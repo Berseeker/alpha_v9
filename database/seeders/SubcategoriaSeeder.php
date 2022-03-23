@@ -597,5 +597,19 @@ class SubcategoriaSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        DB::table('subcategorias')->insert([
+            'nombre' => 'RECREACION',
+            'categoria_id' => 4,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('subcategorias')->insert([
+            'nombre' => 'OTROS RELOJES',
+            'categoria_id' => 17,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }
