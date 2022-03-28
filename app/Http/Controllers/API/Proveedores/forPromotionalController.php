@@ -37,6 +37,7 @@ class forPromotionalController extends Controller
         $response_json = curl_exec ( $curl ); //execute curl
         curl_close ( $curl );
         $response = json_decode($response_json ,true); //decoding the response in json format
+        //dd($response);
 
 
         //$products = $response->json();
@@ -127,6 +128,7 @@ function insertProduct($producto){
         $product->capacidad = NULL; //string 
         $product->caja_master = NULL; //string
         $product->modelo = $producto['id_articulo']; //string; //string
+        $product->existencias = $producto['inventario'];
         if($producto['producto_promocion'] == "SI"){
             $product->promocion = 1; // 1 SIGNIFICA QUE ESTÁ EN PROMOCIÓN
         }else {

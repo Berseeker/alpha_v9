@@ -58,6 +58,8 @@ return new class extends Migration
             $table->unsignedBigInteger('subcategoria_id');
             $table->foreign('subcategoria_id')->references('id')->on('subcategorias');
 
+            $table->integer('existencias')->nullable();
+
 
             $table->softDeletes();
             $table->timestamps();

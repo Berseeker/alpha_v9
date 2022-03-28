@@ -34,6 +34,7 @@ class DobleVelaController extends Controller
         /* ----- IMPLEMENTACION PARA CONSUMIR LA API ----- */
         $ObjectInfo = $this->soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
         $result = json_decode($ObjectInfo->GetExistenciaAllResult, true);
+        dd($result['Resultado']);
 
         $count = 0;
         foreach ($result['Resultado'] as $producto) {
@@ -134,6 +135,7 @@ class DobleVelaController extends Controller
 function insertProductVela($producto){
 
     try {   
+        //dd($producto);
 
         $item = new Producto;
         $item->SDK = trim($producto['CLAVE']); //string
@@ -594,8 +596,29 @@ function insertProductVela($producto){
             $item->subcategoria_id = 93;
             
         }
-        //$item->categoria_id = 20; // Aqui se almacena el Id correspondiente a la categoria en la BD
-        //$item->subcategoria_id = 93; // Aqui se alamacena el Id correspondiente a la subcategoria en la BD
+        
+        // Se calculan las existencias de los productos
+        $existencias = 0;
+
+        if($producto['Disponible Almacen 7'] > 0)
+            $existencias += $producto['Disponible Almacen 7'];
+
+        if($producto['Disponible Almacen 8'] > 0)
+            $existencias += $producto['Disponible Almacen 8'];
+
+        if($producto['Disponible Almacen 9'] > 0)
+            $existencias += $producto['Disponible Almacen 9'];
+
+        if($producto['Disponible Almacen 10'] > 0)
+            $existencias += $producto['Disponible Almacen 10'];
+
+        if($producto['Disponible Almacen 20'] > 0)
+            $existencias += $producto['Disponible Almacen 20'];
+
+        if($producto['Disponible Almacen 24'] > 0)
+            $existencias += $producto['Disponible Almacen 24'];
+
+        $item->existencias = $existencias;
 
         //Se guarda en la BD
         //dd($product);
