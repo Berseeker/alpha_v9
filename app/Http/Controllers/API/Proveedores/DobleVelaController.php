@@ -34,7 +34,6 @@ class DobleVelaController extends Controller
         /* ----- IMPLEMENTACION PARA CONSUMIR LA API ----- */
         $ObjectInfo = $this->soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
         $result = json_decode($ObjectInfo->GetExistenciaAllResult, true);
-        dd($result['Resultado']);
 
         $count = 0;
         foreach ($result['Resultado'] as $producto) {

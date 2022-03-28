@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('for-promotional',[forPromotionalController::class,'index']);
-Route::get('innovation',[InnovationController::class,'index']);
+Route::get('innova-productos',[InnovationController::class,'index']);
 Route::get('doble-vela',[DobleVelaController::class,'index']);
 Route::get('doble-vela-update-imgs',[DobleVelaController::class,'update']);
 Route::get('promoopcion',[PromoOpcionController::class,'index']);
