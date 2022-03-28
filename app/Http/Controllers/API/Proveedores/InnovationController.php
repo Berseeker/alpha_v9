@@ -22,7 +22,7 @@ class InnovationController extends Controller
         if ($err) 
         {
             //MOSTRAR ERRORES
-            echo '<h2>Constructor error</h2>' . $err;
+            dd($err);
             exit();
         }
         //Formato de respuesta XML
