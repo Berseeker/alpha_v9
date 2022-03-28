@@ -31,26 +31,31 @@ class InnovationController extends Controller
         $pag=$client->call('Pages',$params);
         $pag = json_decode($pag,true);
         $page=1;
+        //dd($pag);
         //condición para limitar el número de páginas a mostrar
-        while ($page <= $pag['pages'] ) {
+        for ($i = 1; $pag <= $pag;$i++ ) 
+        {
+
             //parámetros especificando la página
-        $params=array('user_api'=>'Pu7P5Qy602ea9d959f19Byo7','api_key'=>'76o602ea9d959f1f4awL8R-AzIa','format'=>'JSON','page'=>$page);
-        //Método para obtener información  de Productos
-            $response=$client->call('Products',$params);
-            $response=json_decode($response, true);
-            //dd($response);
-            /****** TU CÓDIGO AQUÍ ******/
-            // mostrar el resultado 
-            foreach ($response['data'] as $key => $value) 
-            {
-                $data = insertProductInnovation($value);
-                if(!in_array($data,$global))
-                    array_push($global,$data);
-            }
+                $params=array('user_api'=>'Pu7P5Qy602ea9d959f19Byo7','api_key'=>'76o602ea9d959f1f4awL8R-AzIa','format'=>'JSON','page'=>$i);
+                //Método para obtener información  de Productos
+                $response=$client->call('Products',$params);
+                $response=json_decode($response, true);
+                if(!array_key_exists('data',$response))
+                    dd($response);
+                //dd($response);
+                /****** TU CÓDIGO AQUÍ ******/
+                // mostrar el resultado 
+                foreach ($response['data'] as $key => $value) 
+                {
+                    $data = insertProductInnovation($value);
+                    if(!in_array($data,$global))
+                        array_push($global,$data);
+                }
             
             /****** TU CÓDIGO AQUÍ ******/
-            $page++;
         }
+        //dd('normal');
         dd($global);
 
 
