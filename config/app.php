@@ -176,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\MenuServiceProvider::class,
 
     ],
 
@@ -191,7 +192,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        // custom theme helper
+        'Helper' => App\Helpers\Helpers::class,
     ])->toArray(),
 
 ];

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\Proveedores;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 use SoapClient;
 //Para conexion a la base de datos
@@ -37,6 +39,7 @@ class DobleVelaController extends Controller
 
         $count = 0;
         foreach ($result['Resultado'] as $producto) {
+            //dd($producto);
             $product = DB::table('productos')->where('modelo', '=', $producto['MODELO'])->get();
             if($product->isEmpty()){
                 insertProductVela($producto);
@@ -79,7 +82,7 @@ class DobleVelaController extends Controller
     public function update()
     {
         ini_set('max_execution_time', 9000); //600 seconds = 10 minutes
-        $productos = Producto::where('proveedor','Doble Vela')->limit(300)->offset(400)->get();
+        $productos = Producto::where('proveedor','Doble Vela')->limit(200)->offset(400)->get();
         
         foreach ($productos as $producto) 
         {
@@ -148,7 +151,73 @@ function insertProductVela($producto){
         $item->proveedor = 'Doble Vela';
         $item->piezas_caja = (int)$producto['Unidad Empaque']; // int
         $item->area_impresion = NULL; //stirng
-        $item->metodos_impresion = NULL; // string
+        $metodo_x_impresion = '';
+        if($producto['Tipo Impresion'] == "" || $producto['Tipo Impresion'] == null)
+        {
+            $metodo_x_impresion = null;
+        }
+        else {
+            $tipo_impresiones = Str::of($producto['Tipo Impresion'])->explode(' ');
+            $void = 0;
+            foreach ($tipo_impresiones as $impresion) {
+                if($void > 0)
+                {
+                    $metodo_x_impresion = $metodo_x_impresion.',';
+                }
+                switch($impresion)
+                {
+                    case 'SUB':
+                        $metodo_x_impresion = $metodo_x_impresion.'Sublimado';
+                        break;
+
+                    case 'BR':
+                        $metodo_x_impresion = $metodo_x_impresion.'Bordado';
+                        break;
+
+                    case 'FC':
+                        $metodo_x_impresion = $metodo_x_impresion.'Full color';
+                        break;
+
+                    case 'TM':
+                        $metodo_x_impresion = $metodo_x_impresion.'Tampografía';
+                        break;
+
+                    case 'GL':
+                        $metodo_x_impresion = $metodo_x_impresion.'Grabado Laser';
+                        break;
+
+                    case 'SE':
+                        $metodo_x_impresion = $metodo_x_impresion.'Serigrafía';
+                        break;
+
+                    case 'SB':
+                        $metodo_x_impresion = $metodo_x_impresion.'SandBlast';
+                        break;
+
+                    case 'TR':
+                        $metodo_x_impresion = $metodo_x_impresion.'Transfer';
+                        break;
+
+                    case 'GR':
+                        $metodo_x_impresion = $metodo_x_impresion.'Gota de resina';
+                        break;
+
+                    case 'VT':
+                        $metodo_x_impresion = $metodo_x_impresion.'Vitrificado';
+                        break;
+
+                    case 'HS':
+                        $metodo_x_impresion = $metodo_x_impresion.'Hotstamping';
+                        break;
+
+                    default:
+                        break;
+                }
+                $void++;
+            }
+        }
+        
+        $item->metodos_impresion = $metodo_x_impresion; // string
         $item->peso_caja = trim($producto['Peso caja']); //string -> ya incluye el KG
         //Medidas en cm
         $item->medida_producto_ancho = NULL; //string -> se necesita agregar "cm"

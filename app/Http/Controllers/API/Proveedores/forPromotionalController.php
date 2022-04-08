@@ -50,7 +50,7 @@ class forPromotionalController extends Controller
 
             $product = DB::table('productos')->where('SDK', '=', $producto['id_articulo'])->get();
             if(count($product) == 0){
-                insertProduct($producto);
+                insertPromotional($producto);
                 $count ++;
             }else{
                 if(count($product) > 1){
@@ -88,7 +88,7 @@ class forPromotionalController extends Controller
     }
 }
 
-function insertProduct($producto){
+function insertPromotional($producto){
 
     try {   
         $product = new Producto;
@@ -142,38 +142,38 @@ function insertProduct($producto){
                 case 'AUDÍFONOS':
                     $product->categoria_id = 1;
                     $product->subcategoria_id = 1;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',HEADPHONES,'.$producto['nombre_articulo'];
                     break;
                 case 'ÚNICA':
                     $product->categoria_id = 1;
                     $product->subcategoria_id = 6;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$producto['nombre_articulo'];
                     break;
                 case 'BOCINAS':
                     $product->categoria_id = 1;
                     $product->subcategoria_id = 2;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$producto['nombre_articulo'];
                     break;
                 case 'USB':
                     $product->categoria_id = 1;
                     $product->subcategoria_id = 3;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',MEMORIA USB,'.$producto['nombre_articulo'];
                     break;
                 case 'ACCESORIOS Y CARGADORES':
                     $product->categoria_id = 1;
                     $product->subcategoria_id = 4;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',CABLE USB,CARGADOR,ACCESORIO,ADAPTADOR,PUERTO,CELULAR,'.$producto['nombre_articulo'];
                     break;
                 case 'POWER BANKS':
                     $product->categoria_id = 1;
                     $product->subcategoria_id = 5;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',BATERIA PORTATIL,'.$producto['nombre_articulo'];
                     break;
                 
                 default:
                     $product->categoria_id = 1;
                     $product->subcategoria_id = 6;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$producto['nombre_articulo'];
                     break;
             }
             
@@ -185,28 +185,28 @@ function insertProduct($producto){
             //5.- ACCESORIOS Y CARGADORES
             //6.- POWER BANKS
         }
-        if($producto['categoria'] == "BOLIGRAFOS"){
+        if($producto['categoria'] == "BOLÍGRAFOS"){
             
             switch ($producto['sub_categoria']) {
                 case 'BOLÍGRAFOS METÁLICOS':
                     $product->categoria_id = 2;
                     $product->subcategoria_id = 7;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',BOLIGRAFO METALICO,BOLIGRAFO DE METAL,'.$producto['nombre_articulo'];
                     break;
                 case 'BOLÍGRAFOS MULTIFUNCIONALES':
                     $product->categoria_id = 2;
                     $product->subcategoria_id = 8;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',BOLIGRAFO MULTIFUNCIONAL,'.$producto['nombre_articulo'];
                     break;
                 case 'BOLÍGRAFOS DE PLÁSTICO':
                     $product->categoria_id = 2;
                     $product->subcategoria_id = 9;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',BOLIGRAFO PLASTICO,BOLIGRAFO DE PLASTICO,'.$producto['nombre_articulo'];
                     break;
                 case 'BOLÍGRAFOS ECOLÓGICOS':
                     $product->categoria_id = 2;
                     $product->subcategoria_id = 10;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',BOLIGRAFO ECOLOGICO,'.$producto['nombre_articulo'];
 
                     $ecologico = new Producto;
                     $ecologico->SDK = $producto['id_articulo']; //string
@@ -253,17 +253,19 @@ function insertProduct($producto){
 
                     $ecologico->categoria_id = 8;
                     $ecologico->subcategoria_id = 37;
-                    $ecologico->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $ecologico->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',ECOLOGICO,BOLIGRAFO ECOLOGICO,'.$producto['nombre_articulo'];
                     $ecologico->save();
 
                     break;
                 case 'BOLÍGRAFOS PLÁSTICO':
                     $product->categoria_id = 2;
                     $product->subcategoria_id = 9;
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',BOLIGRAFOS DE PLASTICO,BOLIGRAFO DE PLASTICO,'.$producto['nombre_articulo'];
                     break;   
                 default:
                     $product->categoria_id = 2;
                     $product->subcategoria_id = 15;
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',OTROS BOLIGRAFOS,BOLIGRAFO,'.$producto['nombre_articulo'];
                     break;
             }
             
@@ -280,32 +282,62 @@ function insertProduct($producto){
             switch ($producto['sub_categoria']) {
                 case 'SALUD':
                     $subcategoria = 16;
+                    $string = '';
                     if(Str::contains($producto['descripcion'],"Cubre bocas") || Str::contains($producto['descripcion'],"Termómetro") || Str::contains($producto['descripcion'],"antibacterial") || Str::contains($producto['descripcion'],"Careta")){
                         $subcategoria = 94;
                     }
+                    if(Str::contains($producto['descripcion'],"Cubre bocas"))
+                    {
+                        $string = 'CUBREBOCAS,CUBRE BOCAS,MASCARILLA,KN95,KN 95,MASK';
+                    }
+                    else if(Str::contains($producto['descripcion'],"gel antibacterial"))
+                    {
+                        $string = 'SANITIZANTE,GEL ANTIBACTERIAL';
+                    }
+                    else if(Str::contains($producto['descripcion'],"careta"))
+                    {
+                        $string = 'CARETA,MASK';
+                    }
                     $product->categoria_id = 3;
                     $product->subcategoria_id = $subcategoria;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$producto['nombre_articulo'].','.$string;
                     break;
                 case 'BELLEZA':
                     $product->categoria_id = 3;
                     $product->subcategoria_id = 17;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $string = '';
+                    if(Str::contains($producto['descripcion'],"brochas para maquillaje"))
+                    {
+                        $string = 'SET DE BROCHAS,BROCHAS,BROCHA,MAQUILLAJE';
+                    }
+                    else if(Str::contains($producto['descripcion'],"set de") || Str::contains($producto['descripcion'],"manicure"))
+                    {
+                        $string = 'CORTAUÑAS,CORTA UÑAS,CORTA UÑA,CORTAUÑA,MANICURE,SET DE MANICURE,ESTUCHE DE MANICURE';
+                    }
+                    else if(Str::contains($producto['descripcion'],"espejo"))
+                    {
+                        $string = 'ESPEJO';
+                    }
+                    else if(Str::contains($producto['descripcion'],"cepillo"))
+                    {
+                        $string = 'CEPILLO,PEINE';
+                    }
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$producto['nombre_articulo'].','.$string;
                     break;
                 case 'COSMETIQUERAS':
                     $product->categoria_id = 3;
                     $product->subcategoria_id = 18;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',MAQUILLAJE,COSMETIQUERA,COSMETICO,'.$producto['nombre_articulo'];
                     break;
                 case 'CUIDADO PERSONAL':
                     $product->categoria_id = 3;
                     $product->subcategoria_id = 19;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].'LIMPIEZA,LIMPIADOR,COSTURA,COSER,'.$producto['nombre_articulo'];
                     break;
                 case 'VIAJE':
                     $product->categoria_id = 4;
                     $product->subcategoria_id = 20;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',VIAJAR';
                     break;
                 
                 default:
@@ -329,12 +361,12 @@ function insertProduct($producto){
                 case 'BOLSAS Y MORRALES':
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 22;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].'BOLSA,MORRAL,'.$producto['nombre_articulo'];
                     break;
                 case 'BOLSAS ECOLÓGICAS':
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 23;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].'BOLSA ECOLOGICA';
 
 
                     $ecologico = new Producto;
@@ -382,29 +414,29 @@ function insertProduct($producto){
 
                     $ecologico->categoria_id = 8;
                     $ecologico->subcategoria_id = 40;
-                    $ecologico->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $ecologico->busqueda = 'ECOLOGIA,'.$producto['categoria'].','.$producto['sub_categoria'].',BOLSA ECOLOGICA'.$producto['nombre_articulo'];
                     $ecologico->save();
                     
                     break;
                 case 'MOCHILAS':
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 24;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',MOCHILA,'.$producto['nombre_articulo'];
                     break;
                 case 'MALETAS':
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 25;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',MALETA,'.$producto['nombre_articulo'];
                     break;
                 case 'LONCHERAS Y HIELERAS':
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 26;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',LONCHERA,HIELERA'.$producto['nombre_articulo'];
                     break;
                 case 'GORRAS Y CANGURERAS':
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 27;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',GORRA,CAPUCHA,CANGURERA,'.$producto['nombre_articulo'];
                     break;
                 case 'PARAGUAS':
                     $product->categoria_id = 6;
@@ -414,13 +446,13 @@ function insertProduct($producto){
                 case 'PORTAFOLIOS':
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 28;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',PORTAFOLIO,'.$producto['nombre_articulo'];
                     break;
                 
                 default:
                     $product->categoria_id = 5;
                     $product->subcategoria_id = 24;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',OTROS TEXTILES,'.$producto['nombre_articulo'];
                     break;
             }
             // --------- TEXTIL     
@@ -443,12 +475,14 @@ function insertProduct($producto){
                     break;
                 case 'HERRAMIENTAS':
                     $subcategoria = 33;
+                    $string = '';
                     if(Str::contains($producto['descripcion'],"Flexómetro")){
                         $subcategoria = 36;
+                        $string = 'FLEXOMETRO';
                     }
                     $product->categoria_id = 7;
                     $product->subcategoria_id = $subcategoria;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$string;
                     break;
                 case 'LÁMPARAS':
                     $product->categoria_id = 7;
@@ -509,12 +543,14 @@ function insertProduct($producto){
             switch ($producto['sub_categoria']) {
                 case 'COCINA':
                     $subcategoria = 42;
+                    $string = '';
                     if(Str::contains($producto['descripcion'],"BBQ") || Str::contains($producto['descripcion'],"Asador")){
                         $subcategoria = 44;
+                        $string = 'BBQ,ASADOR';
                     }
                     $product->categoria_id = 9;
                     $product->subcategoria_id = $subcategoria;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$string;
                     break;
                 case 'BAR':
                     $product->categoria_id = 9;
@@ -549,22 +585,28 @@ function insertProduct($producto){
                 case 'ACCESORIOS DE OFICINA':
                     $subcategoria = 47;
                     $categoria = 10;
+                    $string = '';
                     if(Str::contains($producto['descripcion'],"Calculadora")){
                         $subcategoria = 50;
+                        $string = 'CALCULADORA';
                     }else if(Str::contains($producto['descripcion'],"portagafete")){
                         $subcategoria = 53;
+                        $string = 'PORTAGAFETE,GAFETE';
                     }else if(Str::contains($producto['descripcion'],"Porta retrato")){
                         $categoria = 9;
                         $subcategoria = 46;
+                        $string = 'RETRATO,PORTA RETRATO,PORTARETRATO';
                     }else if(Str::contains($producto['descripcion'],"Reloj")){
                         $categoria = 17;
                         $subcategoria = 87;
+                        $string = 'RELOJ';
                     }else if(Str::contains($producto['descripcion'],"Tarjetero")){
                         $subcategoria = 52;
+                        $string = 'TARJETA,TARJETERO';
                     }
                     $product->categoria_id = $categoria;
                     $product->subcategoria_id = $subcategoria;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].','.$string;
                     break;
                 case 'LIBRETAS':
                     $product->categoria_id = 10;
@@ -689,7 +731,7 @@ function insertProduct($producto){
                 case 'CILINDROS DE PLÁSTICO':
                     $product->categoria_id = 14;
                     $product->subcategoria_id = 71;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',CILINDRO DE PLASTICO';
                     break;
                 case 'TAZAS':
                     $product->categoria_id = 14;
@@ -709,6 +751,11 @@ function insertProduct($producto){
                 case 'CILINDROS METÁLICOS':
                     $product->categoria_id = 14;
                     $product->subcategoria_id = 72;
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',CILINDRO METALICO';
+                    break;
+                case 'VASOS DE CARTÓN':
+                    $product->categoria_id = 14;
+                    $product->subcategoria_id = 75;
                     $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
                     break;
                 default:
@@ -732,7 +779,7 @@ function insertProduct($producto){
                 case 'LLAVEROS MULTIFUNCIONALES':
                     $product->categoria_id = 15;
                     $product->subcategoria_id = 79;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',LLAVERO MULTIFUNCIONAL';
                     break;
                 case 'LLAVEROS METÁLICOS':
                     $subcategoria = 80;
@@ -741,7 +788,7 @@ function insertProduct($producto){
                     }
                     $product->categoria_id = 14;
                     $product->subcategoria_id = $subcategoria;
-                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'];
+                    $product->busqueda = $producto['categoria'].','.$producto['sub_categoria'].',LLAVERO METALICO';
                     break;   
                 default:
                     $product->categoria_id = 14;

@@ -27,16 +27,22 @@ class PromoOpcionController extends Controller
                 'msg' => $result['error'] 
             ]);
         }
-
+        $count = 0;
         foreach ($result as $key => $item) 
         {
-            $prevItem = Producto::where('SDK',$item['parent_code'])->first();
+            $prevItem = Producto::where('SDK',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
             if($prevItem == null)
             {
-                insertProduct($item);  
+                insertProduct($item); 
+                $count ++; 
             }
               
         }
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'Se agregaron '.$count.' productos de PromoOpcion de manera exitosa'
+        ]);
     }
 }
 
@@ -47,8 +53,8 @@ function insertProduct($producto)
     $product->nombre = $producto['name'];
     $product->nickname = $producto['name'];
     $product->SDK = $producto['parent_code'];
-    $product->description = $producto['description'];
-    $product->images = json_encode($producto['img']);
+    $product->descripcion = $producto['description'];
+    $product->images = json_encode(array($producto['img']));
     $product->color = json_encode(array($producto['color']));
     $product->proveedor = 'PromoOpcion';
     $product->piezas_caja = $producto['count_box'];
@@ -57,10 +63,10 @@ function insertProduct($producto)
     $product->peso_caja = null;
     $product->medida_producto_ancho = null;
     $product->medida_producto_alto = null;
-    $product->medida_producto_general = $producto['size'];
-    $product->alto_caja = $producto['height'];
-    $product->ancho_caja = $producto['width'];
-    $product->largo_caja = $producto['length'];
+    $product->medidas_producto_general = $producto['size'];
+    $product->alto_caja = ($producto['height'] == "") ? 0.0 : $producto['height'];
+    $product->ancho_caja = ($producto['width'] == "") ? 0.0 : $producto['width'];
+    $product->largo_caja = ($producto['length'] == "") ? 0.0 : $producto['length'];
     $product->caja_master = null;
     $product->modelo = $producto['item_code'];
     $product->material = $producto['material'];
@@ -88,7 +94,7 @@ function insertProduct($producto)
                 $product_T->SDK = $producto['parent_code']; //string
                 $product_T->nombre = $producto['name'];
                 $product_T->nickname = $producto['name'];
-                $product_T->description = $producto['description'];
+                $product_T->descripcion = $producto['description'];
 
                 $product_T->images = json_encode(array($producto['img'])); //JSON
 
@@ -165,7 +171,7 @@ function insertProduct($producto)
             break;
         case 'AUDIO':
 
-            if(Str::contains($producto['portagafete'],"Bocina") || Str::contains($producto['portagafete'],"bocina")){
+            if(Str::contains($producto['description'],"Bocina") || Str::contains($producto['description'],"bocina")){
                 $product->subcategoria_id = 2;
                 $product->categoria_id = 1;
                 $product->busqueda = "TECNOLOGIA,BOCINA";
@@ -345,7 +351,7 @@ function insertProduct($producto)
                 $product_T->SDK = $producto['parent_code']; //string
                 $product_T->nombre = $producto['name'];
                 $product_T->nickname = $producto['name'];
-                $product_T->description = $producto['description'];
+                $product_T->descripcion = $producto['description'];
                 $product_T->images = json_encode(array($producto['img'])); //JSON
                 $product_T->color = json_encode(array($producto['color']));        
                 $product_T->proveedor = 'PromoOpcion';
@@ -422,7 +428,7 @@ function insertProduct($producto)
                 $product->categoria_id = 7;
                 $product->busqueda = "HERRAMIENTAS,FLEXOMETRO";
                 break;
-            }else if(Str::contains($producto['descipcion'],"lampara")){
+            }else if(Str::contains($producto['description'],"lampara")){
                 $product->subcategoria_id = 34;
                 $product->categoria_id = 7;
                 $product->busqueda = "HERRAMIENTAS,LAMPARA";
@@ -605,8 +611,8 @@ function insertProduct($producto)
                 $product_T->SDK = $producto['parent_code']; //string
                 $product_T->nombre = $producto['name'];
                 $product_T->nickname = $producto['name'];
-                $product_T->description = $producto['description'];
-                $product_T->images = json_encode(array($producto['img'])); //JSON
+                $product_T->descripcion = $producto['description'];
+                $product_T->images = json_encode(array($producto['img'] )); //JSON
                 $product_T->color = json_encode(array($producto['color']));        
                 $product_T->proveedor = 'PromoOpcion';
                 $product_T->piezas_caja = (int)$producto['count_box']; // int
@@ -687,6 +693,9 @@ function insertProduct($producto)
             $product->busqueda = "OTROS,VARIOS";
             break;
     }
+
+    $product->existencias = 0;
+    $product->save();
 
 
 }

@@ -7,6 +7,10 @@ use App\Http\Controllers\API\Proveedores\forPromotionalController;
 use App\Http\Controllers\API\Proveedores\DobleVelaController;
 use App\Http\Controllers\API\Proveedores\InnovationController;
 use App\Http\Controllers\API\Proveedores\PromoOpcionController;
+use App\Http\Controllers\API\Cotizaciones\CotizacionController;
+use App\Http\Controllers\API\Productos\ProductoController;
+use App\Http\Controllers\API\Ventas\VentasController;
+use App\Http\Controllers\API\Buscador\BuscadorController;
 use App\Http\Controllers\API\Slug\SlugController;
 
 /*
@@ -36,3 +40,16 @@ Route::get('slug-subcategorias',[SlugController::class,'subcategoriaSlug']);
 Route::get('slug-productos',[SlugController::class,'productoSlug']);
 
 
+Route::get('all-products',[ProductoController::class,'index']);
+Route::get('producto/{sdk}',[ProductoController::class,'producto']);
+
+
+Route::post('store-cotizacion',[CotizacionController::class,'store']);
+Route::post('update-cotizacion/{id}',[CotizacionController::class,'update']);
+Route::post('delete-cotizacion/{id}',[CotizacionController::class,'delete']);
+Route::get('all-cotizaciones',[CotizacionController::class,'index']);
+
+
+Route::get('all-ventas',[VentasController::class,'index']);
+
+Route::get('search-productos/{search}',[BuscadorController::class,'search']);

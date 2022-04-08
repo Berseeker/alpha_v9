@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
+        "laravel/scout": "^9.4",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4"
     },
@@ -31,7 +32,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "app/Helpers/Helpers.php"
+        ]
     },
     "scripts": {
         "post-autoload-dump": [

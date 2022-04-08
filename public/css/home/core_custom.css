@@ -1,0 +1,377 @@
+.card {
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  transition: all 0.3s ease-in-out, background 0s, color 0s, border-color 0s;
+}
+.card .card {
+  box-shadow: none !important;
+}
+.card .card-title {
+  font-weight: 500;
+  font-size: 1.285rem;
+  margin-bottom: 1.53rem;
+}
+.card .card-bordered {
+  border: 0 solid rgba(34, 41, 47, 0.125);
+}
+.card .card-img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.card .card-img-overlay {
+  border-radius: 0.428rem;
+}
+.card.card-fullscreen {
+  display: block;
+  z-index: 9999;
+  position: fixed;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+}
+.card .card-body[class*=border-bottom-] {
+  border-bottom-width: 2px !important;
+}
+.card .card-img-overlay.bg-overlay {
+  background: rgba(34, 41, 47, 0.45);
+}
+.card .card-img-overlay .text-muted {
+  color: #1e1e1e !important;
+}
+.card.card-minimal {
+  border: none;
+  box-shadow: none;
+}
+.card .card-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.card .card-header .card-title {
+  margin-bottom: 0;
+}
+.card .card-header .heading-elements {
+  position: relative;
+  top: -1px;
+}
+.card .card-header .heading-elements li:not(:first-child) a {
+  margin-left: 0.75rem;
+}
+.card .card-header .heading-elements a.btn {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.card .card-header .heading-elements a i,
+.card .card-header .heading-elements a svg {
+  height: 1rem;
+  width: 1rem;
+  font-size: 1rem;
+}
+.card .card-header .heading-elements a[data-action=collapse] i,
+.card .card-header .heading-elements a[data-action=collapse] svg {
+  transition: all 0.25s ease-out;
+  display: inline-block;
+}
+.card .card-header .heading-elements a[data-action=collapse].rotate i,
+.card .card-header .heading-elements a[data-action=collapse].rotate svg {
+  transform: rotate(-180deg);
+}
+.card .card-header + .card-content > .card-body:first-of-type, .card .card-header + .card-body {
+  padding-top: 0px;
+}
+.card .card-footer {
+  border-top: 1px solid #dae1e7;
+  background-color: transparent;
+}
+
+.card-group {
+  margin-bottom: 0.75rem;
+}
+
+.card-head-inverse {
+  color: #fff;
+}
+.card-head-inverse .heading-elements i,
+.card-head-inverse .heading-elements svg {
+  color: #fff;
+}
+
+.card-transparent {
+  background-color: transparent;
+}
+
+.text-white .card-img-overlay .text-muted {
+  color: #fff !important;
+}
+.text-white code {
+  background-color: white;
+}
+.text-white .heading-elements i,
+.text-white .heading-elements svg {
+  color: #fff;
+}
+
+.overlay-img-card .card-img-overlay,
+.overlay-img-card img {
+  max-height: 34.64rem;
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .card-body,
+.card-content {
+    min-height: 1px;
+  }
+}
+.card-congratulations {
+  background: linear-gradient(118deg, #7367f0, rgba(115, 103, 240, 0.7));
+  color: #fff;
+}
+.card-congratulations .congratulations-img-left {
+  width: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+@media (max-width: 575.98px) {
+  .card-congratulations .congratulations-img-left {
+    width: 140px;
+  }
+}
+.card-congratulations .congratulations-img-right {
+  width: 175px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+@media (max-width: 575.98px) {
+  .card-congratulations .congratulations-img-right {
+    width: 140px;
+  }
+}
+.card-congratulations .avatar {
+  margin-bottom: 2rem;
+}
+
+.congratulation-medal {
+  position: absolute;
+  top: 0;
+  right: 37px;
+}
+
+.card-deposits .deposits-divider {
+  margin-top: 1.8rem;
+  margin-bottom: 1.4rem;
+}
+
+.card-employee-task .employee-task:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.card-developer-meetup .meetup-img-wrapper {
+  background-color: rgba(115, 103, 240, 0.1);
+}
+.card-developer-meetup .meetup-header {
+  margin-bottom: 2rem;
+}
+.card-developer-meetup .meetup-header .meetup-day {
+  text-align: center;
+  border-right: 1px solid #d8d6de;
+  padding-right: 1.3rem;
+  margin-right: 1.3rem;
+}
+.card-developer-meetup .meetings .avatar .avatar-content {
+  width: 34px;
+  height: 34px;
+}
+.card-developer-meetup .meetings + .meetings {
+  margin-top: 1.2rem;
+}
+.card-developer-meetup .avatar-group {
+  margin-top: 2rem;
+}
+
+.card-profile {
+  text-align: center;
+}
+.card-profile .card-body {
+  position: relative;
+  padding: 5rem 2.3rem 1.5rem 2.3rem;
+}
+.card-profile .card-body .profile-image-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.card-profile .card-body .profile-image-wrapper .profile-image {
+  position: absolute;
+  top: -4rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 8px 0 rgba(34, 41, 47, 0.14);
+  margin-bottom: 1.15rem;
+}
+.card-profile .card-body .profile-image-wrapper .profile-image img {
+  width: 100px;
+  height: 100px;
+}
+.card-profile .card-body .profile-badge {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.card-apply-job .apply-job-package {
+  padding: 1.2rem;
+  margin-bottom: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-apply-job .apply-job-package sup {
+  top: -0.8rem;
+}
+
+.card-transaction .transaction-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-transaction .transaction-item:not(:last-child) {
+  margin-bottom: 1.2rem;
+}
+.card-transaction .transaction-item .avatar {
+  margin-right: 1.2rem;
+}
+.card-transaction .transaction-item .avatar .avatar-content {
+  width: 42px;
+  height: 42px;
+}
+.card-transaction .transaction-item .transaction-title {
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+}
+
+.card-user-timeline .user-timeline-title-icon {
+  width: 1.714rem;
+  height: 1.714rem;
+  margin-right: 1.3rem;
+}
+.card-user-timeline .timeline .timeline-item:last-child .timeline-event {
+  min-height: auto;
+}
+.card-user-timeline .timeline .timeline-item:not(:last-child) {
+  padding-bottom: 2.3rem;
+}
+
+.business-card .business-items:not(:last-child) {
+  margin-bottom: 1.3rem;
+}
+.business-card .business-items .business-item {
+  border: 1px solid #ebe9f1;
+  border-radius: 0.357rem;
+  padding: 1rem 1rem 1rem 1.3rem;
+}
+.business-card .business-items .business-item:not(:last-child) {
+  margin-bottom: 0.85rem;
+}
+
+.card-browser-states .browser-states {
+  margin-top: 2.14rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-app-design .design-group {
+  margin-bottom: 2rem;
+}
+.card-app-design .design-group .avatar:not(:last-child) {
+  margin-right: 0.6rem;
+}
+.card-app-design .design-planning-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.card-app-design .design-planning-wrapper:not(:last-child) {
+  margin-bottom: 1.3rem;
+}
+.card-app-design .design-planning-wrapper .design-planning {
+  padding: 0.5rem;
+  margin-bottom: 0.7rem;
+  text-align: center;
+  background-color: #f8f8f8;
+  border-radius: 0.357rem;
+  min-width: 6.4rem;
+}
+.card-app-design .design-planning-wrapper .design-planning:not(:last-child) {
+  margin-right: 0.7rem;
+}
+
+.card-statistics .card-header {
+  padding-left: 2.4rem;
+}
+.card-statistics .statistics-body {
+  padding: 2rem 2.4rem 2.8rem !important;
+}
+.card-statistics .statistics-body .avatar .avatar-content {
+  width: 48px;
+  height: 48px;
+}
+.card-statistics .statistics-body .avatar .avatar-content .avatar-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.chart-dropdown .btn {
+  font-size: 1rem;
+  font-weight: 400;
+}
+.chart-dropdown .btn:after {
+  display: none;
+}
+
+.card-revenue-budget .revenue-report-wrapper {
+  padding: 1.286rem 1.5rem;
+}
+@media (min-width: 768px) {
+  .card-revenue-budget .revenue-report-wrapper {
+    border-right: 1px solid #ebe9f1;
+  }
+}
+.card-revenue-budget .revenue-report-wrapper #revenue-report-chart .apexcharts-series[seriesName=Earning] {
+  transform: scaleY(0.965);
+}
+.card-revenue-budget .revenue-report-wrapper #revenue-report-chart .apexcharts-series[seriesName=Expense] {
+  transform: scaleY(1.035);
+}
+.card-revenue-budget .budget-wrapper {
+  padding: 2rem 3rem;
+  text-align: center;
+}
+@media (max-width: 767.98px) {
+  .card-revenue-budget .budget-wrapper {
+    padding-top: 0;
+  }
+}
+.card-revenue-budget .budget-wrapper .budget-dropdown {
+  margin-bottom: 2rem;
+}
+.card-revenue-budget .budget-wrapper #budget-chart {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.earnings-card .apexcharts-canvas .apexcharts-pie .apexcharts-datalabel-label {
+  font-size: 0.8rem;
+  fill: #6e6b7b !important;
+}
+.earnings-card .apexcharts-canvas .apexcharts-pie .apexcharts-datalabel-value {
+  fill: #5e5873;
+  font-size: 1.286rem;
+  font-weight: 500;
+}

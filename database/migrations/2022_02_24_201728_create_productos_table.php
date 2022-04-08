@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('nickname')->nullable();
-            $table->string('SDK');
+            $table->string('SDK')->nullable();
             $table->longText('descripcion')->nullable();
             $table->longText('images')->nullable();
             $table->longText('color')->nullable();

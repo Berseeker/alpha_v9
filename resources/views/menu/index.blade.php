@@ -1,6 +1,6 @@
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm" id="home-navbar">
-    <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('img/logos/logo_alpha.png') }}" id="logo_alpha" alt="AlphaPromos"></a>
+    <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('imgs/logos/logo_alpha.png') }}" id="logo_alpha" alt="AlphaPromos"></a>
     <!--a href="#" class="navbar-brand font-weight-bold d-block d-lg-none">MegaMenu</a-->
     <button type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
         <span class="navbar-toggler-icon"></span>
@@ -60,55 +60,40 @@
         </ul>
         <ul class="navbar-nav" id="auth-nav">
             <li>
-                <a href="" class="nav-link"><i class="fas fa-shopping-cart"></i><span class="badge badge-danger" id="shop-cart">9</span></a>
-            </li>
-            <!-- Authentication Links -->
-            @guest
-                <li>
-                    <a href="{{ route('login') }}" class="nav-link font-weight-bold text-uppercase"><i class="fas fa-user"></i> Iniciar Sesión</a>
-                </li>
-                <li>
-                    <a href="{{ route('register') }}" class="nav-link font-weight-bold text-uppercase"><i class="fas fa-pencil-alt"></i>Registro</a>
-                </li>
-            @else
-                <li>
-                    @if (Auth::user()->id_facebook)
-                        <img src="{{ Auth::user()->avatar_facebook }}" alt="Perfil Facebook" class="perfil-img">
-                    @elseif(Auth::user()->id_google)
-                        <img src="{{ Auth::user()->avatar_google }}" alt="Perfil Google" class="perfil-img">
-                    @else
-                        <img src="{{ asset('img/items/avatar.png') }}" alt="Perfil" class="perfil-img">
-                    @endif
-                </li>
-                <li class="nav-item dropdown d-flex align-items-center">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->nombre }} <span class="caret"></span>
+                <div class="dropdown" style="margin-top: 8px;">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-shopping-cart"></i><span class="badge badge-danger" id="shop-cart">
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('account') }}">
-                            Cuenta
-                        </a>
-                        <form action="{{ route('cerrar.sesion') }}" method="POST">
-                            @csrf
-                            <button class="dropdown-item" type="submit">
-                                <i class="feather icon-power"></i> Cerrar Sesión
-                            </button>
-                        </form>
+                    <div class="dropdown-menu golden-boy" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
                     </div>
-                </li>
-            @endguest
+                </div>
+            </li>
+            <li>
+                <form action="{{ route('home.busqueda') }}" method="GET">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" class="form-control search-product" placeholder="Busca un producto" name="search_global">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        </div>
+                    </div>
+                </form>
+            </li>
         </ul>
     </div>
 </nav>
-<div class="row" id="float-search">
+<!--div class="row" id="float-search">
     <form class="form-inline my-2 my-lg-0" id="general-format" method="GET" action="{{ url('/busqueda') }}">
         @csrf
         <div class="searchbar">
             <input class="search_input" id="general_search" name="general_search" type="text" name="" placeholder="Buscar...">
             <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
         </div>
-        <!--input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button-->
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -120,4 +105,4 @@
             });
         });   
     </script>
-</div>
+</div-->
