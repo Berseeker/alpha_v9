@@ -13,8 +13,8 @@
     <div class="owl-carousel owl-theme custom-t">
         <div class="item"><img src="{{ asset('imgs/slider/cubiertos.jpeg') }}" alt=""></div>
         <div class="item"><img src="{{ asset('imgs/slider/tea.jpeg') }}" alt=""></div>
-        <div class="item"><a href="{{ assets('catalogos/catalogo_kids.pdf') }}" target="_blank"></a><img src="{{ asset('imgs/slider/kids.jpeg') }}" alt=""></div>
-        <div class="item"><a href="{{ assets('catalogos/catalogo_madres.pdf') }}" target="_blank"></a><img src="{{ asset('imgs/slider/mother.jpeg') }}" alt=""></div>
+        <div class="item"><a href="{{ asset('catalogos/catalogo_kids.pdf') }}" target="_blank"></a><img src="{{ asset('imgs/slider/kids.jpeg') }}" alt=""></div>
+        <div class="item"><a href="{{ asset('catalogos/catalogo_madres.pdf') }}" target="_blank"></a><img src="{{ asset('imgs/slider/mother.jpeg') }}" alt=""></div>
         <div class="item"><img src="{{ asset('imgs/slider/inmediata.jpeg') }}" alt=""></div>
     </div>
 
