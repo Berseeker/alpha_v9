@@ -1,7 +1,7 @@
 @component('mail::message')
 #Nueva cotización
  
-Alguien ha cotizado prodcutos en la pagina!
+Alguien ha cotizado productos en la pagina!
  
 @component('mail::button', ['url' => $url])
 Ver Cotizacion

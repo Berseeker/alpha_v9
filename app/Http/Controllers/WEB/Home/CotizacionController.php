@@ -96,17 +96,30 @@ class CotizacionController extends Controller
         $cotizacion->codigo_area = '+52';
         $cotizacion->celular = (int)$request->celular;
         $cotizacion->comentarios = $request->comentarios;
-        $medidas_deseables = null;
-        if($request->has('medidas_deseables'))
-            $medidas_deseables = json_encode($request->medidas_deseables);
 
-        $cotizacion->medidas_deseables = $medidas_deseables;
+        $medidas_deseables = array();
+        $string = 'Sin definir';
+        for($i = 0; $i < $request->total_productos; $i++)
+        {
+            array_push($medidas_deseables,$string);
+        }
+
+        $precios_pzas = array();
+        $string = 0;
+        for($i = 0; $i < $request->total_productos; $i++)
+        {
+            array_push($precios_pzas,$string);
+        }
+        
+            
+
+        $cotizacion->medidas_deseables = json_encode($medidas_deseables);
         $cotizacion->fecha_deseable = json_encode($request->fecha_deseable);
         $cotizacion->pantones = json_encode($request->pantones);
         $cotizacion->tipografia = json_encode($request->tipografia);
         $precios_pza = array();
-        $cotizacion->precio_pza = null;
-        $cotizacion->precio_x_producto = null;
+        $cotizacion->precio_pza = json_encode($precios_pzas);
+        $cotizacion->precio_x_producto = json_encode($precios_pzas);
         $cotizacion->precio_total = 0;
         $cotizacion->precio_subtotal = 0;
         $cotizacion->mano_x_obra = 0;

@@ -11,4 +11,9 @@ class Cotizacion extends Model
     use HasFactory,SoftDeletes;
 
     protected $table = 'cotizaciones';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

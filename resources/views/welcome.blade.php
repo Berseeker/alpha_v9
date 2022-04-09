@@ -48,15 +48,15 @@
                         <!--h2>Nice <span>Lily</span></h2>
                         <p>Lily likes to play with crayons and pencils</p-->
                     </div>
-                    <a href="#">View more</a>
+                    <a href="{{ url('/subcategoria/articulos-contingencia') }}">View more</a>
                 </figcaption>     
             </figure>
             <figure class="effect-romeo">
                 <img src="https://tympanus.net/Development/HoverEffectIdeas/img/2.jpg" alt="img02"/>
                 <figcaption>
                     <h2>Alpha<span>Displays</span></h2>
-                    <p>By<br>Jorge</p>
-                    <a href="#">View more</a>
+                    <p>By<br>Jorge Galvan</p>
+                    <a href="{{ route('home.displays') }}">View more</a>
                 </figcaption>     
             </figure>
         </div>

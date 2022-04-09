@@ -70,11 +70,8 @@
         </div>
         <!-- Wizard ends -->
         @if (session('success'))
-            <div class="alert alert-success" role="alert" style="width: 600px;display:block;margin:0px auto;text-align:center;margin-top:60px;">
+            <div class="alert alert-success" role="alert" style="width: 500px;display:block;margin:0px auto;text-align:center;margin-top:60px;padding:8px;">
                 <i class="fas fa-thumbs-up" style="margin-right: 10px;"></i> {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
         @endif 
         @if($errors->any())

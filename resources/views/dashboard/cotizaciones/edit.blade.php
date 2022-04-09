@@ -159,20 +159,29 @@
                         <div class="col-12 col-sm-6 mb-2">
                             <div class="form-group">
                                 @php
-                                    $servicios = explode(",", $product->metodos_impresion);
+                                    $servicios = null; 
+                                    if($product->metodos_impresion != null)
+                                    {
+                                        $servicios = explode(",", $product->metodos_impresion);
+                                    }    
                                 @endphp
                                 <label for="password-icon">Metodo de Impresión solicitado <span class="obligated">*</span></label>
                                 <fieldset class="form-group">
                                     <select class="form-control servicio_id" id="servicio_id" name="servicio_id[]">
-                                        <option value="default"> Selecciona una opcion</option>
-                                        @foreach ($servicios as $servicio)
-                                            @if (trim($product->impresion_metodo) == trim($servicio))
-                                                <option value="{{ trim($servicio) }}" selected> {{ trim($servicio) }} </option> 
-                                            @else
-                                                <option value="{{ trim($servicio) }}"> {{ trim($servicio) }} </option> 
-                                            @endif
-                        
-                                        @endforeach
+                                        <option value="sin definir"> Selecciona una opcion</option>
+                                        @if ($servicios == null)
+                                            <option value='sin definir'>No hay metodos de impresion</option>
+                                        @else
+                                            
+                                            @foreach ($servicios as $servicio)
+                                                @if (trim($product->impresion_metodo) == trim($servicio))
+                                                    <option value="{{ trim($servicio) }}" selected> {{ trim($servicio) }} </option> 
+                                                @else
+                                                    <option value="{{ trim($servicio) }}"> {{ trim($servicio) }} </option> 
+                                                @endif
+                            
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </fieldset>      
                             </div>
@@ -286,20 +295,9 @@
                         <div class="form-group">
                             <label for="email-id-icon">Nombre del archivo: (descargalo)</label>
                             <div class="position-relative has-icon-left">     
-                                <a href="{{ url('/dashboard/download-cotizacion/'.$cotizacion->id) }}" class="form-control">Assets.zip</a>
+                                <a href="{{ url('/dashboard/download-file/'.$cotizacion->id) }}" class="form-control">Assets.zip</a>
                                 <div class="form-control-position">
                                     <i class="icon-form feather icon-download"></i>
-                                </div>
-                            </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="email-id-icon">Logo a sustituir</label>
-                            <div class="position-relative has-icon-left">     
-                                <input type="file" multiple="" name="logo_img" id="logo_img" class="form-control">
-                                <div class="form-control-position">
-                                    <i class="icon-form feather icon-upload"></i>
                                 </div>
                             </div>
                       </div>
@@ -383,18 +381,16 @@
                           </div>
                       </div>
                     </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="contact-info-icon">Calle</label>
-                            <div class="position-relative has-icon-left">
-                                <fieldset class="form-group">
-                                    <textarea class="form-control" name="calle" id="calle" rows="2">{{ $cotizacion->calle ?? old('$request->calle') }}</textarea>
-                                </fieldset>
-                                <div class="form-control-position">
-                                    <i class="icon-form fas fa-paragraph"></i>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-12 col-sm-6">
+                      <div class="form-group">
+                          <label for="first-name-icon">Calle <span class="obligated">*</span></label>
+                          <div class="position-relative has-icon-left">
+                              <input type="text" class="form-control" name="calle" id="calle" value="{{ $cotizacion->calle ?? old('$request->calle') }}">
+                              <div class="form-control-position">
+                                  <i class="icon-form feather icon-dollar-sign"></i>
+                              </div>
+                          </div>
+                      </div>
                     </div>
                     <div class="col-12 mt-2">
                         <div class="form-group">

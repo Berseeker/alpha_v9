@@ -29,6 +29,12 @@
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Email"><img src="{{ asset('imgs/logos/alpha_icon.png') }}" alt="Alpha Promos" style="width:25px;"></a></li>
       <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#"
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat" style="margin-top: 5px;">Alpha Promos</a></li>
+      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('/contacto') }}"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" style="margin-top: 5px;margin-left:30px;">Contacto</a></li>
+      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('/servicios') }}"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" style="margin-top: 5px;margin-left:30px;">Servicios</a></li>
+      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ url('/displays') }}"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" style="margin-top: 5px;margin-left:30px;">Alpha Displays</a></li>
     </ul>
   </div>
   <ul class="nav navbar-nav align-items-center ms-auto">
@@ -49,7 +55,7 @@
     <li class="nav-item dropdown dropdown-cart me-25">
       <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
         <i class="ficon" data-feather="shopping-cart"></i>
-        <span class="badge rounded-pill bg-primary badge-up cart-item-count contador-cart">6</span>
+        <span class="badge rounded-pill bg-primary badge-up cart-item-count contador-cart">0</span>
       </a>
       <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
         <li class="dropdown-menu-header">

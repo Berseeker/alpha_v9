@@ -169,10 +169,20 @@ $(function () {
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="'+
-                            assetPath + 'dashboard/show-cotizacion/' + id +
+                            assetPath + 'dashboard/edit-cotizacion/' + id +
                             '" class="dropdown-item">' +
                             feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
                             'Editar</a>' +
+                            '<a href="' +
+                            assetPath + 'dashboard/show-cotizacion/' + id +
+                            '" class="dropdown-item">' +
+                            feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Visualizar</a>' +
+                            '<a href="' +
+                            assetPath + 'dashboard/download-cotizacion/' + id +
+                            '" class="dropdown-item">' +
+                            feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Descargar</a>' +
                             '<button class="dropdown-item delete-cotizacion" onclick="deleteConfirmation('+id+')">' +
                             feather.icons['trash-2'].toSvg({ class: 'font-small-4 me-50' }) +
                             'Borrar</button></div>' +

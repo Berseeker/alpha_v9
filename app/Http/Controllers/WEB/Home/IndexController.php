@@ -5,6 +5,7 @@ namespace App\Http\Controllers\WEB\Home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 //Para conexion a la base de datos
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -12,6 +13,8 @@ use Illuminate\Support\Str;
 use App\Models\Subcategoria;
 use App\Models\Categoria;
 use App\Models\Producto;
+
+use App\Mail\newMessage;
 
 class IndexController extends Controller
 {
@@ -237,6 +240,80 @@ class IndexController extends Controller
             'flag' => $flag,
             'title' => $title,
             'cont' => $cont
+        ]);
+    }
+
+    public function contacto(Request $request)
+    {
+        $pageConfigs = [
+            'pageClass' => 'ecommerce-application',
+        ];
+
+        $breadcrumbs = [
+            ['link' => "/", 'name' => "Inicio"], ['name' => "Mandanos un mensaje"]
+        ];
+
+        $categorias = Categoria::all();
+        
+        
+        return view('Home.contacto', [
+            'pageConfigs' => $pageConfigs,
+            'breadcrumbs' => $breadcrumbs,
+            'categorias' => $categorias
+        ]);
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $rules = [
+            'nombre' => 'required',
+            'email' => 'required',
+            'celular' => 'required'
+        ];
+
+        $messages = [
+            'nombre.required' => 'Es necesario indicar un nombre',
+            'email.required' => 'Es necesario dejar un email',
+            'celular.required' => 'Es necesario dejar un numero de contacto',
+        ];
+
+        $this->validate($request,$rules,$messages);
+
+
+        Mail::to('juan.alucard.02@gmail.com')
+            ->cc(['celene@alphapromos.mx','fernando@alphapromos.mx','jhonatan@alphapromos.mx','osiris@alphapromos.mx'])
+            ->send(new newMessage($request->nombre,$request->email,$request->celular,$request->comentarios));
+
+        return back()->with('success','El mensaje se envio correctamente');
+    }
+
+    public function servicios()
+    {
+        $categorias = Categoria::all();
+        $pageConfigs = [
+          'contentLayout' => "content-detached-left-sidebar",
+          'bodyClass' => 'ecommerce-application',
+        ];
+
+        return view('Home.servicios',[
+            'pageConfigs' => $pageConfigs,
+            'categorias' => $categorias,
+            'cont' => 1
+        ]);
+    }
+
+    public function displays()
+    {
+        $categorias = Categoria::all();
+        $pageConfigs = [
+          'contentLayout' => "content-detached-left-sidebar",
+          'bodyClass' => 'ecommerce-application',
+        ];
+
+        return view('Home.displays',[
+            'pageConfigs' => $pageConfigs,
+            'categorias' => $categorias,
+            'cont' => 1
         ]);
     }
 }

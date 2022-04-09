@@ -30,7 +30,7 @@
     
 
     @yield('page-styles')
-
+  <script src="//code-sa1.jivosite.com/widget/DuWHrZwtML" async></script>
 
 </head>
 <body class="pace-done vertical-layout vertical-menu-modern content-detached-left-sidebar navbar-floating footer-static menu-expanded">

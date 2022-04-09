@@ -15,6 +15,9 @@ use App\Models\Producto;
 use App\Models\Venta;
 
 use DateTime;
+//para el manejo de archivos
+use ZipArchive;
+use File;
 
 class CotizacionController extends Controller
 {
@@ -98,8 +101,7 @@ class CotizacionController extends Controller
         $breadcrumbs = [
             ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
         ];
-
-
+        
         $ids = json_decode($cotizacion->productos_id);
         $fechas_deseables = json_decode($cotizacion->fecha_deseable);
         $pantones = json_decode($cotizacion->pantones);
@@ -142,7 +144,7 @@ class CotizacionController extends Controller
             $producto->num_pzas = $num_pzas[$void];
             $producto->medidas_deseables = $medidas_deseables[$void];
             $producto->precio_pza = $precio_pza[$void];
-            $producto->impresion_metodo = $metodos_impresion[$void];
+            $producto->impresion_metodo = array_key_exists($void,$metodos_impresion) ?  $metodos_impresion[$void] : null;
             array_push($items,$producto);
             $void++;
         }
@@ -267,6 +269,95 @@ class CotizacionController extends Controller
 
         return back()->with('success','La cotizacion se actualizo de manera correcta');
         
+    }
+
+    public function download($id){
+        
+        $cotizacion = Cotizacion::find($id);
+        $path = public_path('storage');
+        $public = public_path();
+        if($cotizacion->logo_img != NULL){
+
+            $files = json_decode($cotizacion->logo_img);
+            $zipname = uniqid().'assets.zip';
+            $zip = new ZipArchive;
+            $zip->open($public.'/assets/'.$zipname, ZipArchive::CREATE);
+            foreach ($files as $file) {
+                $zip->addFile($path.'/'.$file,$file);
+            }
+            $zip->close();
+            
+            return response()->download($public.'/assets/'.$zipname);
+        }
+        else{
+            return back()->with('warning', 'No hay archivos adjuntos!');
+        }
+    }
+
+    public function preview($id)
+    {
+        $cotizacion = Cotizacion::find($id);
+
+        $breadcrumbs = [
+            ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
+        ];
+
+        $ids = json_decode($cotizacion->productos_id);
+        $num_pzas = json_decode($cotizacion->numero_pzas);
+        $precio_pza = json_decode($cotizacion->precio_pza);
+
+        $productos = DB::table('productos')
+                    ->whereIn('id', $ids)
+                    ->get();
+
+        $items = array();
+        $void = 0;
+        foreach ($productos as $producto) 
+        {
+            $producto->num_pzas = $num_pzas[$void];
+            $producto->precio_pza = $precio_pza[$void];
+            $producto->precio_producto = (double)($num_pzas[$void] * $precio_pza[$void]);
+            array_push($items,$producto);
+            $void++;
+        }
+
+        return view('dashboard.cotizaciones.download',[
+            'breadcrumbs' => $breadcrumbs,
+            'cotizacion' => $cotizacion,
+            'productos' => $items
+        ]);
+    }
+
+    public function invoice_print($id)
+    {
+        $cotizacion = Cotizacion::find($id);
+
+        $pageConfigs = ['pageHeader' => false];
+
+        $ids = json_decode($cotizacion->productos_id);
+        $num_pzas = json_decode($cotizacion->numero_pzas);
+        $precio_pza = json_decode($cotizacion->precio_pza);
+
+        $productos = DB::table('productos')
+                    ->whereIn('id', $ids)
+                    ->get();
+
+        $items = array();
+        $void = 0;
+        foreach ($productos as $producto) 
+        {
+            $producto->num_pzas = $num_pzas[$void];
+            $producto->precio_pza = $precio_pza[$void];
+            $producto->precio_producto = (double)($num_pzas[$void] * $precio_pza[$void]);
+            array_push($items,$producto);
+            $void++;
+        }
+
+        return view('dashboard.cotizaciones.print', [
+            'breadcrumbs' => $pageConfigs,
+            'cotizacion' => $cotizacion,
+            'productos' => $items
+        ]);
     }
 }
 

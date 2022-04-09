@@ -82,7 +82,7 @@ class DobleVelaController extends Controller
     public function update()
     {
         ini_set('max_execution_time', 9000); //600 seconds = 10 minutes
-        $productos = Producto::where('proveedor','Doble Vela')->limit(200)->offset(400)->get();
+        $productos = Producto::where('proveedor','Doble Vela')->limit(200)->offset(800)->get();
         
         foreach ($productos as $producto) 
         {

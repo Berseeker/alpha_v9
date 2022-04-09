@@ -24,7 +24,7 @@
       <div class="card">
         <div class="card-body d-flex align-items-center justify-content-between">
           <div>
-            <h3 class="fw-bolder mb-75">{{ $forpromo }}</h3>
+            <h3 class="fw-bolder mb-75">{{ number_format($forpromo) }}</h3>
             <span>Productos 4Promotional</span>
           </div>
           <div class="avatar bg-light-primary p-50">
@@ -39,7 +39,7 @@
       <div class="card">
         <div class="card-body d-flex align-items-center justify-content-between">
           <div>
-            <h3 class="fw-bolder mb-75">{{ $innova }}</h3>
+            <h3 class="fw-bolder mb-75">{{ number_format($innova) }}</h3>
             <span>Productos Innovation</span>
           </div>
           <div class="avatar bg-light-danger p-50">
@@ -54,8 +54,8 @@
       <div class="card">
         <div class="card-body d-flex align-items-center justify-content-between">
           <div>
-            <h3 class="fw-bolder mb-75">{{ $promoOpcion }}</h3>
-            <span>Prodcutos PromoOpcion</span>
+            <h3 class="fw-bolder mb-75">{{ number_format($promoOpcion) }}</h3>
+            <span>Productos PromoOpcion</span>
           </div>
           <div class="avatar bg-light-success p-50">
             <span class="avatar-content">
@@ -69,7 +69,7 @@
       <div class="card">
         <div class="card-body d-flex align-items-center justify-content-between">
           <div>
-            <h3 class="fw-bolder mb-75">{{ $vela }}</h3>
+            <h3 class="fw-bolder mb-75">{{ number_format($vela) }}</h3>
             <span>Productos DobleVela</span>
           </div>
           <div class="avatar bg-light-warning p-50">

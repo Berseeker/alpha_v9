@@ -9,7 +9,10 @@
 
 $(window).on('load', function () {
   'use strict';
-
+  var $cotizaciones = $('#analytic-cotizacion').val();
+  var $ventas = $('#analytic-ventas').val();
+  var random = Math.floor(Math.random() * ($cotizaciones - 1 + 1) + 1);
+  console.log($cotizaciones);
   var $barColor = '#f3f3f3';
   var $trackBgColor = '#EBEBEB';
   var $textMutedColor = '#b9b9c3';
@@ -174,7 +177,7 @@ $(window).on('load', function () {
     colors: [window.colors.solid.info],
     series: [
       {
-        data: [0, 20, 5, 30, 15, 45]
+        data: [0, random,$cotizaciones]
       }
     ],
     markers: {
@@ -272,7 +275,7 @@ $(window).on('load', function () {
               offsetY: 15,
               label: 'App',
               formatter: function (w) {
-                return '53%';
+                return $ventas+'%';
               }
             }
           }
@@ -336,12 +339,12 @@ $(window).on('load', function () {
     colors: [window.colors.solid.primary, window.colors.solid.warning],
     series: [
       {
-        name: 'Earning',
-        data: [95, 177, 284, 256, 105, 63, 168, 218, 72]
+        name: 'Cotizaciones',
+        data: [0, 0, 0, $cotizaciones, 0, 0, 0, 0, 0]
       },
       {
-        name: 'Expense',
-        data: [-145, -80, -60, -180, -100, -60, -85, -75, -100]
+        name: 'Ventas',
+        data: [-0, -0, -0, $ventas, -0, -0, -0, -0, -0]
       }
     ],
     dataLabels: {
@@ -404,10 +407,10 @@ $(window).on('load', function () {
     colors: [window.colors.solid.primary, $budgetStrokeColor2],
     series: [
       {
-        data: [61, 48, 69, 52, 60, 40, 79, 60, 59, 43, 62]
+        data: [0, 0, 0, $cotizaciones, 0, 0, 0, 0, 0, 0, 0]
       },
       {
-        data: [20, 10, 30, 15, 23, 0, 25, 15, 20, 5, 27]
+        data: [0, 1, 4, 6, 23, 0, 25, 15, 20, 5, 27]
       }
     ],
     tooltip: {
