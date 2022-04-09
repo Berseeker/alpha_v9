@@ -53,7 +53,7 @@ class CotizacionController extends Controller
 
         $total_productos = count($productos);
         
-        return view('home.cotizacion', [
+        return view('Home.cotizacion', [
             'pageConfigs' => $pageConfigs,
             'breadcrumbs' => $breadcrumbs,
             'categorias' => $categorias,
