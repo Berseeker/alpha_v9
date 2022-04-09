@@ -117,14 +117,14 @@
         Si no encuentra lo que necesita en nuestra página web, se lo localizamos y cotizamos.</p>
     </div>
 
-    <h1 class="title-home">Productos Destacados</h1>
+    <!--h1 class="title-home">Productos Destacados</h1>
     <div class="divider-custom" style="color: #AADD35;">
         <div class="divider-custom-line"></div>
         <div class="divider-custom-icon">
             <img src="{{ asset('imgs/logos/alpha_icon.png') }}" alt="" class="alpha_icon">
         </div>
         <div class="divider-custom-line"></div>
-    </div>
+    </div-->
 
 @endsection
 

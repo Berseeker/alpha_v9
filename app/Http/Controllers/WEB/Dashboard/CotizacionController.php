@@ -137,7 +137,7 @@ class CotizacionController extends Controller
                 $count++;
             }
             $producto->colores = $colores;
-            $producto->fecha_deseable = invertDate($fechas_deseables[$void]);
+            $producto->fecha_deseable = $fechas_deseables[$void];
             $producto->pantones = $pantones[$void];
             $producto->tipografia = $tipografia[$void];
             $producto->numero_tintas = $numero_tintas[$void];
@@ -193,20 +193,23 @@ class CotizacionController extends Controller
         $cotizacion->celular = $request->celular;
         $cotizacion->comentarios = $request->comentarios;
         /* Productos */
-        $date_transformed = array();
-        foreach ($request->prefix__fecha_deseable as $item) {
+        // = array();
+        /*foreach ($request->fecha_deseable as $item) {
+           
             $date = new DateTime($item);
+            
             array_push($date_transformed,$date->format('Y-m-d'));
-        }
+        }*/
+        
         $cotizacion->medidas_deseables = json_encode($request->medidas_deseables);
-        $cotizacion->fecha_deseable = json_encode($date_transformed);
+        $cotizacion->fecha_deseable = json_encode($request->fecha_deseable);
         $cotizacion->pantones = json_encode($request->pantones);
         $cotizacion->tipografia = json_encode($request->tipografia);
         $cotizacion->numero_tintas = json_encode($request->numero_tintas);
         $cotizacion->numero_pzas = json_encode($request->cantidad_pzas);
         $cotizacion->productos_id = json_encode($request->producto_id);
         $cotizacion->metodos_impresion = json_encode($request->servicio_id);
-
+        
         $precios_productos = array();
         $total_pzas = 0;
         for($i=0;$i < $request->total_productos; $i++)
@@ -218,6 +221,7 @@ class CotizacionController extends Controller
             array_push($precios_productos,$precio_producto);
         }
         /* Precios */
+        
         $cotizacion->precio_pza = json_encode($request->precio_pza);
         $cotizacion->precio_x_producto = json_encode($precios_productos);
         $cotizacion->precio_total = $request->precio_total;

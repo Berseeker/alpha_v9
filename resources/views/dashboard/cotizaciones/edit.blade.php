@@ -8,6 +8,9 @@
         <script src="{{ asset('js/old/jquery.min.js')}}"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+        <link rel="stylesheet" href="{{ asset('vendors/css/pickers/flatpickr/flatpickr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/base/plugins/forms/pickers/form-flat-pickr.css') }}">
 @endsection
 
 @section('content')
@@ -189,13 +192,9 @@
                         <div class="col-12 col-sm-6 mb-2">
                             <div class="form-group">
                                 <label for="email-id-icon">Fecha deseable de Entrega <span class="obligated">*</span></label>
-                                <div class="position-relative has-icon-left">
-                                    <input type='text' id="fecha_deseable" name="fecha_deseable[]" class="form-control pickadate" value="{{ $product->fecha_deseable ?? old('$request->fecha_deseable') }}" />
-                                    <input type="hidden" class="form-control">
-                                    <div class="form-control-position">
-                                    <i class="icon-form feather icon-calendar"></i>
-                                    </div>
-                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control flatpickr-basic" name="fecha_deseable[]" placeholder="{{ $producto->fecha_deseable }}" value="{{ $producto->fecha_deseable }}" />
+                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 mb-2">
@@ -427,9 +426,10 @@
 
 @section('vendor-script')
         <!-- vendor files -->
-        <script src="{{ asset('js/old/picker.js') }}"></script>
-        <script src="{{ asset('js/old/picker.date.js') }}"></script>
-        <script src="{{ asset('js/old/picker.time.js') }}"></script>
-        <script src="{{ asset('js/old/legacy.js') }}"></script>
-        <script src="{{ asset('js/old/pick-a-datetime.js') }}"></script>
+        <script src="{{ asset('vendors/js/pickers/pickadate/picker.js') }}"></script>
+        <script src="{{ asset('vendors/js/pickers/pickadate/picker.date.js') }}"></script>
+        <script src="{{ asset('vendors/js/pickers/pickadate/picker.time.js') }}"></script>
+        <script src="{{ asset('vendors/js/pickers/pickadate/legacy.js') }}"></script>
+        <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+        <script src="{{ asset('js/scripts/forms/pickers/form-pickers.js') }}"></script>
 @endsection
