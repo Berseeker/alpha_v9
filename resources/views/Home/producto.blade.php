@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommercet.css') }}">
 <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
 <link rel="stylesheet" href="{{ asset('css/home/categori.css') }}">
-<link rel="stylesheet" href="{{ asset('css/home/home_web.css') }}">
 <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
 @endsection
@@ -125,7 +124,7 @@
                             @endforeach
                         @endif 
                     </div>
-                    <a href="#" class="btn btn-primary btn-cart" sdk="{{ $producto->modelo }}" namep="{{ $producto->modelo }}">
+                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->SDK}}'>
                         <i class="fa-solid fa-cart-plus"></i>
                         <span class="add-to-cart">Agregar al Carrito</span>
                      </a>

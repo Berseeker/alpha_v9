@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommercet.css') }}">
 <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
 <link rel="stylesheet" href="{{ asset('css/home/categori.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/home/home_web.css') }}">
 @endsection
 
     
@@ -118,7 +117,7 @@
                                         <i class="fa-solid fa-info"></i>
                                         <span>Detalles</span>
                                     </a>
-                                    <a href="#" class="btn btn-primary btn-cart">
+                                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->SDK}}'>
                                         <i class="fa-solid fa-cart-plus"></i>
                                         <span class="add-to-cart">Agregar al Carrito</span>
                                     </a>

@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommercet.css') }}">
 <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
 <link rel="stylesheet" href="{{ asset('css/home/categori.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/home/home_web.css') }}">
 @endsection
 
     
@@ -31,43 +30,11 @@
             @include('layouts.sidebar')
         </div>
         <div class="col-sm-9 col-md-10">
-            <section id="ecommerce-header">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="ecommerce-header-items">
-                            <div class="result-toggler">
-                                <button class="navbar-toggler shop-sidebar-toggler" type="button" data-bs-toggle="collapse">
-                                    <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
-                                </button>
-                                <div class="search-results"><i class="fa-solid fa-magnifying-glass" style="margin-right: 5px;color:#7367f0"></i>{{ $total }} productos encontrados</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- E-commerce Content Section Starts -->
-
-            <!-- background Overlay when sidebar is shown  starts-->
-            <div class="body-content-overlay"></div>
-            <!-- background Overlay when sidebar is shown  ends-->
-
             <!-- E-commerce Search Bar Starts -->
             <section id="ecommerce-searchbar" class="ecommerce-searchbar">
                 <div class="row mt-1">
                     <div class="col-sm-12 col-md-6">
-                        <form action="" method="get">
-                            <div class="input-group input-group-merge"> 
-                                @csrf
-                                <input type="text" class="form-control search-product" 
-                                id="shop-search" name="search_global" 
-                                placeholder="Buscar Producto" aria-label="Search..." 
-                                aria-describedby="shop-search" style="border-radius: 6px;text-indent:5px;"/>
-                                <span class="input-group-text"><i class="fa-brands fa-searchengin"></i></span>
-                                
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
+                        <div class="search-results" style="text-align: left;"><i class="fa-solid fa-magnifying-glass" style="margin-right: 5px;color:#7367f0"></i>{{ $total }} productos encontrados</div>
                     </div>
                 </div>
             </section>
@@ -144,7 +111,7 @@
                                         <i class="fa-solid fa-info"></i>
                                         <span>Detalles</span>
                                     </a>
-                                    <a href="#" class="btn btn-primary btn-cart">
+                                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->SDK}}'>
                                         <i class="fa-solid fa-cart-plus"></i>
                                         <span class="add-to-cart">Agregar al Carrito</span>
                                     </a>

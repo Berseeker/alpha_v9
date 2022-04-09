@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API\Productos;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\Producto;
 
@@ -20,12 +22,12 @@ class ProductoController extends Controller
 
     public function producto($sdk)
     {
-        $producto = Producto::where('SDK',$sdk)->first()->toJson();
+        $producto = Producto::where('SDK',$sdk)->first();
 
         $img = asset('imgs/no_disp.png');
         if($producto->images != null)
         {
-            $img = json_decode($product->images)[0];
+            $img = json_decode($producto->images)[0];
             if(!Str::contains($img,['https','http']))
             {
                 $img = Storage::url($img);
@@ -34,11 +36,11 @@ class ProductoController extends Controller
 
         return response()->json([
             'nombre' => $producto->nombre,
-            'sdk' => $producto->sdk,
+            'sdk' => $producto->SDK,
             'img' => $img
         ]);
 
-        return $producto;
+        //return $producto;
     }
 
 }

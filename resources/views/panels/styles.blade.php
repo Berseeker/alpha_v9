@@ -20,7 +20,7 @@
 @if ($configData['mainLayoutType'] === 'horizontal')
   <link rel="stylesheet" href="{{ asset('css/base/core/menu/menu-types/horizontal-menu.css') }}" />
 @else
-  <link rel="stylesheet" href="{{ asset('css/base/core/menu/menu-types/vertical-menu.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/base/core/menu/menu-types/vertical.css') }}" />
 @endif
 
 {{-- Page Styles --}}

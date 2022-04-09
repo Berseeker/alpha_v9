@@ -46,6 +46,7 @@ return new class extends Migration
             $table->string('colonia')->nullable();
             $table->string('estado')->nullable();
             $table->string('no_ext')->nullable();
+            $table->string('ciudad')->nullable();
             // Status de la cotizacion
             // Estados: Pendiente, Cancelada, Aprobada
             $table->enum('status',['Pendiente','Cancelada','Aprobada']);

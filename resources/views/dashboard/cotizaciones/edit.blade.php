@@ -249,19 +249,19 @@
                             $(".servicio_id-{{$cont}}").select2();
                             $(".producto_select-{{$cont}}").select2();
                             $('.producto_select-{{$cont}}').on("select2:select", function (e) {
-                            var id = $(this).val();
-                            $.ajax({
-                                url:"/ajax/colores/"+id,
-                                method:"GET",
-                                dataType : "json",
-                                success:function(data)
-                                {   
-                                    console.log(data);
-                                    var img_producto = '<img src="'+data[2][0]+'" style="width:200px;display:block;margin:0px auto;" alt="Producto" />';
-                                    $("#img-hold").html("");
-                                    $("#img-hold").append(img_producto);
-                                }
-                            });
+                                var id = $(this).val();
+                                $.ajax({
+                                    url:"/ajax/colores/"+id,
+                                    method:"GET",
+                                    dataType : "json",
+                                    success:function(data)
+                                    {   
+                                        console.log(data);
+                                        var img_producto = '<img src="'+data[2][0]+'" style="width:200px;display:block;margin:0px auto;" alt="Producto" />';
+                                        $("#img-hold").html("");
+                                        $("#img-hold").append(img_producto);
+                                    }
+                                });
                             });
                         </script>
                         @php

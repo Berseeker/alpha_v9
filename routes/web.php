@@ -22,6 +22,7 @@ Route::get('/producto/{slug}',[App\Http\Controllers\WEB\Home\IndexController::cl
 
 Route::get('/busqueda-resultado',[App\Http\Controllers\WEB\Home\IndexController::class, 'busqueda'])->name('home.busqueda');
 Route::get('/ver-cotizacion',[App\Http\Controllers\WEB\Home\CotizacionController::class, 'index'])->name('home.cotizacion');
+Route::post('/ver-cotizacion',[App\Http\Controllers\WEB\Home\CotizacionController::class, 'store'])->name('home.cotizacion');
 
 
 

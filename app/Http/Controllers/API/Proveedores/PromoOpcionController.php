@@ -59,7 +59,25 @@ function insertProduct($producto)
     $product->proveedor = 'PromoOpcion';
     $product->piezas_caja = $producto['count_box'];
     $product->area_impresion = $producto['printing_area'];
-    $product->metodos_impresion = $producto['printing'];
+    $impresion = '';
+    if(Str::contains($producto['printing'], '/'))
+    {
+        $metodos = Str::of($producto['printing'])->explode('/');
+        $count = 0;
+        foreach ($metodos as $metodo) {
+            if($count == 0)
+            {
+                $impresion = $impresion.trim($metodo); 
+            }
+            else {
+                $impresion = $impresion.','.trim($metodo); 
+            }
+            $count++;
+        }
+    }else {
+        $impresion = $producto['printing'];
+    }
+    $product->metodos_impresion = $impresion;
     $product->peso_caja = null;
     $product->medida_producto_ancho = null;
     $product->medida_producto_alto = null;
@@ -104,7 +122,7 @@ function insertProduct($producto)
                 $product_T->proveedor = 'PromoOpcion';
                 $product_T->piezas_caja = (int)$producto['count_box']; // int
                 $product_T->area_impresion = $producto['printing_area']; //stirng
-                $product_T->metodos_impresion = $producto['printing']; // string
+                $product_T->metodos_impresion = $product->metodos_impresion; // string
 
                 $product_T->peso_caja = $producto['nw']." kg"; //string -> se necesita agregar "KG"
                 //Medidas en cm
@@ -357,7 +375,7 @@ function insertProduct($producto)
                 $product_T->proveedor = 'PromoOpcion';
                 $product_T->piezas_caja = (int)$producto['count_box']; // int
                 $product_T->area_impresion = $producto['printing_area']; //stirng
-                $product_T->metodos_impresion = $producto['printing']; // string
+                $product_T->metodos_impresion = $product->metodos_impresion; // string
                 $product_T->peso_caja = $producto['nw']." kg"; //string -> se necesita agregar "KG"
                 $product_T->medida_producto_ancho = NULL; //string -> se necesita agregar "cm"
                 $product_T->medida_producto_alto = NULL; //string -> se necesita agregar "cm"
@@ -617,7 +635,7 @@ function insertProduct($producto)
                 $product_T->proveedor = 'PromoOpcion';
                 $product_T->piezas_caja = (int)$producto['count_box']; // int
                 $product_T->area_impresion = $producto['printing_area']; //stirng
-                $product_T->metodos_impresion = $producto['printing']; // string
+                $product_T->metodos_impresion = $product->metodos_impresion; // string
                 $product_T->peso_caja = $producto['nw']." kg"; //string -> se necesita agregar "KG"
                 $product_T->medida_producto_ancho = NULL; //string -> se necesita agregar "cm"
                 $product_T->medida_producto_alto = NULL; //string -> se necesita agregar "cm"

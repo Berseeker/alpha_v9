@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\Proveedores;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+
 
 //Para conexion a la base de datos
 use Illuminate\Support\Facades\DB;
@@ -14,7 +16,6 @@ use Illuminate\Http\Client\RequestException;
 //Traer el modelo de Producto
 use App\Models\Producto;
 
-use Illuminate\Support\Str;
 
 class forPromotionalController extends Controller
 {
@@ -115,7 +116,26 @@ function insertPromotional($producto){
         $product->proveedor = 'Forpromotional';
         $product->piezas_caja = $producto['piezas_caja']; // int
         $product->area_impresion = $producto['area_impresion']; //stirng
-        $product->metodos_impresion = $producto['metodos_impresion']; // string
+        $impresion = '';
+        if(Str::contains($producto['metodos_impresion'], '-'))
+        {
+            $metodos = Str::of($producto['metodos_impresion'])->explode('-');
+            $count = 0;
+            foreach ($metodos as $metodo) {
+                if($count == 0)
+                {
+                    $impresion = $impresion.trim($metodo); 
+                }
+                else {
+                    $impresion = $impresion.','.trim($metodo); 
+                }
+                $count++;
+            }
+        }else {
+            $impresion = $producto['metodos_impresion'];
+        }
+        
+        $product->metodos_impresion = $impresion; // string
         $product->peso_caja = $producto['peso_caja']." kg"; //string -> se necesita agregar "KG"
         //Medidas en cm
         $product->medida_producto_ancho = $producto['medida_producto_ancho']." cm"; //string -> se necesita agregar "cm"
@@ -232,7 +252,7 @@ function insertPromotional($producto){
                     $ecologico->proveedor = 'Forpromotional';
                     $ecologico->piezas_caja = $producto['piezas_caja']; // int
                     $ecologico->area_impresion = $producto['area_impresion']; //stirng
-                    $ecologico->metodos_impresion = $producto['metodos_impresion']; // string
+                    $ecologico->metodos_impresion = $product->metodos_impresion; // string
                     $ecologico->peso_caja = $producto['peso_caja']." kg"; //string -> se necesita agregar "KG"
                     //Medidas en cm
                     $ecologico->medida_producto_ancho = $producto['medida_producto_ancho']." cm"; //string -> se necesita agregar "cm"
@@ -393,7 +413,7 @@ function insertPromotional($producto){
                     $ecologico->proveedor = 'Forpromotional';
                     $ecologico->piezas_caja = $producto['piezas_caja']; // int
                     $ecologico->area_impresion = $producto['area_impresion']; //stirng
-                    $ecologico->metodos_impresion = $producto['metodos_impresion']; // string
+                    $ecologico->metodos_impresion = $product->metodos_impresion; // string
                     $ecologico->peso_caja = $producto['peso_caja']." kg"; //string -> se necesita agregar "KG"
                     //Medidas en cm
                     $ecologico->medida_producto_ancho = $producto['medida_producto_ancho']." cm"; //string -> se necesita agregar "cm"

@@ -41,8 +41,6 @@
                                                         
                                                         @endphp
                                                     @endforeach
-                                                    
-                                                
                                                 </ul>
                                             </div>
                                         @endforeach
@@ -63,11 +61,16 @@
                 <div class="dropdown" style="margin-top: 8px;">
                     <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-shopping-cart"></i><span class="badge badge-danger" id="shop-cart">
+                        <span class="badge rounded-pill bg-danger badge-glow badge-up contador-cart">0</span>
                     </a>
                     <div class="dropdown-menu golden-boy" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <p>Mi carrito</p>
+                        <div class="items-hooked">
+                            <p class="text-warning" style="text-align:center;margin-top:20px;margin-bottom:20px;">No hay Productos!!</p>
+                        </div>
+                        <div class="footer-cart">
+                            <a href="{{ route('home.cotizacion') }}" class="btn btn-warning" style="width: 100%;">Cotizar</a>
+                        </div>
                     </div>
                 </div>
             </li>

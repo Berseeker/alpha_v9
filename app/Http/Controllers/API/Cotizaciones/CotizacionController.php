@@ -86,6 +86,7 @@ class CotizacionController extends Controller
         $cotizacion->no_ext = $request->no_ext;
         $cotizacion->estado = $request->estado;
         $cotizacion->colonia = $request->colonia;
+        $cotizacion->ciudad = $request->ciudad;
         $cotizacion->status = 'Pendiente';
         $cotizacion->user_id = 1;
         $cotizacion->save();

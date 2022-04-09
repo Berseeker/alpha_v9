@@ -52,6 +52,38 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
+        'cotizacion' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/cotizaciones_logo'),
+            'url' => env('APP_URL').'/storage/cotizaciones_logo',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+        'custom_product' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/custom_product'),
+            'url' => env('APP_URL').'/storage/custom_product',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
 
     ],
 
@@ -68,6 +100,9 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('cotizacion') => storage_path('app/public/cotizaciones_logo'),
+        public_path('custom_product') => storage_path('app/public/custom_product'),
+        public_path('images') => storage_path('app/images'),
     ],
 
 ];

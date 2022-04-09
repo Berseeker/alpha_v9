@@ -229,6 +229,7 @@ class CotizacionController extends Controller
         $cotizacion->no_ext = $request->no_ext;
         $cotizacion->estado = $request->estado;
         $cotizacion->colonia = $request->colonia;
+        $cotizacion->ciudad = $request->ciudad;
         $cotizacion->status = $request->status;
         $cotizacion->user_id = Auth::user()->id;
         $cotizacion->save();
