@@ -106,13 +106,13 @@
                                 @endphp 
                                 <div class="card ecommerce-card">
                                     <div class="item-img">
-                                        <a href="{{url('app/ecommerce/details')}}">
+                                        <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}">
                                             <img src="{{$img}}" alt="img-placeholder" />
                                         </a>
                                     </div>
                                     <div class="card-body">
                                         <div class="item-name">
-                                            <h6 class="mb-0"><a href="{{url('app/ecommerce/details')}}" class="text-body">{{ $producto->nombre}}</a></h6>
+                                            <h6 class="mb-0"><a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}" class="text-body">{{ $producto->nombre}}</a></h6>
                                             <span class="item-company">By <a href="#" class="company-name">AlphaPromos</a></span>
                                             <div class="item-rating">
                                                 <ul class="unstyled-list list-inline">

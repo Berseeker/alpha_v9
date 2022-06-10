@@ -30,7 +30,7 @@
                                                                 
                                                             if($cont == 2){
                                                                 $cont = 1;
-                                                                echo '<li class="nav-item"><a href="/categoria/'.$categoria->id.'" class="nav-link custom-a pb-0 hvr-underline-from-center">Ver más...</a></li>';
+                                                                echo '<li class="nav-item"><a href="/categoria/'.Str::slug($categoria->nombre, '-').'" class="nav-link custom-a pb-0 hvr-underline-from-center">Ver más...</a></li>';
                                                                 break;
                                                             }
                                                             elseif($cont == count($categoria->subcategorias)){

@@ -99,7 +99,7 @@
                                         </div>
                                     </div>
                                     <h6 class="item-name">
-                                        <a class="text-body" href="{{url('app/ecommerce/details')}}">{{ $producto->nombre }}</a>
+                                        <a class="text-body" href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}">{{ $producto->nombre }}</a>
                                         <span class="card-text item-company">By <a href="#" class="company-name">{{ $producto->SDK }}</a></span>
                                     </h6>
                                     <p class="card-text item-description">
