@@ -379,7 +379,7 @@ class SubcategoriaSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('subcategorias')->insert([
-            'nombre' => 'VARIOS',
+            'nombre' => 'VARIOS-ANTIESTRÉS',
             'categoria_id' => 12,
             'created_at' => now(),
             'updated_at' => now()
@@ -427,7 +427,7 @@ class SubcategoriaSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('subcategorias')->insert([
-            'nombre' => 'VARIOS',
+            'nombre' => 'VARIOS-TEXTIL',
             'categoria_id' => 13,
             'created_at' => now(),
             'updated_at' => now()
