@@ -175,7 +175,7 @@
                 <i class="fas fa-bolt" style="color:red;"></i>
             </div>
             <h4 class="info-title">Pedidos Express</h4>
-            <p>Entrega de 24-48 horas.</p>
+            <p>Entrega de 48-72 horas.</p>
             </div>
         </div>
         </div>
