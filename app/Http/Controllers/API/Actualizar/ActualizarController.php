@@ -27,7 +27,7 @@ class ActualizarController extends Controller
         }
 
         foreach ($categorias as $categoria) {
-            $subcategorias = Subcategoria::where('categoria_id',$categoria->id)->get();
+            $subcategorias = Subcategoria::where('categoria_id',$categoria->id)->where('delete_at','!=',null)->get();
 
             if($subcategorias->isEmpty())
             {
@@ -38,5 +38,28 @@ class ActualizarController extends Controller
         return response()->json([
             'status' => 'La tarea se realizo con exito'
         ]);
+    }
+
+    public function restore()
+    {
+        $subcategorias = Subcategoria::onlyTrashed()->get();
+
+        foreach ($subcategorias as $subcategoria) {
+            $productos = Producto::where('subcategoria_id',$subcategoria[0]->id)->get();
+            if(!$productos->isEmpty())
+            {
+                $subcategoria[0]->restore();
+            }
+        }
+
+        $categorias = Categoria::onlyTrashed()->get();
+
+        foreach ($categorias as $categoria) {
+            $subcategorias = Subcategoria::where('categoria_id',$categoria[0]->id)->where('delete_at','!=',null)->get();
+            if(!$subcategorias->isEmpty())
+            {
+                $categoria[0]->restore();
+            }
+        }
     }
 }
