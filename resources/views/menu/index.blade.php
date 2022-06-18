@@ -25,7 +25,7 @@
                                                 </h6>
                                                 <ul class="list-unstyled">
                                                     @foreach ($categoria->subcategorias as $subcategoria)
-                                                        <li class="nav-item"><a href="{{ url('/subcategoria/'.Str::slug($subcategoria->nombre, '-')) }}" class="nav-link custom-a pb-0 hvr-underline-from-center" style="padding: 0.1rem 0.5rem;font-size:10px;">{{ $subcategoria->nombre }}</a></li>
+                                                        <li class="nav-item"><a href="{{ url('/subcategoria/sub-'.Str::slug($subcategoria->nombre, '-')) }}" class="nav-link custom-a pb-0 hvr-underline-from-center" style="padding: 0.1rem 0.5rem;font-size:10px;">{{ $subcategoria->nombre }}</a></li>
                                                         
                                                     @endforeach
                                                 </ul>

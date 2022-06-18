@@ -35,7 +35,7 @@ class SlugController extends Controller
     public function subcategoriaSlug(){
         $subcategorias = Subcategoria::all();
         foreach ($subcategorias as $subcategoria) {
-            $slug = Str::slug($subcategoria->nombre, '-');
+            $slug = 'sub-'.Str::slug($subcategoria->nombre, '-');
             $item = new Slug();
             $item->original_name = $subcategoria->nombre;
             $item->slug = $slug;

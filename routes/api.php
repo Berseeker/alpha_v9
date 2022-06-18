@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\API\Actualizar\ActualizarController;
 use App\Http\Controllers\API\Proveedores\forPromotionalController;
 use App\Http\Controllers\API\Proveedores\DobleVelaController;
 use App\Http\Controllers\API\Proveedores\InnovationController;
@@ -53,3 +54,5 @@ Route::get('all-cotizaciones',[CotizacionController::class,'index']);
 Route::get('all-ventas',[VentasController::class,'index']);
 
 Route::get('search-productos/{search}',[BuscadorController::class,'search']);
+
+Route::get('update-null-items',[ActualizarController::class,'index']);
