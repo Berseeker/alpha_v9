@@ -25,21 +25,8 @@
                                                 </h6>
                                                 <ul class="list-unstyled">
                                                     @foreach ($categoria->subcategorias as $subcategoria)
-                                                        <li class="nav-item"><a href="{{ url('/subcategoria/'.Str::slug($subcategoria->nombre, '-')) }}" class="nav-link custom-a pb-0 hvr-underline-from-center">{{ $subcategoria->nombre }}</a></li>
-                                                        @php
-                                                                
-                                                            if($cont == 2){
-                                                                $cont = 1;
-                                                                echo '<li class="nav-item"><a href="/categoria/'.Str::slug($categoria->nombre, '-').'" class="nav-link custom-a pb-0 hvr-underline-from-center">Ver más...</a></li>';
-                                                                break;
-                                                            }
-                                                            elseif($cont == count($categoria->subcategorias)){
-                                                                $cont = 1;
-                                                                break;
-                                                            }
-                                                            $cont++; 
+                                                        <li class="nav-item"><a href="{{ url('/subcategoria/'.Str::slug($subcategoria->nombre, '-')) }}" class="nav-link custom-a pb-0 hvr-underline-from-center" style="padding: 0.1rem 0.5rem;font-size:10px;">{{ $subcategoria->nombre }}</a></li>
                                                         
-                                                        @endphp
                                                     @endforeach
                                                 </ul>
                                             </div>
