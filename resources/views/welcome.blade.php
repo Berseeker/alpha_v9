@@ -31,26 +31,25 @@
                     <a href="{{ asset('catalogos/dia_x_madres.pdf') }}" target="_blank">View more</a>
                 </figcaption>     
             </figure>
-            <figure class="effect-oscar">
+            <!--figure class="effect-oscar">
                 <img src="{{ asset('imgs/dynamic_items/tequila.png') }}" alt="img1"/>
                 <figcaption>
                     <div>
-                        <!--h2>Tequila <span>Circulo</span></h2>
-                        <p class="font-s">Recomandado por Alpha Promos</p-->
+                        <h2>Tequila <span>Circulo</span></h2>
                     </div>
                     <a href="{{ asset('catalogos/circulo_tequila.pdf') }}" target="_blank">View more</a>
                 </figcaption>     
-            </figure>
-            <figure class="effect-layla">
+            </figure-->
+            <!--figure class="effect-layla">
                 <img src="{{ asset('imgs/dynamic_items/covid_19.jpeg') }}" alt="img1"/>
                 <figcaption>
                     <div>
-                        <!--h2>Nice <span>Lily</span></h2>
-                        <p>Lily likes to play with crayons and pencils</p-->
+                        <h2>Nice <span>Lily</span></h2>
+                        <p>Lily likes to play with crayons and pencils</p>
                     </div>
                     <a href="{{ url('/subcategoria/articulos-contingencia') }}">View more</a>
                 </figcaption>     
-            </figure>
+            </figure-->
             <figure class="effect-romeo">
                 <img src="https://tympanus.net/Development/HoverEffectIdeas/img/2.jpg" alt="img02"/>
                 <figcaption>
@@ -97,7 +96,7 @@
                 <i class="fas fa-bolt" style="color:red;"></i>
             </div>
             <h4 class="info-title">Pedidos Express</h4>
-            <p>Entrega de 24-48 horas.</p>
+            <p>Entrega de 48-72 horas.</p>
             </div>
         </div>
         </div>
