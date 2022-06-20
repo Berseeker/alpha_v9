@@ -2214,3 +2214,13 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   margin-top: 15px;
   margin-bottom: 25px;
 }
+
+.customImgSilder{
+  height: 500px;
+}
+
+@media(min-width: 1200px){
+  .customImgSilder{
+    height: 550;
+  }
+}
