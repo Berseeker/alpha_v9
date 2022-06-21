@@ -11,7 +11,7 @@
     @include('_partials.social')
 
     <div class="owl-carousel owl-theme custom-t">
-       <a href="{{ asset('catalogos/catalogo_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol_catalogo.jpg') }}" alt=""></a>
+        <a href="{{ asset('catalogos/catalogo_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol_catalogo.jpg') }}" alt="" height="550px;" class="customImgSilder"></a>
     </div>
 
 
