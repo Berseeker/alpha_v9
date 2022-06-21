@@ -24,7 +24,7 @@
                         <h2>Catalogo <span>{{ now()->year }}</span></h2>
                         <!--p>Lily likes to play with crayons and pencils</p-->
                     </div>
-                    <a href="{{ asset('catalogos/dia_x_madres.pdf') }}" target="_blank">View more</a>
+                    <a href="{{ asset('catalogos/catalogo_2022.pdf') }}" target="_blank">View more</a>
                 </figcaption>     
             </figure>
             <!--figure class="effect-oscar">
