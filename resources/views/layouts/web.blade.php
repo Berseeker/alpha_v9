@@ -149,7 +149,7 @@ $(document).ready(function(){
       }   
   });
 
-  $('.btn-cart').on('click', function (e) {
+  $('.btn-cart-add').on('click', function (e) {
       var sdk = $(this).attr("sdk"),
       url = "{{ url('/')}}";
       if(!$(this).hasClass('btn-loaded'))
