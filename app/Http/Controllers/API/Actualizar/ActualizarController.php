@@ -43,12 +43,12 @@ class ActualizarController extends Controller
     public function restore()
     {
         $subcategorias = Subcategoria::onlyTrashed()->get();
-
+        //dd($subcategorias);
         foreach ($subcategorias as $subcategoria) {
-            $productos = Producto::where('subcategoria_id',$subcategoria[0]->id)->get();
+            $productos = Producto::where('subcategoria_id',$subcategoria['id'])->get();
             if(!$productos->isEmpty())
             {
-                $subcategoria[0]->restore();
+                $subcategoria->restore();
             }
         }
 
@@ -61,5 +61,9 @@ class ActualizarController extends Controller
                 $categoria[0]->restore();
             }
         }
+
+        return response()->json([
+            'status' => 'Los categorias/subcategorias fueron restauradas'
+        ]);
     }
 }
