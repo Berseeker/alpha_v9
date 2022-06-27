@@ -54,8 +54,8 @@ $(function () {
         { data: 'id' },
         { data: 'nombre' },
         { data: 'SDK' },
+        { data: 'subcategoria' },
         { data: 'proveedor' },
-        { data: 'metodos_impresion' },
         { data: '' },
       ],
       columnDefs: [
@@ -74,11 +74,10 @@ $(function () {
           targets: 1,
           responsivePriority: 4,
           render: function (data, type, full, meta) {
-            console.log(full);
+            //console.log(full);
             var $name = full['nombre'],
               $sdk = full['SDK'],
-              $ident = full['id'],
-              $image = full['proveedor'];
+              images = JSON.parse(full['images'])[0];
             
             var colorClass = '';
             // Creates full output for row
@@ -91,6 +90,9 @@ $(function () {
               '<small class="emp_post text-muted">' +
               $sdk +
               '</small>' +
+              '</div>' +
+              '<div class="img-holder">' +
+              '<img src="'+ images +'" style="width:60px;" />' +
               '</div>' +
               '</div>';
             return $row_output;
@@ -124,15 +126,23 @@ $(function () {
               19: feather.icons['calendar'].toSvg({ class: 'font-medium-3 text-danger me-50' }),
               20: feather.icons['briefcase'].toSvg({ class: 'font-medium-3 text-danger me-50' }),
             };
-            return "<span class='text-truncate align-middle'>" + roleBadgeObj[$cate] + $role.nombre + '</span>';
+            return "<span class='text-truncate align-middle'>" + roleBadgeObj[$cate] + $role + '</span>';
+          }
+        },
+        {
+          targets: 3,
+          render: function (data, type, full, meta) {
+            var $subcategoria = full['subcategoria'];
+
+            return '<span class="text-nowrap">' + $subcategoria + '</span>';
           }
         },
         {
           targets: 4,
           render: function (data, type, full, meta) {
-            var $billing = full['metodos_impresion'];
+            var $proveedor = full['proveedor'];
 
-            return '<span class="text-nowrap">' + $billing + '</span>';
+            return '<span class="text-nowrap">' + $proveedor + '</span>';
           }
         },
         {

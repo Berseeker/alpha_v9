@@ -14,8 +14,11 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        //$productos = DB::table('productos')->with('categoria')->get()->toJson();
-        $productos = Producto::with('categoria')->where('deleted_at',null)->get()->toJson();
+        $productos = DB::table('productos')
+            ->join('categorias', 'productos.categoria_id', '=', 'categorias.id')
+            ->join('subcategorias', 'productos.subcategoria_id', '=', 'subcategorias.id')
+            ->select('productos.id','productos.nombre','productos.modelo', 'productos.categoria_id','productos.SDK','productos.proveedor', 'productos.images', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria')
+            ->get()->toJson();
         
         return $productos;
     }

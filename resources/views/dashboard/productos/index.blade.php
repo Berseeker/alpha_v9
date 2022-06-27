@@ -108,8 +108,8 @@
             <th></th>
             <th>Producto</th>
             <th>Categoria</th>
+            <th>Subcategoria</th>
             <th>Proveedor</th>
-            <th>Metodos de Impresion</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -142,5 +142,5 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-user-lista.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-user-lista-custom.js') }}"></script>
 @endsection
