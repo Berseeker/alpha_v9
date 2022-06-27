@@ -76,8 +76,13 @@ $(function () {
           render: function (data, type, full, meta) {
             //console.log(full);
             var $name = full['nombre'],
-              $sdk = full['SDK'],
+              $sdk = full['SDK'];
+
+            var images = '/imgs/no_disp.png';
+            if(full['images'] != null){
               images = JSON.parse(full['images'])[0];
+              }
+              
             
             var colorClass = '';
             // Creates full output for row
