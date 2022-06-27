@@ -81,7 +81,11 @@ $(function () {
             var images = '/imgs/no_disp.png';
             if(full['images'] != null){
               images = JSON.parse(full['images'])[0];
+              if(!images.includes('https'))
+              {
+                images = 'https://www.alphapromos.mx/storage/'+images;
               }
+            }
               
             
             var colorClass = '';
