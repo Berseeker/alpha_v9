@@ -38,6 +38,9 @@
                     </div>
                     <div class="col-sm-12 col-md-6">
                         @if($productos instanceof \Illuminate\Pagination\LengthAwarePaginator )
+                            <div class="pager-text">
+                                <p style="margin-bottom: 30px;">Mostrando {{ $productos->perPage() }} productos de {{ $productos->total() }}</p>
+                            </div>
                             {{$productos->links()}}
                         @endif
                     </div>
@@ -127,9 +130,10 @@
                 @endif
             </section>
             @if($productos instanceof \Illuminate\Pagination\LengthAwarePaginator )
-
+                <div class="pager-text">
+                    <p style="margin-bottom: 30px;">Mostrando {{ $productos->perPage() }} productos de {{ $productos->total() }}</p>
+                </div>
                 {{$productos->links()}}
-
             @endif
         </div>
     </div>
