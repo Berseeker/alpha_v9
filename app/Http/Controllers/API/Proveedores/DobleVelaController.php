@@ -83,7 +83,7 @@ class DobleVelaController extends Controller
     {
         ini_set('max_execution_time', 9000); //600 seconds = 10 minutes
         //$productos = Producto::where('proveedor','Doble Vela')->limit(200)->offset(800)->get();
-        $productos = Producto::where('proveedor','Doble Vela')->get();
+        $productos = Producto::where('proveedor','Doble Vela')->where('images','null')->get();
         
         foreach ($productos as $producto) 
         {
