@@ -24,7 +24,7 @@
       <div class="card card-congratulation-medal">
         <div class="card-body">
           <h5>Hola {{ Auth::user()->name }}! 🎉 </h5>
-          <p class="card-text font-small-3">Cotizaciones que llevan AlphaPromos</p>
+          <p class="card-text font-small-3">Cotizaciones que lleva AlphaPromos</p>
           <h3 class="mb-75 mt-2 pt-50">
             <a href="#"># {{ $cotizaciones }}</a>
             <input type="hidden" id="analytic-cotizacion" value="{{ $cotizaciones }}">
