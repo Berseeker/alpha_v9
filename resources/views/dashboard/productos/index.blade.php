@@ -142,5 +142,5 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-user-lista-custom.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-user-list-custom.js') }}"></script>
 @endsection
