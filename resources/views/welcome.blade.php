@@ -10,17 +10,18 @@
 
     @include('_partials.social')
 
-    <div class="owl-carousel owl-theme custom-t">
-        <div class="item"><img src="{{ asset('imgs/slider/futbol_catalogo.jpg') }}" alt="" height="550px;" class="customImgSilder"></div>
-        <div class="item"><img src="{{ asset('imgs/slider/tea.jpeg') }}" alt=""></div>
-        <a href="{{ asset('catalogos/catalogo_kids.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/kids.jpeg') }}" alt=""></a>
-        <a href="{{ asset('catalogos/catalogo_madres.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/mother.jpeg') }}" alt=""></a>
-        <div class="item"><img src="{{ asset('imgs/slider/inmediata.jpeg') }}" alt=""></div>
+    <div class="owl-carousel owl-theme custom-t">    
         @foreach ($imagenes as $imagen)
             @if ($imagen->seccion == 'home_slider')              
-                <div class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></div>                
+                <a href="{{ Storage::url($imagen->pdf)}}" target="_blank" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
             @endif
         @endforeach
+
+        <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol_catalogo.jpg') }}" alt="" class="customImgSilder"></a>
+        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" class="customImgSilder"></a>
+        <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class="customImgSilder"></a>
+        <a href="{{ asset('catalogos/golf.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" class="customImgSilder"></a>
+
     </div>
 
 
@@ -33,7 +34,7 @@
                         <h2>Catalogo <span>{{ now()->year }}</span></h2>
                         <!--p>Lily likes to play with crayons and pencils</p-->
                     </div>
-                    <a href="{{ asset('catalogos/dia_x_madres.pdf') }}" target="_blank">View more</a>
+                    <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank">View more</a>
                 </figcaption>     
             </figure>
             <!--figure class="effect-oscar">

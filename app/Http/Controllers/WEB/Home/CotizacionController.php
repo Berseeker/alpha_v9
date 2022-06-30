@@ -169,9 +169,8 @@ class CotizacionController extends Controller
         setcookie('carrito_cotizaciones', NULL);
         $url = url('/').'/login';
 
-        Mail::to('juan.alucard@hotmail.com')
-            ->cc(['celene@alphapromos.mx','fernando@alphapromos.mx','jhonatan@alphapromos.mx','osiris@alphapromos.mx'])
-            ->bcc('juan.alucard.02@gmail.com')
+        Mail::to('juan.alucard.02@gmail.com')
+            ->cc(['alphapromos.rsociales@gmail.com','ventas@alphapromos.mx'])
             ->send(new newCotizacion($url,$cotizacion));
 
         return back()->with('success','La cotizacion se envio de forma exitosa!, nos pondremos en contacto con usted muy pronto.');

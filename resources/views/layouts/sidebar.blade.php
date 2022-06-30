@@ -19,7 +19,7 @@
                   <div class="card card-body">
                       <ul class="subcategory-list">
                           @foreach ($categoria->subcategorias as $subcategoria)
-                          <li><a href="{{ url('/subcategoria/'.Str::slug($subcategoria->nombre,'-')) }}">{{ $subcategoria->nombre }}</a> </li>
+                          <li><a href="{{ url('/subcategoria/sub-'.Str::slug($subcategoria->nombre,'-')) }}">{{ $subcategoria->nombre }}</a> </li>
                           @endforeach
                       </ul>
                   </div>

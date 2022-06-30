@@ -19,6 +19,7 @@
     content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
   <meta name="author" content="PIXINVENT">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <link rel="icon" href="{{ asset('imgs/logos/alpha.ico') }}">
   <title>@yield('title') - AlphaPromos</title>
   <link rel="apple-touch-icon" href="{{ asset('images/ico/favicon-32x32.png') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo/favicon.ico') }}" />

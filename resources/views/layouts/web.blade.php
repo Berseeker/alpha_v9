@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('imgs/logos/alpha.ico') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -147,6 +148,65 @@ $(document).ready(function(){
             }
         });
       }   
+  });
+
+  $('.btn-cart-add').on('click', function (e) {
+      var sdk = $(this).attr("sdk"),
+      url = "{{ url('/')}}";
+
+      $.ajax({
+          url:"/api/producto/"+sdk,
+          method:"GET",
+          dataType : "json",
+          success:function(data)
+          {  
+            //console.log(data);
+            var items = [];
+            if(Cookies.get('carrito_cotizaciones') == undefined)
+            {
+                //console.log('Se inicializa el carrito de compras');
+                $('.items-hooked').html('');
+                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+                $(".items-hooked").append(template);
+                items.push(data.sdk);
+                $("#shop-cart").css('display','inline-flex');
+                $(".contador-cart").html('');
+                $(".contador-cart").html('1');
+                var value = JSON.stringify(items);
+                Cookies.set('carrito_cotizaciones',value);
+            }
+            else
+            {
+              var items = JSON.parse(Cookies.get('carrito_cotizaciones'));
+              $('.items-hooked').html('');
+              items.forEach(element => {
+  
+                $.ajax({
+                  url:"/api/producto/"+element,
+                  method:"GET",
+                  dataType : "json",
+                  success:function(data)
+                  {  
+                      var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+                      $(".items-hooked").append(template);  
+                  }
+                });
+                
+              });
+              var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+              $(".items-hooked").append(template);
+
+              items.push(data.sdk);
+              var cont = items.length;
+              $("#shop-cart").css('display','inline-flex');
+              $(".contador-cart").html('');
+              $(".contador-cart").html(cont);
+              var value = JSON.stringify(items);
+              Cookies.set('carrito_cotizaciones',value);
+            }
+            window.location.href="/ver-cotizacion";   
+          }
+      });
   });
   
 });
