@@ -10,10 +10,12 @@
 
     @include('_partials.social')
 
+    <video width="100%" height="600" controls autoplay='autoplay' loop='true' style="margin-top: 80px;" muted>
+        <source src="{{ asset('imgs/nuevos_articulos.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
     <div class="owl-carousel owl-theme custom-t">
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="{{ asset('imgs/nuevos_articulos.mp4') }}" allowfullscreen></iframe>
-        </div>
         <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
         <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class=""></a>
