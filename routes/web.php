@@ -37,7 +37,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/dashboard/productos', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'index'])->name('dashboard.productos');
 Route::get('/dashboard/delete-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'delete'])->name('dashboard.delete.producto');
-Route::get('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'edit'])->name('dashboard.delete.producto');
+Route::get('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'edit'])->name('dashboard.edit.producto');
+Route::post('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'update'])->name('dashboard.update.producto');
+
+
 
 Route::get('/dashboard/cotizaciones',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'index'])->name('dashboard.cotizaciones');
 Route::get('/dashboard/show-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'show'])->name('dashboard.cotizacion');
@@ -89,5 +92,10 @@ Route::group(['middleware' => ['role:Admin|Supervisor']], function () {
        
 });
 
+
+//CREACCION DE PRODUCTOS
+
+Route::get('/dashboard/create-product', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'create']);
+Route::post('/dashboard/create-product', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'store']);
 
 

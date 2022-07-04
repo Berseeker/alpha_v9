@@ -84,28 +84,19 @@ class ImageController extends Controller
     }
 
 
-    public function update( Request $request, $id){
-        $rules = [
-            'nueva_imagen' => 'required|image|mimes:jpg,png,jpeg' 
-        ];
-
-        $messages = [
-            'nueva_imagen.required' => 'Es necesaria una imagen',
-            'nueva_imagen.image' => 'Tipo de archivo no valido',
-            'nueva_imagen.mimes' => 'Extension de imagen no valida'
-        ];
-        
-        $this->validate($request, $rules, $messages);
+    public function update( Request $request, $id)
+    {
         //dd($request->all());
-
-        $name = $request->file('nueva_imagen')->getClientOriginalName();
- 
-        $path = $request->file('nueva_imagen')->store('public/images_slider');
-
         $imagen = Imagen::find($id);
-        Storage::delete($imagen->path);
-        $imagen->nombre = $name;
-        $imagen->path = $path;
+        if($request->has('nombre')){
+            $imagen->nombre = $request->name;
+        }
+
+        if($request->has('nueva_imagen')){
+            $path = $request->file('nueva_imagen')->store('public/images_slider');
+            Storage::delete($imagen->path);
+            $imagen->path = $path;
+        }
 
         if ($request->has('titulo')) {
             $imagen->titulo = $request->titulo;
@@ -113,10 +104,13 @@ class ImageController extends Controller
         if ($request->has('parrafo')) {
             $imagen->parrafo = $request->parrafo;
         }
-        if ($request->has('pdf')) {
-            Storage::delete($imagen->pdf);
-            $path = $request->file('pdf')->store('public/catalogos');
+        if ($request->has('nuevo_pdf')) {
+            if($imagen->pdf != null){
+                Storage::delete($imagen->pdf);
+            }
+            $path = $request->file('nuevo_pdf')->store('public/catalogos');
             $imagen->pdf = $path;
+            
         }
         $imagen->save();
         return back()->with('success',"Imagen editada correctamente");

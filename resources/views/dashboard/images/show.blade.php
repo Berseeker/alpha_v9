@@ -95,17 +95,28 @@
                             $template = '@foreach ($clonazepan as $imagen)' +
                             '@if ($imagen->seccion == "home_slider")' +
                             '<form action="{{ url("/dashboard/update-image/".$imagen->id) }}" enctype="multipart/form-data" method="POST" style="margin-top:15px;">' +
-                                    '@csrf' +
+                                    '@csrf' +                       
                                     '<div class="row">' +
-                                        '<div class="col-xs-12">' +
-                                            '<img src="{{ Storage::url($imagen->path) }}" alt="perros" style="width: 200px;">' +
+                                        '@if($imagen->pdf != null)'+  
+                                        '<div class="col-sm-6">' +
+                                            '<a target="_blank" class="form-control" href="{{ Storage::url($imagen->pdf) }}">Catalogo Actual</a>' +
+                                        '</div>' +
+                                        '@endif' +
+                                        '<div class="col-sm-6">' +
+                                            '<label class="form-control">Imagen Actual:</label>' +
+                                            '<img src="{{ Storage::url($imagen->path) }}" alt="perros" style="width: 200px;">' +                                            
+                                        '</div>' +
+                                    '</div>' +                             
+                                    '<div class="row">' +
+                                        '<div class="col-sm-6">' +
+                                            '<div class="form-group"><label> Nuevo Catalogo (PDF):</label> <input type="file" name="nuevo_pdf" class="form-control"> </div>' +
+                                        '</div>' +
+                                        '<div class="col-sm-6">' +
+                                            '<div class="form-group"><label> Nuevo Imagen </label> <input type="file" name="nueva_imagen" class="form-control"> </div>' +
+                                            
                                         '</div>' +
                                     '</div>' +
-                                    '<div class="row">' +
-                                        '<div class="col-sm-12">' +
-                                            '<div class="form-group"><label> Nuevo Imagen </label> <input type="file" name="nueva_imagen" class="form-control"> </div>' +                                 
-                                        '</div>' +
-                                    '</div>' +
+
                                     '<div class="form-group">' +
                                         '<div class="row">' +
                                             '<div class="col-sm-6">' +

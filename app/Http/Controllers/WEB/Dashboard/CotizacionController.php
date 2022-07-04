@@ -267,8 +267,18 @@ class CotizacionController extends Controller
                     $prevVenta->venta_realizada = now();
                     $prevVenta->save();
                 }
+            }          
+        }
+        //$cotizacion->id
+        //venta $cotizaion_id
+        if($request->status == 'Pendiente' || $request->status == 'Cancelada' ){
+            $preVenta = Venta::where('cotizacion_id', '=' , $cotizacion->id)->get();
+            if(!$preVenta->isEmpty()){
+                foreach($preVenta as $Venta){
+                    $Venta->delete();
+                }
             }
-            
+
         }
 
         return back()->with('success','La cotizacion se actualizo de manera correcta');

@@ -12,8 +12,8 @@
 
     <div class="owl-carousel owl-theme custom-t">    
         @foreach ($imagenes as $imagen)
-            @if ($imagen->seccion == 'home_slider')              
-                <a href="{{ Storage::url($imagen->pdf)}}" target="_blank" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
+            @if ($imagen->seccion == 'home_slider')           
+                <a href="{{ ($imagen->pdf == null) ? '#' : Storage::url($imagen->pdf) }}" target="{{ ($imagen->pdf == null) ? '' : '_blank'}}" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
             @endif
         @endforeach
 

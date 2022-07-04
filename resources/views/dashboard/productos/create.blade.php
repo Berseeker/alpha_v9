@@ -58,26 +58,16 @@
     <!-- profile -->
     <div class="card">
       <div class="card-header border-bottom">
-        <h4 class="card-title">Datos de {{ $producto->nombre.'-'.$producto->SDK }}</h4>
+        <h4 class="card-title">Nuevo Producto</h4>
       </div>
       <div class="card-body py-2 my-25">
         <!-- header section -->
         <div class="d-flex">
-          <a href="#" class="me-25">
-            <img
-              src="{{ $imgs[0] }}"
-              id="account-upload-img"
-              class="uploadedAvatar rounded me-50"
-              alt="profile image"
-              height="100"
-              width="100"
-            />
-          </a>
           <!-- upload and reset button -->
           <div class="d-flex align-items-end mt-75 ms-1">
             <div>
               <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Proveedor</label>
-              <button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75">{{ $producto->proveedor }}</button>
+              <button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75"></button>
               <p class="mb-0 text-red">Grandes poderes conllevan una gran responsabilidad</p>
               <p class="mb-0">Edite bajo su propio riesgo!</p>
             </div>
@@ -106,7 +96,7 @@
             </div>
         @endif
         <!-- form -->
-        <form class="validate-form mt-2 pt-50" method="POST" action="{{url("/dashboard/edit-product/".$producto->id)}}">
+        <form class="validate-form mt-2 pt-50" method="POST" action="{{url("/dashboard/create-product")}}" enctype="multipart/form-data">
             @csrf
           <div class="row">
             <div class="col-12 col-sm-6 mb-1">
@@ -117,8 +107,6 @@
                 id="nickname"
                 name="nombre"
                 placeholder="Nombre del producto"
-                value="{{ old('nombre') ?? $producto->nombre }}"
-                data-msg="Product SDK"
               />
             </div>
             <div class="col-12 col-sm-6 mb-1">
@@ -129,37 +117,75 @@
                 id="accountEmail"
                 name="modelo"
                 placeholder="Modelo del producto"
-                value="{{ old('nombre') ?? $producto->modelo}}"
               />
+            </div>
+            <div class="col-12 col-sm-6 mb-1">
+                <label class="form-label" for="accountEmail">SDK</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="accountEmail"
+                  name="SDK"
+                  placeholder="SDK"
+                />
+            </div>
+            <div class="col-12 col-sm-6 mb-1">
+                <label class="form-label" for="accountEmail">Imagen del producto</label>
+                <input type="file" name="nueva_imagen[]" id="fileToUpload" class="form-control" multiple>
+            </div>
+            <div class="col-12 col-sm-6 mb-1">
+                <label class="form-label" for="accountEmail">Color(Si Son varios colores, seprarlos con una coma)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="accountEmail"
+                  name="color"
+                  placeholder="Azul"
+                />
+            </div>
+            <div class="col-12 col-sm-6 mb-1">
+                <label class="form-label" for="accountEmail">Proveedor</label>
+                <select name="proveedor" class="form-control">
+                    <option value="Innova">Innova</option>
+                    <option value="PromoOpcion">Promo Opcion</option>
+                    <option value="Doble Vela">Doble Vela</option>
+                    <option value="Forpromotional">For Promotional</option>
+                    <option value="AlphaPromos">Alpha Promos</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 mb-1">
+                <label class="form-label" for="accountEmail">Metodos de Impresion(Si Son varios, seprarlos con una coma)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="accountEmail"
+                  name="metodo_impresion"
+                  placeholder="Impresion"
+                />
             </div>
             <div class="col-12 col-sm-6 mb-1">
               <label class="form-label" for="country">Categorias</label>
               <select id="categorias" class="select2 form-select" name="categoria">
-                @foreach ($categorias as $categoria)
-                    @if ($categoria->id == $producto->categoria_id)
-                        <option selected value='{{ $categoria->id }}'>{{ $categoria->nombre }}</option>
-                    @else
+                @foreach ($categorias as $categoria)                  
                         <option value="{{ $categoria->id }}"> {{ $categoria->nombre }}</option>
-                    @endif
                 @endforeach
               </select>
             </div>
             <div class="col-12 col-sm-6 mb-1">
               <label for="language" class="form-label">Subcategorias</label>
               <select class="select2 form-select" id="sub-dynamic" name="subcategoria">
-                <option value="{{$producto->subcategoria_id}}">{{ $producto->subcategoria->nombre}}</option>
+                
               </select>
             </div>
             <div class="col-12 col-sm-6 mb-1">
               <label class="form-label" for="accountEmail">Descripcion</label>
               <textarea 
                 class="form-control" 
-                name="descripcion">
-                {{ old('nombre') ?? $producto->descripcion}}
+                name="descripcion">          
               </textarea>
             </div>           
             <div class="col-12">
-              <button type="submit" class="btn btn-primary mt-1 me-1">Editar</button>
+              <button type="submit" class="btn btn-primary mt-1 me-1">Crear</button>
               <a type="reset" class="btn btn-outline-secondary mt-1" href="{{url("/dashboard/productos") }}">Cancelar</a>
             </div>
           </div>
@@ -185,9 +211,23 @@
   <script type="text/javascript">
     $(document).ready(function(){
       var url = '{{ url("/")}}';
+     //AL INICIO CUANDO NO TIENE NADA, SE EJECUTA ESTA PARTE
+        $.get(url +"/api/get-subcategorias/" + $('#categorias').val(), function(data, status){
+            var subcategorias = JSON.parse(data);
+            $('#sub-dynamic').html('');
+            var template = '';
+            subcategorias.forEach(subcategoria => {
+                //console.log(subcategoria);
+                
+                template = template + '<option value="'+subcategoria.id+'">'+subcategoria.nombre+'</option>';
+            });
+            $('#sub-dynamic').html(template);
+        });
+    //FIN DE CUANDO NO TIENE NADA
       //console.log(url);
       $('#categorias').on('change', function() {
         //console.log( this.value ); VER EL ID QUE SE ESTABA SELECCIONANDO
+    //CUANDO YA SE DIO UN CLICK, CUANDO SE CAMBIA DE CATEGORIA, HACE ESTA PARTE
         $.get(url +"/api/get-subcategorias/" + this.value, function(data, status){
           var subcategorias = JSON.parse(data);
           $('#sub-dynamic').html('');
@@ -199,6 +239,7 @@
           });
           $('#sub-dynamic').html(template);
         });
+    //FIN DE CUANDO DA CLIK, O CAMBIA LA CATEGORIA
       });
     });
     
