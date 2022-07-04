@@ -11,6 +11,9 @@
     @include('_partials.social')
 
     <div class="owl-carousel owl-theme custom-t">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="{{ asset('imgs/nuevos_articulos.mp4') }}" allowfullscreen></iframe>
+        </div>
         <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
         <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class=""></a>
