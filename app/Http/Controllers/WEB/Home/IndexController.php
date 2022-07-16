@@ -223,7 +223,7 @@ class IndexController extends Controller
         if($request->has('search_global'))
         {
             $title = Str::upper($request->search_global);
-            $productos = Producto::where('nombre','LIKE','%'.$request->search_global.'%')->where('descripcion','LIKE','%'.$request->search_global.'%')->get();
+            $productos = Producto::where('nombre','LIKE','%'.$request->search_global.'%')->orWhere('descripcion','LIKE','%'.$request->search_global.'%')->get();
             $total_items = count($productos);
         }
 
