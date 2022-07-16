@@ -59,8 +59,11 @@
           var template = '';
           data.forEach(function(element, indice, array) {
             string = element.nombre + ' ' + element.modelo;
-            lower = string.toLowerCase();
-            slug = lower.replace(/\s/g,'-');
+            string.replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ').toLowerCase();
+            string.replace(/^\s+|\s+$/gm,'');
+            slug=str.replace(/\s+/g, '-');
+            //lower = string.toLowerCase();
+            //slug = lower.replace(/\s/g,'-');
             console.log(slug);
             img = "{{ asset('imgs/no_disp.png') }}";
             if(element.images != null){
