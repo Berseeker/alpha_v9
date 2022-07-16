@@ -174,7 +174,7 @@ class IndexController extends Controller
         $area_impresion = NULL;
         
 
-        $images = json_decode($producto->images);
+        //$images = json_decode($producto->images);
         $categoria = Categoria::find($producto->categoria_id);
 
         if($producto->area_impresion != "S/MEDIDAS_IMP"){
