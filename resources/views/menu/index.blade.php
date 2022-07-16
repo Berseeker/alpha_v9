@@ -65,12 +65,13 @@
                 <form action="{{ route('home.busqueda') }}" method="GET">
                     @csrf
                     <div class="input-group">
-                        <input type="text" class="form-control search-product" placeholder="Busca un producto" name="search_global">
+                        <input type="text" class="form-control search-product" id="search-global" placeholder="Busca un producto" name="search_global">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
                         </div>
                     </div>
                 </form>
+                <ul id="searched-items"></ul>
             </li>
         </ul>
     </div>

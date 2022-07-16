@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home/index_master.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home/items.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -46,12 +46,44 @@
     </div>
 </body>
 <script type="text/javascript">
-    $('.search-global').keypress(function (e) {
-    if (e.which == 13) {
-        $('form#login').submit();
-        return false;    //<---- Add this line
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('search-global');
+
+    input.addEventListener('keyup', event => {
+      $.ajax({
+        url:"/api/search-productos/" + event.target.value,
+        method:"GET",
+        dataType : "json",
+        success:function(data)
+        {  
+          var template = '';
+          data.forEach(function(element, indice, array) {
+            string = element.nombre + ' ' + element.modelo;
+            lower = string.toLowerCase();
+            slug = lower.replace(/\s/g,'-');
+            console.log(slug);
+            img = "{{ asset('imgs/no_disp.png') }}";
+            if(element.images != null){
+                var obj = jQuery.parseJSON(element.images);
+                if(obj[0].includes('http'))
+                {
+                  img = obj[0];
+                }else{
+                  img = '{{ asset("storage") }}' +'/'+ obj[0];                         
+                }
+                
+            }
+            template = template + '<li><a href="/producto/'+ slug +'"><p> <img src="'+img+'" style="width:50px;" />'+ element.nombre +'</p><span style="color:black;">'+ element.descripcion +'</span></a></li>';
+          });
+          $('#searched-items').html('');
+          $('#searched-items').css('display','block');
+          $('#searched-items').html(template);
+          //var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+            //$(".items-hooked").append(template);
+        }
+      });
     });
+  });
 </script>
 <script type="text/javascript">
 $(document).ready(function(){

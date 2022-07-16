@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use Laravel\Scout\Searchable;
 
@@ -32,9 +34,21 @@ class Producto extends Model
 
     public function toSearchableArray()
     {
+        $img = '/imgs/no_disp.png';
+        if($this->images != null)
+        {
+            $img = json_decode($this->images)[0];
+            if(!Str::contains($img,['https','http']))
+            {
+                $img = Storage::url($img);
+            }
+        }
 
         return [
             'busqueda' => $this->busqueda,
+            'nombre' => $this->nombre,
+            'descripcion' => $this->descripcion,
+            'img' => $img
         ];
     }
 }
