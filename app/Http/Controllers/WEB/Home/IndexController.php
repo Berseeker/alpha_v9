@@ -224,6 +224,7 @@ class IndexController extends Controller
         {
             $title = Str::upper($request->search_global);
             $productos = Producto::search($request->search_global)->get();
+            dd($productos);
             $total_items = count($productos);
         }
 
