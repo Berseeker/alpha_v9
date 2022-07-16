@@ -281,7 +281,7 @@ class IndexController extends Controller
 
 
         Mail::to('juan.alucard.02@gmail.com')
-            ->cc(['celene@alphapromos.mx','fernando@alphapromos.mx','jhonatan@alphapromos.mx','osiris@alphapromos.mx'])
+            ->cc(['alphapromos.rsociales@gmail.com','ventas@alphapromos.mx'])
             ->send(new newMessage($request->nombre,$request->email,$request->celular,$request->comentarios));
 
         return back()->with('success','El mensaje se envio correctamente');
