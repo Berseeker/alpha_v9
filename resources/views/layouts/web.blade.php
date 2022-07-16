@@ -33,13 +33,13 @@
     @yield('page-styles')
   <script src="//code-sa1.jivosite.com/widget/DuWHrZwtML" async></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE01T8D4J4"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-525GD06J3K"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-CE01T8D4J4');
+    gtag('config', 'G-525GD06J3K');
   </script>
 
 </head>
