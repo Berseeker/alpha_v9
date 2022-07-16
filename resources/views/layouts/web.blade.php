@@ -32,6 +32,15 @@
 
     @yield('page-styles')
   <script src="//code-sa1.jivosite.com/widget/DuWHrZwtML" async></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE01T8D4J4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CE01T8D4J4');
+  </script>
 
 </head>
 <body class="pace-done vertical-layout vertical-menu-modern content-detached-left-sidebar navbar-floating footer-static menu-expanded">
