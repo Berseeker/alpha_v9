@@ -61,7 +61,7 @@
             string = element.nombre + ' ' + element.modelo;
             string.replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ').toLowerCase();
             string.replace(/^\s+|\s+$/gm,'');
-            slug=str.replace(/\s+/g, '-');
+            slug=string.replace(/\s+/g, '-');
             //lower = string.toLowerCase();
             //slug = lower.replace(/\s/g,'-');
             console.log(slug);
