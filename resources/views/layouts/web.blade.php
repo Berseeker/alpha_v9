@@ -59,11 +59,14 @@
           var template = '';
           data.forEach(function(element, indice, array) {
             string = element.nombre + ' ' + element.modelo;
-            string.replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ').toLowerCase();
-            string.replace(/^\s+|\s+$/gm,'');
-            slug=string.replace(/\s+/g, '-');
-            //lower = string.toLowerCase();
-            //slug = lower.replace(/\s/g,'-');
+            string = string.replace(/\s+/g, "-");
+            string = string.replace(/[^\w\-]+/g, "");
+            string = string.replace(/\-\-+/g, "-");
+            string = string.replace(/^-+/, "");
+            string = string.replace(/-+$/, "");
+            slug = string.replace(/\s+/g, '-');
+            lower = string.toLowerCase();
+            slug = lower.replace(/\s/g,'-');
             console.log(slug);
             img = "{{ asset('imgs/no_disp.png') }}";
             if(element.images != null){
