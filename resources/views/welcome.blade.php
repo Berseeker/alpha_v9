@@ -16,6 +16,11 @@
     </video>
 
     <div class="owl-carousel owl-theme custom-t">
+        @foreach ($imagenes as $imagen)
+            @if ($imagen->seccion == 'home_slider')           
+                <a href="{{ ($imagen->pdf == null) ? '#' : Storage::url($imagen->pdf) }}" target="{{ ($imagen->pdf == null) ? '' : '_blank'}}" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
+            @endif
+        @endforeach
         <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
         <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class=""></a>
@@ -62,6 +67,20 @@
                     <a href="{{ route('home.displays') }}">View more</a>
                 </figcaption>     
             </figure>
+            @foreach ($imagenes as $imagen)
+                @if ($imagen->seccion == 'catalogos')
+                    <figure class="effect-lily">
+                        <img src="{{ Storage::url($imagen->path) }}" alt="img12"/> <!-- 480 * 360 tamaño de las imagenes -->
+                        <figcaption>
+                            <div>
+                                <h2>Catalogo <span>{{ $imagen->titulo }}</span></h2>
+                                <!--p>Lily likes to play with crayons and pencils</p-->
+                            </div>
+                            <a href="{{ Storage::url($imagen->pdf) }}" target="_blank">View more</a>
+                        </figcaption>     
+                    </figure>
+                @endif
+            @endforeach
         </div>
     </div>
 

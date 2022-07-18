@@ -37,7 +37,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/dashboard/productos', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'index'])->name('dashboard.productos');
 Route::get('/dashboard/delete-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'delete'])->name('dashboard.delete.producto');
-Route::get('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'edit'])->name('dashboard.delete.producto');
+Route::get('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'edit'])->name('dashboard.edit.producto');
+Route::post('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'update'])->name('dashboard.update.producto');
+
+
 
 Route::get('/dashboard/cotizaciones',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'index'])->name('dashboard.cotizaciones');
 Route::get('/dashboard/show-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'show'])->name('dashboard.cotizacion');
@@ -49,3 +52,50 @@ Route::get('/dashboard/print-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboar
 
 
 Route::get('/dashboard/ventas',[App\Http\Controllers\WEB\Dashboard\VentaController::class, 'index'])->name('dashboard.ventas');
+
+
+
+
+
+
+//PROTECCION DE RUTAS CON PERMISOS PARA LA CREACION DE RECURSOS
+Route::group(['middleware' => ['role:Admin|Supervisor|Empleado','permission:all|create']], function () {
+    //RUTAS DE LAS IMAGENES
+    Route::get('/dashboard/create-image',[App\Http\Controllers\WEB\Dashboard\ImageController::class, 'index'])->name('create.image');
+    Route::post('/dashboard/create-image',[App\Http\Controllers\WEB\Dashboard\ImageController::class, 'store']);
+
+    //RUTAS DE LOS USUARIOS
+    Route::get('/dashboard/create-users',[App\Http\Controllers\WEB\Dashboard\Users\UserController::class, 'index'])->name('users.create');
+    Route::post('/dashboard/create-users',[App\Http\Controllers\WEB\Dashboard\Users\UserController::class, 'store']);   
+});
+
+//PROTECCION DE RUTAS CON PERMISOS PARA LA ACTUALIZACION DE RECURSOS
+Route::group(['middleware' => ['role:Admin|Supervisor|Empleado','permission:all|update']], function () {
+    //RUTAS DE LAS IMAGENES
+    Route::get('/dashboard/update-images',[App\Http\Controllers\WEB\Dashboard\ImageController::class, 'edit'])->name('update.images');
+    Route::post('/dashboard/update-image/{id}',[App\Http\Controllers\WEB\Dashboard\ImageController::class, 'update']);
+
+});
+
+
+
+//PROTECCION DE RUTAS, SOLO  PARA ADMINS CON ROLES
+Route::group(['middleware' => ['role:Admin|Supervisor']], function () {
+    //RUTAS DE LOS ROLES Y EDICION DE USUARIOS
+    Route::get('/dashboard/users',[App\Http\Controllers\WEB\Dashboard\Role\RoleController::class, 'index']);
+    Route::post('/dashboard/update-user/{id}',[App\Http\Controllers\WEB\Dashboard\Role\RoleController::class, 'update']);
+    //RUTAS DE LAS IMAGENES
+    Route::get('/dashboard/delete-images/{id}',[App\Http\Controllers\WEB\Dashboard\ImageController::class, 'delete']);
+    //RUTAS DE LOS USUARIOS
+    Route::get('/dashboard/delete-users/{id}',[App\Http\Controllers\WEB\Dashboard\Users\UserController::class, 'delete']);
+
+       
+});
+
+
+//CREACCION DE PRODUCTOS
+
+Route::get('/dashboard/create-product', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'create']);
+Route::post('/dashboard/create-product', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'store']);
+
+

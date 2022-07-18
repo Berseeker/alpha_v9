@@ -14,6 +14,7 @@ use App\Http\Controllers\API\Ventas\VentasController;
 use App\Http\Controllers\API\Buscador\BuscadorController;
 use App\Http\Controllers\API\Slug\SlugController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,3 +58,5 @@ Route::get('search-productos/{search}',[BuscadorController::class,'search']);
 
 Route::get('update-null-items',[ActualizarController::class,'index']);
 Route::get('restore-null-items',[ActualizarController::class,'restore']);
+
+Route::get('get-subcategorias/{id}',[BuscadorController::class,'getSubcategorias']);

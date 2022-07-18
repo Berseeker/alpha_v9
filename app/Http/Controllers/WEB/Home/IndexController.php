@@ -15,6 +15,7 @@ use App\Models\Categoria;
 use App\Models\Producto;
 
 use App\Mail\newMessage;
+use App\Models\Imagen;
 
 class IndexController extends Controller
 {
@@ -22,10 +23,12 @@ class IndexController extends Controller
     {
         $categorias = Categoria::all();
         $cont = 1;
+        $imagen = Imagen::all();
 
         return view('welcome',[
             'categorias' => $categorias,
-            'cont' => $cont
+            'cont' => $cont,
+            'imagenes' => $imagen
         ]);
     }
 

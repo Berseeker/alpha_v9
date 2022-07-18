@@ -26,7 +26,7 @@ class CotizacionController extends Controller
         $cotizaciones = Cotizacion::all();
 
         $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['name' => "Cotizaciones"]
+            ['link' => "/home", 'name' => "Dashboard"], ['name' => "Cotizaciones"]
         ];
 
         return view('dashboard.cotizaciones.index',[
@@ -38,7 +38,7 @@ class CotizacionController extends Controller
     public function show($id)
     {
         $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/cotizaciones", 'name' => "Cotizaciones"], ['name' => "Cotizacion"]
+            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/cotizaciones", 'name' => "Cotizaciones"], ['name' => "Cotizacion"]
         ];
 
         $cotizacion = Cotizacion::find($id);
@@ -99,7 +99,7 @@ class CotizacionController extends Controller
         $productosAll = Producto::all();
 
         $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
+            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
         ];
         
         $ids = json_decode($cotizacion->productos_id);
@@ -273,8 +273,18 @@ class CotizacionController extends Controller
                     $prevVenta->venta_realizada = now();
                     $prevVenta->save();
                 }
+            }          
+        }
+        //$cotizacion->id
+        //venta $cotizaion_id
+        if($request->status == 'Pendiente' || $request->status == 'Cancelada' ){
+            $preVenta = Venta::where('cotizacion_id', '=' , $cotizacion->id)->get();
+            if(!$preVenta->isEmpty()){
+                foreach($preVenta as $Venta){
+                    $Venta->delete();
+                }
             }
-            
+
         }
 
         return back()->with('success','La cotizacion se actualizo de manera correcta');
@@ -309,7 +319,7 @@ class CotizacionController extends Controller
         $cotizacion = Cotizacion::find($id);
 
         $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
+            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
         ];
 
         $ids = json_decode($cotizacion->productos_id);
