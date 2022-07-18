@@ -95,7 +95,7 @@ class CotizacionController extends Controller
         $cotizacion->apellidos = $request->apellidos;
         $cotizacion->email = $request->email;
         $cotizacion->codigo_area = '+52';
-        $cotizacion->celular = (int) str_replace(' ', '', $request->celular);
+        $cotizacion->celular = (int)Str::slug($request->celular,'');
         $cotizacion->comentarios = $request->comentarios;
         $medidas_deseables = array();
         $string = 'Sin definir';

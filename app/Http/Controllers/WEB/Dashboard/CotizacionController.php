@@ -111,7 +111,7 @@ class CotizacionController extends Controller
         $num_pzas = json_decode($cotizacion->numero_pzas);
         $medidas_deseables = json_decode($cotizacion->medidas_deseables);
         $precio_pza = json_decode($cotizacion->precio_pza);
-        $metodos_impresion = json_decode($cotizacion->metodos_impresion);
+        $metodos_impresion = ($cotizacion->metodos_impresion == null) ? null : json_decode($cotizacion->metodos_impresion);
         
         $productos = DB::table('productos')
                     ->whereIn('id', $ids)
@@ -136,6 +136,12 @@ class CotizacionController extends Controller
                 }
                 $count++;
             }
+            $impresion = null;
+            if($metodos_impresion != null){
+                if(array_key_exists($void,$metodos_impresion)){
+                    $impresion = $metodos_impresion[$void];
+                }
+            }
             $producto->colores = $colores;
             $producto->fecha_deseable = $fechas_deseables[$void];
             $producto->pantones = $pantones[$void];
@@ -144,7 +150,7 @@ class CotizacionController extends Controller
             $producto->num_pzas = $num_pzas[$void];
             $producto->medidas_deseables = $medidas_deseables[$void];
             $producto->precio_pza = $precio_pza[$void];
-            $producto->impresion_metodo = array_key_exists($void,$metodos_impresion) ?  $metodos_impresion[$void] : null;
+            $producto->impresion_metodo = $impresion;
             array_push($items,$producto);
             $void++;
         }

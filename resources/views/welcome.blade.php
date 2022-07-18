@@ -10,18 +10,21 @@
 
     @include('_partials.social')
 
-    <div class="owl-carousel owl-theme custom-t">    
+    <video width="100%" height="600" controls autoplay='autoplay' loop='true' style="margin-top: 80px;" muted>
+        <source src="{{ asset('imgs/nuevos_articulos.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="owl-carousel owl-theme custom-t">
         @foreach ($imagenes as $imagen)
             @if ($imagen->seccion == 'home_slider')           
                 <a href="{{ ($imagen->pdf == null) ? '#' : Storage::url($imagen->pdf) }}" target="{{ ($imagen->pdf == null) ? '' : '_blank'}}" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
             @endif
         @endforeach
-
-        <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol_catalogo.jpg') }}" alt="" class="customImgSilder"></a>
-        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" class="customImgSilder"></a>
-        <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class="customImgSilder"></a>
-        <a href="{{ asset('catalogos/golf.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" class="customImgSilder"></a>
-
+        <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
+        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/golf.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" class=""></a>
     </div>
 
 
@@ -152,7 +155,7 @@
     <script>
         var owl = $('.owl-carousel');
         owl.owlCarousel({
-            items:1,
+            items:2,
             loop:true,
             margin:10,
             autoplay:true,

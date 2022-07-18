@@ -168,6 +168,7 @@ class IndexController extends Controller
         $producto = NULL;
         $title = null;
         $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
+
         if(!$slug_producto->isEmpty()){
             $producto = Producto::find($slug_producto[0]->fk_id);
             $title = $producto->nombre;
@@ -177,7 +178,7 @@ class IndexController extends Controller
         $area_impresion = NULL;
         
 
-        $images = json_decode($producto->images);
+        //$images = json_decode($producto->images);
         $categoria = Categoria::find($producto->categoria_id);
 
         if($producto->area_impresion != "S/MEDIDAS_IMP"){
@@ -225,7 +226,7 @@ class IndexController extends Controller
         if($request->has('search_global'))
         {
             $title = Str::upper($request->search_global);
-            $productos = Producto::search($request->search_global)->get();
+            $productos = Producto::where('nombre','LIKE','%'.$request->search_global.'%')->orWhere('descripcion','LIKE','%'.$request->search_global.'%')->get();
             $total_items = count($productos);
         }
 
@@ -284,7 +285,7 @@ class IndexController extends Controller
 
 
         Mail::to('juan.alucard.02@gmail.com')
-            ->cc(['celene@alphapromos.mx','fernando@alphapromos.mx','jhonatan@alphapromos.mx','osiris@alphapromos.mx'])
+            ->cc(['alphapromos.rsociales@gmail.com','ventas@alphapromos.mx'])
             ->send(new newMessage($request->nombre,$request->email,$request->celular,$request->comentarios));
 
         return back()->with('success','El mensaje se envio correctamente');

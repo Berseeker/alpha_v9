@@ -1,0 +1,27 @@
+.custom-t
+{
+    margin-top: 70px;
+}
+
+#searched-items{
+    display: none;
+    position: fixed;
+    height: 600px;
+    overflow:hidden; 
+    overflow-y:scroll;
+    padding-left: 0px;
+    margin-right: 40px;
+    margin-left: -40px;
+    background-color: lightgray;
+    padding: 10px;
+    list-style: none;
+    border-radius: 8px;
+}
+
+#searched-items li span{
+    font-size: 11px;
+}
+
+#searched-items li{
+    margin-bottom: 8px;
+}
