@@ -138,7 +138,7 @@ class CotizacionController extends Controller
             }
             $impresion = null;
             if($metodos_impresion != null){
-                if(array_key_exists($void,$impresion)){
+                if(array_key_exists($void,$metodos_impresion)){
                     $impresion = $metodos_impresion[$void];
                 }
             }
