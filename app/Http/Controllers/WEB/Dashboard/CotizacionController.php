@@ -254,9 +254,9 @@ class CotizacionController extends Controller
                 $venta = new Venta();
                 $venta->cantidad_piezas = $total_pzas;
                 $venta->venta_realizada = now();
-                $venta->total = $request->precio_total;
-                $venta->subtotal = $request->precio_subtotal;
-                $venta->mano_obra = $request->mano_x_obra;
+                $venta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
+                $venta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
+                $venta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
                 $venta->status = 'Aprobada';
                 $venta->cotizacion_id = $cotizacion->id;
                 $venta->user_id = Auth::user()->id;
@@ -264,9 +264,9 @@ class CotizacionController extends Controller
             }
             else {
                 $prevVenta->cantidad_piezas = $total_pzas;
-                $prevVenta->total = $request->precio_total;
-                $prevVenta->subtotal = $request->precio_subtotal;
-                $prevVenta->mano_obra = $request->mano_x_obra;
+                $prevVenta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
+                $prevVenta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
+                $prevVenta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
                 $prevVenta->user_id = Auth::user()->id;
                 if($prevVenta->isDirty())
                 {
