@@ -249,7 +249,19 @@ class IndexController extends Controller
 
         $colores = json_decode($producto->color);
         $count_color = 0;
+        $images_collection = array();
+        if( $producto->images != NULL)
+        {
+            foreach (json_decode($producto->images) as $img) {
+                $image = $img;
+                if(!Str::contains($img,['https','http']))
+                {
+                    $image = Storage::url($img);
+                }
 
+                array_push($images_collection,$image);
+            }
+        }
 
         SEOMeta::setTitle('Producto - '.$producto->nombre);
         SEOMeta::setDescription($producto->descripcion);
@@ -261,7 +273,7 @@ class IndexController extends Controller
         OpenGraph::setUrl('https://alphapromos.mx/producto/ '.$slug_producto);
         OpenGraph::addProperty('type', 'producto');
         OpenGraph::addProperty('locale', 'es');
-        OpenGraph::addImage($producto->images);
+        OpenGraph::addImage($images_collection[0]);
 
         Twitter::setTitle($producto->nombre);
         Twitter::setSite('@alphapromos');
@@ -269,7 +281,7 @@ class IndexController extends Controller
         JsonLd::setTitle($producto->nombre);
         JsonLd::setDescription($producto->descripcion);
         JsonLd::setType('Producto');
-        JsonLd::addImage($producto->images);
+        JsonLd::addImage($images_collection[0]);
 
         
         return view('Home.producto',[
