@@ -17,6 +17,13 @@ use App\Models\Producto;
 use App\Mail\newMessage;
 use App\Models\Imagen;
 
+use SEOMeta;
+use OpenGraph;
+use JsonLd;
+use Twitter;
+use App\Article;
+
+
 class IndexController extends Controller
 {
     public function index()
@@ -24,6 +31,23 @@ class IndexController extends Controller
         $categorias = Categoria::all();
         $cont = 1;
         $imagen = Imagen::all();
+
+        SEOMeta::setTitle('AlphaPromos');
+        SEOMeta::setDescription('Pagina de articulos Promocionales');
+        SEOMeta::setCanonical('https://alphapromos.mx');
+
+        OpenGraph::setDescription('Pagina de articulos Promocionales');
+        OpenGraph::setTitle('AlphaPromos');
+        OpenGraph::setUrl('https://alphapromos.mx');
+        OpenGraph::addProperty('type', 'articulos');
+
+        Twitter::setTitle('AlphaPromos');
+        Twitter::setSite('@alphapromos');
+
+        JsonLd::setTitle('AlphaPromos');
+        JsonLd::setDescription('Pagina de articulos Promocionales');
+        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
+
 
         return view('welcome',[
             'categorias' => $categorias,
@@ -76,6 +100,23 @@ class IndexController extends Controller
             if(count($productos) == 0)
                 $flag=0;
         }
+
+        SEOMeta::setTitle('Categoria - '.$title);
+        SEOMeta::setDescription('Articulos que pertenecen a la categoria '.$title);
+        SEOMeta::setCanonical('https://alphapromos.mx/');
+
+        OpenGraph::setDescription('Articulos que pertenecen a la categoria '.$title);
+        OpenGraph::setTitle('Categoria - '.$title);
+        OpenGraph::setUrl('https://alphapromos.mx/');
+        OpenGraph::addProperty('type', 'categoria');
+
+        Twitter::setTitle('Categoria - '.$title);
+        Twitter::setSite('@alphapromos');
+
+        JsonLd::setTitle('Categoria - '.$title);
+        JsonLd::setDescription('Articulos que pertenecen a la categoria '.$title);
+        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
+
         
         return view('Home.categoria',[
             'pageConfigs' => $pageConfigs,
@@ -139,6 +180,22 @@ class IndexController extends Controller
                 $flag=0;
 
         }
+
+        SEOMeta::setTitle('Subcategoria - '.$title);
+        SEOMeta::setDescription('Articulos que pertenecen a la subcategoria '.$title);
+        SEOMeta::setCanonical('https://alphapromos.mx/');
+
+        OpenGraph::setDescription('Articulos que pertenecen a la subcategoria '.$title);
+        OpenGraph::setTitle('Subcategoria - '.$title);
+        OpenGraph::setUrl('https://alphapromos.mx/');
+        OpenGraph::addProperty('type', 'subcategoria');
+
+        Twitter::setTitle('Subcategoria - '.$title);
+        Twitter::setSite('@alphapromos');
+
+        JsonLd::setTitle('Subcategoria - '.$title);
+        JsonLd::setDescription('Articulos que pertenecen a la Subcategoria '.$title);
+        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
             
         return view('Home.subcategoria',[
             'pageConfigs' => $pageConfigs,
@@ -192,6 +249,28 @@ class IndexController extends Controller
 
         $colores = json_decode($producto->color);
         $count_color = 0;
+
+
+        SEOMeta::setTitle('Producto - '.$producto->nombre);
+        SEOMeta::setDescription($producto->descripcion);
+        SEOMeta::addMeta('producto:published_time', $producto->created_at->toW3CString(), 'property');
+        SEOMeta::addKeyword($producto->busqueda);
+
+        OpenGraph::setDescription($producto->descripcion);
+        OpenGraph::setTitle($producto->nombre);
+        OpenGraph::setUrl('https://alphapromos.mx/producto/ '.$slug_producto);
+        OpenGraph::addProperty('type', 'producto');
+        OpenGraph::addProperty('locale', 'es');
+        OpenGraph::addImage($producto->images);
+
+        Twitter::setTitle($producto->nombre);
+        Twitter::setSite('@alphapromos');
+        
+        JsonLd::setTitle($producto->nombre);
+        JsonLd::setDescription($producto->descripcion);
+        JsonLd::setType('Producto');
+        JsonLd::addImage($producto->images);
+
         
         return view('Home.producto',[
             'title' => $title,
@@ -258,13 +337,31 @@ class IndexController extends Controller
         ];
 
         $categorias = Categoria::all();
+
         
+        SEOMeta::setTitle('Contacto');
+        SEOMeta::setDescription('Formulario de contacto para quejas o sugerencias');
+        SEOMeta::setCanonical('https://alphapromos.mx/');
+
+        OpenGraph::setDescription('Formulario de contacto para quejas o sugerencias');
+        OpenGraph::setTitle('Contacto');
+        OpenGraph::setUrl('https://alphapromos.mx/');
+        OpenGraph::addProperty('type', 'contacto');
+
+        Twitter::setTitle('Contacto');
+        Twitter::setSite('@alphapromos');
+
+        JsonLd::setTitle('Contacto');
+        JsonLd::setDescription('Formulario de contacto para quejas o sugerencias');
+        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
         
         return view('Home.contacto', [
             'pageConfigs' => $pageConfigs,
             'breadcrumbs' => $breadcrumbs,
             'categorias' => $categorias
         ]);
+       
+        
     }
 
     public function sendMessage(Request $request)
@@ -272,13 +369,16 @@ class IndexController extends Controller
         $rules = [
             'nombre' => 'required',
             'email' => 'required',
-            'celular' => 'required'
+            'celular' => 'required',
+            'g-recaptcha-response' => 'recaptcha'
         ];
 
         $messages = [
             'nombre.required' => 'Es necesario indicar un nombre',
             'email.required' => 'Es necesario dejar un email',
             'celular.required' => 'Es necesario dejar un numero de contacto',
+            'g-recaptcha-response' => 'Es necesario llenar este'
+
         ];
 
         $this->validate($request,$rules,$messages);
@@ -299,6 +399,22 @@ class IndexController extends Controller
           'bodyClass' => 'ecommerce-application',
         ];
 
+        SEOMeta::setTitle('Servicios');
+        SEOMeta::setDescription('Tipos de servicios disponibles para los clientes');
+        SEOMeta::setCanonical('https://alphapromos.mx/');
+
+        OpenGraph::setDescription('Tipos de servicios disponibles para los clientes');
+        OpenGraph::setTitle('Servicios');
+        OpenGraph::setUrl('https://alphapromos.mx/');
+        OpenGraph::addProperty('type', 'servicios');
+
+        Twitter::setTitle('Servicios');
+        Twitter::setSite('@alphapromos');
+
+        JsonLd::setTitle('Servicios');
+        JsonLd::setDescription('Tipos de servicios disponibles para los clientes');
+        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
+
         return view('Home.servicios',[
             'pageConfigs' => $pageConfigs,
             'categorias' => $categorias,
@@ -313,6 +429,22 @@ class IndexController extends Controller
           'contentLayout' => "content-detached-left-sidebar",
           'bodyClass' => 'ecommerce-application',
         ];
+
+        SEOMeta::setTitle('Displays');
+        SEOMeta::setDescription('Ponemos a tus órdenes nuestro servicio de diseño y armado de stands para tus expos, convenciones o eventos sociales con personal calificado y precios accesibles, solicita cotización.');
+        SEOMeta::setCanonical('https://alphapromos.mx/');
+
+        OpenGraph::setDescription('Ponemos a tus órdenes nuestro servicio de diseño y armado de stands para tus expos, convenciones o eventos sociales con personal calificado y precios accesibles, solicita cotización.');
+        OpenGraph::setTitle('Displays');
+        OpenGraph::setUrl('https://alphapromos.mx/');
+        OpenGraph::addProperty('type', 'displays');
+
+        Twitter::setTitle('Displays');
+        Twitter::setSite('@alphapromos');
+
+        JsonLd::setTitle('Displays');
+        JsonLd::setDescription('Ponemos a tus órdenes nuestro servicio de diseño y armado de stands para tus expos, convenciones o eventos sociales con personal calificado y precios accesibles, solicita cotización.');
+        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
 
         return view('Home.displays',[
             'pageConfigs' => $pageConfigs,

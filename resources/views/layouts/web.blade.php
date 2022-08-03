@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'AlphaPromos') }}</title>
+    <!-- <title>{{ config('app.name', 'AlphaPromos') }}</title>-->
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
@@ -41,6 +41,11 @@
 
     gtag('config', 'G-525GD06J3K');
   </script>
+
+  {!! SEOMeta::generate() !!}
+  {!! OpenGraph::generate() !!}
+  {!! Twitter::generate() !!}
+  {!! JsonLd::generate() !!}
 
 </head>
 <body class="pace-done vertical-layout vertical-menu-modern content-detached-left-sidebar navbar-floating footer-static menu-expanded">
