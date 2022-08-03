@@ -68,6 +68,11 @@
           var template = '';
           data.forEach(function(element, indice, array) {
             string = element.nombre + ' ' + element.modelo;
+            //quitar acentos 
+            string = string
+                      .normalize('NFD')
+                      .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+                      .normalize();
             string = string.replace(/\s+/g, "-");
             string = string.replace(/[^\w\-]+/g, "");
             string = string.replace(/\-\-+/g, "-");
