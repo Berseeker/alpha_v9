@@ -332,3 +332,37 @@ $(function () {
         });
     }
 });
+
+function fireModal(id)
+{
+    /*$.ajax({
+        url: "/api/get-users",
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+            var template = '';
+            data.forEach(function (empleado, indice, array) {
+                console.log(empleado);
+                template = template + '<option value="'+empleado.id+'">'+empleado.name+'</option>';
+            });
+            $('#empleados-alpha').html('');
+            $('#empleados-alpha').html(template)
+            //var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+            //$(".items-hooked").append(template);
+        }
+    });
+
+    $('#cotizacion-id').html('');
+    $('#cotizacion-id').html(id);
+
+    var template = '<option value=""></option>'
+   
+    $('#edicion-rapida').modal('show');
+    console.log(id);
+    //PONER EN LOS ACTIONS 
+    '<a href="#" onclick="fireModal('+id+');" class="dropdown-item">' +
+                            feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Edicion Rapida</a>' +
+    */
+
+}
