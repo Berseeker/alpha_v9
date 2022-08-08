@@ -53,7 +53,7 @@
             <section id="ecommerce-products" class="grid-view row">
                 @if ($productos->isEmpty())
 
-                    <img src="{{ asset('imgs/logos/not_found.png') }}" alt="No hay productos que coincidan con tu busqueda" style="width: 550px;margin:0px auto;margin-bottom:20px;">
+                    <img src="{{ asset('imgs/logos/no_encontrado.png') }}" alt="No hay productos que coincidan con tu busqueda" style="width: 550px;margin:0px auto;margin-bottom:20px;">
                     <h2 class="text-warning">No se encontraron productos relacionados <br> con tu búsqueda </h2>
 
                 @else
