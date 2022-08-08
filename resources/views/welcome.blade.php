@@ -21,8 +21,9 @@
                 <a href="{{ ($imagen->pdf == null) ? '#' : Storage::url($imagen->pdf) }}" target="{{ ($imagen->pdf == null) ? '' : '_blank'}}" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
             @endif
         @endforeach
+        <a href="{{ asset('catalogos/catalogo_clases.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_regreso_clases.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
-        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/catalogo_agendas.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_agendas.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/golf.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" class=""></a>
     </div>
