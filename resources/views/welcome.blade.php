@@ -3,7 +3,7 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.theme.default.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home/home_index.css') }}">
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
                 <a href="{{ ($imagen->pdf == null) ? '#' : Storage::url($imagen->pdf) }}" target="{{ ($imagen->pdf == null) ? '' : '_blank'}}" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
             @endif
         @endforeach
-        <a href="{{ asset('catalogos/catalogo_clases.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_regreso_clases.png') }}" alt="" class=""></a>
+        <a href="https://online.flippingbook.com/view/768367767" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_regreso_clases.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/catalogo_agendas.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_agendas.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class=""></a>
@@ -86,43 +86,43 @@
     </div>
 
     <div class="features text-center">
-        <div class="row">
-        <div class="col-md-3">
-            <div class="info">
-            <div class="icon icon-info">
-                <i class="fas fa-handshake" style="color: #255992;"></i>
+        <div class="row mobile-row">
+            <div class="col-md-3">
+                <div class="info">
+                <div class="icon icon-info">
+                    <i class="fas fa-handshake" style="color: #255992;"></i>
+                </div>
+                <h4 class="info-title">Atención Eficaz </h4>
+                <p>Atención personalizada, con asesorías para una inteligente selección, acorde a sus necesidades y presupuesto.</p>
+                </div>
             </div>
-            <h4 class="info-title">Atención Eficaz </h4>
-            <p>Atención personalizada, con asesorías para una inteligente selección, acorde a sus necesidades y presupuesto.</p>
+            <div class="col-md-3">
+                <div class="info">
+                <div class="icon icon-info">
+                    <i class="material-icons" style="color: green;">verified_user</i>
+                </div>
+                <h4 class="info-title">Experiencia </h4>
+                <p>Con más de 25 años en el mercado.  Hemos amalgamado la experiencia con las innovaciones del mundo actual.</p>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="info">
-            <div class="icon icon-info">
-                <i class="material-icons" style="color: green;">verified_user</i>
+            <div class="col-md-3">
+                <div class="info">
+                <div class="icon icon-success">
+                    <i class="fas fa-truck" style="color:#00bcd4;"></i>
+                </div>
+                <h4 class="info-title">Flete Incluido</h4>
+                <p>Envíos a todo México sin pago extra.</p>
+                </div>
             </div>
-            <h4 class="info-title">Experiencia </h4>
-            <p>Con más de 25 años en el mercado.  Hemos amalgamado la experiencia con las innovaciones del mundo actual.</p>
+            <div class="col-md-3">
+                <div class="info">
+                <div class="icon icon-rose">
+                    <i class="fas fa-bolt" style="color:red;"></i>
+                </div>
+                <h4 class="info-title">Pedidos Express</h4>
+                <p>Entrega de 48-72 horas.</p>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="info">
-            <div class="icon icon-success">
-                <i class="fas fa-truck" style="color:#00bcd4;"></i>
-            </div>
-            <h4 class="info-title">Flete Incluido</h4>
-            <p>Envíos a todo México sin pago extra.</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="info">
-            <div class="icon icon-rose">
-                <i class="fas fa-bolt" style="color:red;"></i>
-            </div>
-            <h4 class="info-title">Pedidos Express</h4>
-            <p>Entrega de 48-72 horas.</p>
-            </div>
-        </div>
         </div>
     </div>
 
