@@ -218,6 +218,7 @@ class CotizacionController extends Controller
         
         $precios_productos = array();
         $total_pzas = 0;
+        dd($request);
         for($i=0;$i < $request->total_productos; $i++)
         {
             $precio_pzas = $request->precio_pza[$i];
