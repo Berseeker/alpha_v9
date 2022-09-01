@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Categoria;
 use App\Models\Cotizacion;
 use App\Models\Venta;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -31,8 +32,8 @@ class HomeController extends Controller
         $cotizaciones = DB::table('cotizaciones')->count();
         $productos = DB::table('productos')->count();
         $ventas = Venta::sum('total');
-
-
+        //dd(Auth::user()->getAllPermissions());
+    
         return view('home',[
             'cotizaciones' => $cotizaciones,
             'productos' => $productos,

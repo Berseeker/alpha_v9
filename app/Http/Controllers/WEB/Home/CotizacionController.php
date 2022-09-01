@@ -13,6 +13,7 @@ use App\Models\Cotizacion;
 use App\Models\Producto;
 
 use App\Mail\newCotizacion;
+use App\Mail\UserNotification;
 
 class CotizacionController extends Controller
 {
@@ -94,9 +95,8 @@ class CotizacionController extends Controller
         $cotizacion->apellidos = $request->apellidos;
         $cotizacion->email = $request->email;
         $cotizacion->codigo_area = '+52';
-        $cotizacion->celular = (int)$request->celular;
+        $cotizacion->celular = (int)Str::slug($request->celular,'');
         $cotizacion->comentarios = $request->comentarios;
-
         $medidas_deseables = array();
         $string = 'Sin definir';
         for($i = 0; $i < $request->total_productos; $i++)
@@ -117,7 +117,6 @@ class CotizacionController extends Controller
         $cotizacion->fecha_deseable = json_encode($request->fecha_deseable);
         $cotizacion->pantones = json_encode($request->pantones);
         $cotizacion->tipografia = json_encode($request->tipografia);
-        $precios_pza = array();
         $cotizacion->precio_pza = json_encode($precios_pzas);
         $cotizacion->precio_x_producto = json_encode($precios_pzas);
         $cotizacion->precio_total = 0;
@@ -169,10 +168,12 @@ class CotizacionController extends Controller
         setcookie('carrito_cotizaciones', NULL);
         $url = url('/').'/login';
 
-        Mail::to('juan.alucard@hotmail.com')
-            ->cc(['celene@alphapromos.mx','fernando@alphapromos.mx','jhonatan@alphapromos.mx','osiris@alphapromos.mx'])
-            ->bcc('juan.alucard.02@gmail.com')
+        Mail::to('juan.alucard.02@gmail.com')
+            ->cc(['alphapromos.rsociales@gmail.com','ventas@alphapromos.mx'])
             ->send(new newCotizacion($url,$cotizacion));
+        
+        Mail::to($cotizacion->email)     
+            ->send(new UserNotification($cotizacion));
 
         return back()->with('success','La cotizacion se envio de forma exitosa!, nos pondremos en contacto con usted muy pronto.');
     }
