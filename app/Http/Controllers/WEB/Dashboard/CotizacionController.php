@@ -26,7 +26,7 @@ class CotizacionController extends Controller
         $cotizaciones = Cotizacion::all();
 
         $breadcrumbs = [
-            ['link' => "/home", 'name' => "Dashboard"], ['name' => "Cotizaciones"]
+            ['link' => "/", 'name' => "Home"], ['name' => "Cotizaciones"]
         ];
 
         return view('dashboard.cotizaciones.index',[
@@ -38,7 +38,7 @@ class CotizacionController extends Controller
     public function show($id)
     {
         $breadcrumbs = [
-            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/cotizaciones", 'name' => "Cotizaciones"], ['name' => "Cotizacion"]
+            ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/cotizaciones", 'name' => "Cotizaciones"], ['name' => "Cotizacion"]
         ];
 
         $cotizacion = Cotizacion::find($id);
@@ -99,7 +99,7 @@ class CotizacionController extends Controller
         $productosAll = Producto::all();
 
         $breadcrumbs = [
-            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
+            ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
         ];
         
         $ids = json_decode($cotizacion->productos_id);
@@ -111,7 +111,7 @@ class CotizacionController extends Controller
         $num_pzas = json_decode($cotizacion->numero_pzas);
         $medidas_deseables = json_decode($cotizacion->medidas_deseables);
         $precio_pza = json_decode($cotizacion->precio_pza);
-        $metodos_impresion = ($cotizacion->metodos_impresion == null) ? null : json_decode($cotizacion->metodos_impresion);
+        $metodos_impresion = json_decode($cotizacion->metodos_impresion);
         
         $productos = DB::table('productos')
                     ->whereIn('id', $ids)
@@ -136,12 +136,6 @@ class CotizacionController extends Controller
                 }
                 $count++;
             }
-            $impresion = null;
-            if($metodos_impresion != null){
-                if(array_key_exists($void,$metodos_impresion)){
-                    $impresion = $metodos_impresion[$void];
-                }
-            }
             $producto->colores = $colores;
             $producto->fecha_deseable = $fechas_deseables[$void];
             $producto->pantones = $pantones[$void];
@@ -150,7 +144,7 @@ class CotizacionController extends Controller
             $producto->num_pzas = $num_pzas[$void];
             $producto->medidas_deseables = $medidas_deseables[$void];
             $producto->precio_pza = $precio_pza[$void];
-            $producto->impresion_metodo = $impresion;
+            $producto->impresion_metodo = array_key_exists($void,$metodos_impresion) ?  $metodos_impresion[$void] : null;
             array_push($items,$producto);
             $void++;
         }
@@ -254,9 +248,9 @@ class CotizacionController extends Controller
                 $venta = new Venta();
                 $venta->cantidad_piezas = $total_pzas;
                 $venta->venta_realizada = now();
-                $venta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
-                $venta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
-                $venta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
+                $venta->total = $request->precio_total;
+                $venta->subtotal = $request->precio_subtotal;
+                $venta->mano_obra = $request->mano_x_obra;
                 $venta->status = 'Aprobada';
                 $venta->cotizacion_id = $cotizacion->id;
                 $venta->user_id = Auth::user()->id;
@@ -264,27 +258,17 @@ class CotizacionController extends Controller
             }
             else {
                 $prevVenta->cantidad_piezas = $total_pzas;
-                $prevVenta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
-                $prevVenta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
-                $prevVenta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
+                $prevVenta->total = $request->precio_total;
+                $prevVenta->subtotal = $request->precio_subtotal;
+                $prevVenta->mano_obra = $request->mano_x_obra;
                 $prevVenta->user_id = Auth::user()->id;
                 if($prevVenta->isDirty())
                 {
                     $prevVenta->venta_realizada = now();
                     $prevVenta->save();
                 }
-            }          
-        }
-        //$cotizacion->id
-        //venta $cotizaion_id
-        if($request->status == 'Pendiente' || $request->status == 'Cancelada' ){
-            $preVenta = Venta::where('cotizacion_id', '=' , $cotizacion->id)->get();
-            if(!$preVenta->isEmpty()){
-                foreach($preVenta as $Venta){
-                    $Venta->delete();
-                }
             }
-
+            
         }
 
         return back()->with('success','La cotizacion se actualizo de manera correcta');
@@ -319,7 +303,7 @@ class CotizacionController extends Controller
         $cotizacion = Cotizacion::find($id);
 
         $breadcrumbs = [
-            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
+            ['link' => "/", 'name' => "Home"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
         ];
 
         $ids = json_decode($cotizacion->productos_id);

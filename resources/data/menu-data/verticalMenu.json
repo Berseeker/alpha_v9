@@ -14,7 +14,7 @@
     {
       "url": "/dashboard/productos",
       "name": "Producto",
-      "icon": "package",
+      "icon": "mail",
       "slug": "app-producto"
     },
     {
@@ -26,19 +26,7 @@
     {
       "url": "/dashboard/ventas",
       "name": "Venta",
-      "icon": "dollar-sign",
-      "slug": "app-venta"
-    },
-    {
-      "url": "/dashboard/users",
-      "name": "Usuarios",
-      "icon": "users",
-      "slug": "app-venta"
-    },
-    {
-      "url": "/dashboard/update-images",
-      "name": "Imagenes",
-      "icon": "image",
+      "icon": "check-square",
       "slug": "app-venta"
     }
   ]

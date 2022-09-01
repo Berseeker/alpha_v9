@@ -14,5 +14,4 @@ class SearchController extends Controller
         $productos = Producto::search($search)->get();
         return $productos->toJson();
     }
-
 }

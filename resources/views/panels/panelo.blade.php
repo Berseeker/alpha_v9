@@ -37,7 +37,7 @@ $configData = Helper::applClasses();
             <ul class="menu-content subcategory-list">
                 @foreach ($categoria->subcategorias as $subcategoria)
                 <li>
-                    <a href="{{ url('/subcategoria/sub-'.Str::slug($subcategoria->nombre,'-')) }}" class="d-flex align-items-center" target="_self" style="font-size:11px;">
+                    <a href="{{ url('/subcategoria/'.Str::slug($subcategoria->nombre,'-')) }}" class="d-flex align-items-center" target="_self" style="font-size:11px;">
                         <i class="fa-solid fa-compact-disc" style="margin-right: 10px;font-size:1rem;top:8px;"></i>
                         <span class="menu-title text-truncate">{{ $subcategoria->nombre }}</span>
                     </a> 

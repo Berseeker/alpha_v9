@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Lista Cotizaciones')
+@section('title', 'Lista Productos')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -119,35 +119,6 @@
   </div>
   <!-- list and filter end -->
 </section>
-
-<div class="modal" tabindex="-1" id="edicion-rapida">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edición rapida cotizacion  #<span id="cotizacion-id"></span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="" method="get">
-          @csrf
-          <div class="form-group">
-            <label for="empleados">Asignar vendedor</label>
-            <select name="empleados" class="form-control" id="empleados-alpha">
-            </select>
-          </div>
-        </form>
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="close-modal" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- users list ends -->
 @endsection
 
@@ -174,7 +145,7 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-cotizaciones-listas.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-cotizacion-listo.js') }}"></script>
 
   <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
   <script>
@@ -226,8 +197,5 @@
                 return false;
             })
     }
-    $("#close-modal").click(function () {
-        $('#edicion-rapida').modal({ show: false })
-    });
   </script>
 @endsection

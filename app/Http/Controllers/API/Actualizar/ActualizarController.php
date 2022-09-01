@@ -43,27 +43,23 @@ class ActualizarController extends Controller
     public function restore()
     {
         $subcategorias = Subcategoria::onlyTrashed()->get();
-        //dd($subcategorias);
+
         foreach ($subcategorias as $subcategoria) {
-            $productos = Producto::where('subcategoria_id',$subcategoria['id'])->get();
+            $productos = Producto::where('subcategoria_id',$subcategoria[0]->id)->get();
             if(!$productos->isEmpty())
             {
-                $subcategoria->restore();
+                $subcategoria[0]->restore();
             }
         }
 
         $categorias = Categoria::onlyTrashed()->get();
 
         foreach ($categorias as $categoria) {
-            $subcategorias = Subcategoria::where('categoria_id',$categoria['id'])->where('deleted_at',null)->get();
+            $subcategorias = Subcategoria::where('categoria_id',$categoria[0]->id)->where('deleted_at',null)->get();
             if(!$subcategorias->isEmpty())
             {
-                $categoria->restore();
+                $categoria[0]->restore();
             }
         }
-
-        return response()->json([
-            'status' => 'Los categorias/subcategorias fueron restauradas'
-        ]);
     }
 }

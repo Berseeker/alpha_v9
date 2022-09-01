@@ -163,7 +163,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        
 
         /*
          * Package Service Providers...
@@ -178,8 +177,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
-        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
 
     ],
 
@@ -197,10 +194,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // custom theme helper
         'Helper' => App\Helpers\Helpers::class,
-        'SEOMeta'   => Artesaos\SEOTools\Facades\SEOMeta::class,
-        'OpenGraph' => Artesaos\SEOTools\Facades\OpenGraph::class,
-        'Twitter'   => Artesaos\SEOTools\Facades\TwitterCard::class,
-        'JsonLd'   => Artesaos\SEOTools\Facades\JsonLd::class,
     ])->toArray(),
 
 ];
