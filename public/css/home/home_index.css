@@ -2235,7 +2235,7 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
 }
 
 .desktop-menu{
-  display: block;
+  display: inline-flex;
 }
 
 
