@@ -3,7 +3,7 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.theme.default.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home/home_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home/style_home.css') }}">
 @endsection
 
 @section('content')
