@@ -17,6 +17,36 @@ $configData = Helper::applClasses();
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 	<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+	<style>
+        .mobile-row{
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        .mobile-menu{
+            display: none;
+        }
+
+        .desktop-menu{
+            display: inline-flex;
+        }
+
+
+        @media(max-width: 500px){
+            .mobile-row{
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .mobile-menu{
+                display: block;
+            }
+
+            .desktop-menu{
+                display: none;
+            }
+        }
+    </style>
 
 @endsection
 

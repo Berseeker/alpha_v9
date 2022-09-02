@@ -256,7 +256,7 @@ class IndexController extends Controller
                 $image = $img;
                 if(!Str::contains($img,['https','http']))
                 {
-                    $image = Storage::url($img);
+                    $image = url('/'.$img);
                 }
 
                 array_push($images_collection,$image);

@@ -33,7 +33,7 @@ class ProductoController extends Controller
             $img = json_decode($producto->images)[0];
             if(!Str::contains($img,['https','http']))
             {
-                $img = Storage::url($img);
+                $img = url('/'.$img);
             }
         }
 
