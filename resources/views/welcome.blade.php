@@ -32,13 +32,13 @@
     <div class="content" style="display: -webkit-box;">
         <div class="grid">
             <figure class="effect-lily">
-                <img src="{{ asset('imgs/dynamic_items/catalogo.jpeg') }}" alt="img12"/> <!-- 480 * 360 tamaño de las imagenes -->
+                <img src="{{ asset('imgs/dynamic_items/sombreros.png') }}" alt="Sombreros"/> <!-- 480 * 360 tamaño de las imagenes -->
                 <figcaption>
                     <div>
-                        <h2>Catalogo <span>{{ now()->year }}</span></h2>
+                        <!--h2>Catalogo <span>{{ now()->year }}</span></h2-->
                         <!--p>Lily likes to play with crayons and pencils</p-->
                     </div>
-                    <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank">View more</a>
+                    <a href="{{ url('https://www.alphapromos.mx/producto/sombrero-playa-sm-12') }}" target="_blank">Ver mas</a>
                 </figcaption>     
             </figure>
             <!--figure class="effect-oscar">
