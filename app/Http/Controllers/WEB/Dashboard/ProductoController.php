@@ -129,7 +129,7 @@ class ProductoController extends Controller
         $colores = explode(",",$request->color);
         if($request->has('nueva_imagen')){
             foreach($request->nueva_imagen as $imagen){
-                $path[] = $imagen->store('public/productos');
+                $path[] = $imagen->store('public');
             }  
         }
 
