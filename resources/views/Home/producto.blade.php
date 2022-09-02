@@ -131,9 +131,9 @@
                     <!--button class="item_add_cart info-product-cart">
                         <i class="fas fa-shopping-cart"></i> Agregar al Carrito
                     </button-->
-                    <button class="btn add_detalle_producto info-product-cotizar" slug={{ Str::slug($producto->nombre.' '.$producto->modelo) }}>
+                    <button class="btn add_detalle_producto info-product-cotizar btn-cart-add" sdk ='{{$producto->SDK}}' slug={{ Str::slug($producto->nombre.' '.$producto->modelo) }}>
                         <i class="fas fa-store"></i>Cotizar
-                    </a>
+                    </button>
             </div>
             
         </div>

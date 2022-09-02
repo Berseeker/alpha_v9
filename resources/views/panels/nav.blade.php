@@ -67,7 +67,7 @@
         <li class="scrollable-container media-list items-hooked">
         </li>
         <li class="dropdown-menu-footer" style="margin-top: 20px;">
-          <a class="btn btn-primary w-100" href="{{ url('app/ecommerce/checkout') }}">Cotizar</a>
+          <a class="btn btn-primary w-100" href="{{ route('home.cotizacion') }}">Cotizar</a>
         </li>
       </ul>
     </li>

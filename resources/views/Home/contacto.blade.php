@@ -169,6 +169,16 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {!! htmlFormSnippet([
+                                    "theme" => "light",
+                                    "size" => "normal",
+                                    "tabindex" => "3",
+                                    "callback" => "callbackFunction",
+                                    "expired-callback" => "expiredCallbackFunction",
+                                    "error-callback" => "errorCallbackFunction",
+                                ]) !!}
+                                
                                 <div class="col-sm-9 offset-sm-3">
                                     <button type="submit" class="btn btn-primary me-1">Enviar</button>
                                 </div>
