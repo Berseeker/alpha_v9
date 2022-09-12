@@ -43,7 +43,7 @@ $configData = Helper::applClasses();
                 @endif
                 <div class="form-group">
                     <label for="nombre">Nombre Completo</label>
-                    <input type="text" class="form-control" name="name" placeholder="Ejemplo: John Doe">
+                    <input type="text" class="form-control" name="nombre" placeholder="Ejemplo: John Doe">
                 </div>
                 <div class="form-group">
                     <label for="email">Correo electrónico</label>
