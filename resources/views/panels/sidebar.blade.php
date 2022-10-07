@@ -11,7 +11,7 @@ $configData = Helper::applClasses();
             <span class="brand-logo">
               <img src="{{ asset('imgs/logos/alpha.png') }}" alt="" style="width: 30px;">
             </span>
-            <h2 class="brand-text">Alpha Promos</h2>
+            <h2 class="brand-text">Alpha</h2>
         </a>
       </li>
       <li class="nav-item nav-toggle">
