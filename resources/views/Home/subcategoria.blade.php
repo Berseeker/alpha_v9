@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-sliders.css') }}">
 <link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommercet.css') }}">
 <link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
-<link rel="stylesheet" href="{{ asset('css/home/categori.css') }}">
+<link rel="stylesheet" href="{{ asset('css/home/second_style.css') }}">
 @endsection
 
     

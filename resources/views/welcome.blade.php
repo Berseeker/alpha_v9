@@ -3,7 +3,9 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home/style_home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
+
 @endsection
 
 @section('content')
@@ -11,23 +13,31 @@
     @include('_partials.social')
 
     <div class="owl-carousel owl-theme custom-t">
-        <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol_catalogo.jpg') }}" alt="" height="550px;" class="customImgSilder"></a>
-        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas.png') }}" alt="" height="550px;" class="customImgSilder"></a>
-        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" height="550px;" class="customImgSilder"></a>
-        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" height="550px;" class="customImgSilder"></a>
+        @foreach ($imagenes as $imagen)
+            @if ($imagen->seccion == 'home_slider')           
+                <a href="{{ ($imagen->pdf == null) ? '#' : Storage::url($imagen->pdf) }}" target="{{ ($imagen->pdf == null) ? '' : '_blank'}}" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
+            @endif
+        @endforeach
+        <a href="{{ asset('catalogos/cat_fiestas.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_patrio.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/cat_rosa.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_rosa.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/cat_clases.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_regreso_clases.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/cat_futbol.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/cat_agendas.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_agendas.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/cat_verano.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/verano.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/cat_golf.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" class=""></a>
     </div>
 
 
     <div class="content" style="display: -webkit-box;">
         <div class="grid">
             <figure class="effect-lily">
-                <img src="{{ asset('imgs/dynamic_items/catalogo.jpeg') }}" alt="img12"/> <!-- 480 * 360 tamaño de las imagenes -->
+                <img src="{{ asset('imgs/dynamic_items/sombreros.png') }}" alt="Sombreros"/> <!-- 480 * 360 tamaño de las imagenes -->
                 <figcaption>
                     <div>
-                        <h2>Catalogo <span>{{ now()->year }}</span></h2>
+                        <!--h2>Catalogo <span>{{ now()->year }}</span></h2-->
                         <!--p>Lily likes to play with crayons and pencils</p-->
                     </div>
-                    <a href="{{ asset('catalogos/futbol_2022.pdf') }}" target="_blank">View more</a>
+                    <a href="{{ url('https://www.alphapromos.mx/producto/sombrero-playa-sm-12') }}" target="_blank">Ver mas</a>
                 </figcaption>     
             </figure>
             <!--figure class="effect-oscar">

@@ -55,4 +55,64 @@ class ProductoController extends Controller
             return back()->with('error','El producto seleccionado no pudo ser eliminado');
         }
     }
+
+    public function create()
+    {
+        $categorias = Categoria::all();
+        return view('dashboard.productos.create',[
+            'categorias' => $categorias        
+        ]);
+    }
+
+    public function store( Request $request){
+        $rules = [
+            'nombre' =>             'required',
+            'modelo'=>              'required',
+            'SDK'=>                 'required',
+            'color'=>               'required',
+            'proveedor'=>           'required',
+            'metodo_impresion'=>    'required',
+            'categoria'=>          'required',
+            'subcategoria'=>        'required',
+            'descripcion'=>         'required',
+        ];
+
+        $messages = [
+            'nombre.required' => 'Es necesario poner un nombre',
+            'modelo.required' => 'Es necesario poner un modelo',
+            'SDK.required' => 'Es necesario poner un SDK',
+            'color.required' => 'Es necesario poner un color',
+            'proveedor.required' => 'Es necesario poner un proveedor',
+            'metodo_impresion.required' => 'Es necesario poner un metodo de impresion',
+            'categoria.required' => 'Es necesario poner una categoria',
+            'subcategoria.required' => 'Es necesario poner una subcategoria',
+            'descripcion.required' => 'Es necesario poner una descripcion'
+        ];
+        
+        $this->validate($request, $rules, $messages);
+        $path = []; 
+        $colores = explode(",",$request->color);
+        if($request->has('nueva_imagen')){
+            foreach($request->nueva_imagen as $imagen){
+                $path[] = $imagen->store('public');
+            }  
+        }
+
+        $producto = new Producto();
+        $producto->nombre = $request->nombre;
+        $producto->modelo = $request->modelo;
+        $producto->images = ($request->has('nueva_imagen')) ? json_encode($path) : null;
+        $producto->SDK = $request->SDK;
+        $producto->color = json_encode($colores);
+        $producto->proveedor = $request->proveedor;
+        $producto->metodos_impresion = $request->metodo_impresion;
+        $producto->categoria_id = $request->categoria;
+        $producto->subcategoria_id = $request->subcategoria;
+        $producto->descripcion = $request->descripcion;
+
+        $producto->save();
+        return back()->with('success',"Producto Creado");
+        
+
+    }
 }

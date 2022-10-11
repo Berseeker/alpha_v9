@@ -15,6 +15,13 @@ use App\Models\Categoria;
 use App\Models\Producto;
 
 use App\Mail\newMessage;
+use App\Models\Imagen;
+
+use SEOMeta;
+use OpenGraph;
+use JsonLd;
+use Twitter;
+
 
 class IndexController extends Controller
 {
@@ -188,6 +195,39 @@ class IndexController extends Controller
 
         $colores = json_decode($producto->color);
         $count_color = 0;
+        $images_collection = array();
+        if( $producto->images != NULL)
+        {
+            foreach (json_decode($producto->images) as $img) {
+                $image = $img;
+                if(!Str::contains($img,['https','http']))
+                {
+                    $image = url('/'.$img);
+                }
+
+                array_push($images_collection,$image);
+            }
+        }
+
+        SEOMeta::setTitle('Producto - '.$producto->nombre);
+        SEOMeta::setDescription($producto->descripcion);
+        SEOMeta::addMeta('producto:published_time', $producto->created_at->toW3CString(), 'property');
+        SEOMeta::addKeyword($producto->busqueda);
+
+        OpenGraph::setDescription($producto->descripcion);
+        OpenGraph::setTitle($producto->nombre);
+        OpenGraph::setUrl('https://alphapromos.mx/producto/ '.$slug_producto);
+        OpenGraph::addProperty('type', 'producto');
+        OpenGraph::addProperty('locale', 'es');
+        OpenGraph::addImage($images_collection[0]);
+
+        Twitter::setTitle($producto->nombre);
+        Twitter::setSite('@alphapromos');
+        
+        JsonLd::setTitle($producto->nombre);
+        JsonLd::setDescription($producto->descripcion);
+        JsonLd::setType('Producto');
+        JsonLd::addImage($images_collection[0]);
         
         return view('Home.producto',[
             'title' => $title,
@@ -301,7 +341,7 @@ class IndexController extends Controller
             'cont' => 1
         ]);
     }
-
+    
     public function displays()
     {
         $categorias = Categoria::all();
@@ -316,4 +356,5 @@ class IndexController extends Controller
             'cont' => 1
         ]);
     }
+
 }

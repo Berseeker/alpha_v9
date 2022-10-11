@@ -6,7 +6,24 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbarContent" class="collapse navbar-collapse">
-        <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav mx-auto mobile-menu">
+            <li class="nav-item">
+                <div class="row" style="margin:0px;">
+                    @foreach ($categorias as $categoria)
+                        <div class="col-6" style="margin-bottom:10px;">
+                            <h6 class="text-uppercase"> 
+                                <i class="fa {{ $categoria->icon }}"></i>
+                                <a href="{{ url('/categoria/'.Str::slug($categoria->nombre, '-')) }}" class="custom-a category-title "> {{ $categoria->nombre }} </a>
+                            </h6>
+                        </div>
+                    @endforeach
+                </div>
+            </li>
+            <li class="nav-item"><a href="{{ url('/contacto') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Contacto</a></li>
+            <li class="nav-item"><a href="{{ url('/servicios') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Servicios</a></li>
+            <li class="nav-item"> <a href="{{ url('/displays') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Alpha Displays</a> </li>
+        </ul>
+        <ul class="navbar-nav mx-auto desktop-menu">
             <li class="nav-item"><a href="/" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Inicio</a></li>
             <li class="nav-item dropdown megamenu">
                 <a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle font-weight-bold text-uppercase hvr-underline-from-left">Categorías</a>

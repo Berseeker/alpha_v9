@@ -26,7 +26,9 @@ Route::post('/ver-cotizacion',[App\Http\Controllers\WEB\Home\CotizacionControlle
 Route::get('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'contacto'])->name('home.contacto');
 Route::post('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'sendMessage'])->name('home.contacto');
 Route::get('/servicios',[App\Http\Controllers\WEB\Home\IndexController::class, 'servicios'])->name('home.servicios');
-Route::get('/displays',[App\Http\Controllers\WEB\Home\IndexController::class, 'displays'])->name('home.displays');
+Route::get('/displays',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'displays'])->name('home.displays');
+Route::get('/linea-alpha',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'hats'])->name('home.linea.displays');
+Route::post('/linea-alpha',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'hatCotizacion']);
 
 
 

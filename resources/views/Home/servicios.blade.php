@@ -11,6 +11,36 @@ $configData = Helper::applClasses();
     <!--   Estilos Draggable --> 
     <link rel="stylesheet" href="https://use.typekit.net/ugp0unb.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home/services/base.css') }}" />
+    <style>
+        .mobile-row{
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        .mobile-menu{
+            display: none;
+        }
+
+        .desktop-menu{
+            display: inline-flex;
+        }
+
+
+        @media(max-width: 500px){
+            .mobile-row{
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .mobile-menu{
+                display: block;
+            }
+
+            .desktop-menu{
+                display: none;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
