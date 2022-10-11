@@ -33,8 +33,6 @@ class newCotizacion extends Mailable
     public function build()
     {
         return $this->markdown('Mails.newCotizacion')
-            ->subject('Nueva Cotizacion')
-            ->from('noreply@alphapromos.mx', 'Alpha Promos')
             ->with([
                         'cotizacion' => $this->cotizacion,
                         'url' => $this->url,

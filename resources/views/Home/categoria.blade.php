@@ -39,9 +39,6 @@
                     </div>
                     <div class="col-sm-12 col-md-6">
                         @if($productos instanceof \Illuminate\Pagination\LengthAwarePaginator )
-                            <div class="pager-text">
-                                <p style="margin-bottom: 30px;">Mostrando {{ $productos->perPage() }} productos de {{ $productos->total() }}</p>
-                            </div>
                             {{$productos->links()}}
                         @endif
                     </div>
@@ -53,7 +50,7 @@
             <section id="ecommerce-products" class="grid-view row">
                 @if ($productos->isEmpty())
 
-                    <img src="{{ asset('imgs/logos/no_encontrado.png') }}" alt="No hay productos que coincidan con tu busqueda" style="width: 550px;margin:0px auto;margin-bottom:20px;">
+                    <img src="{{ asset('imgs/logos/no_item.png') }}" alt="No hay productos que coincidan con tu busqueda" style="width: 350px;margin:0px auto;margin-bottom:20px;">
                     <h2 class="text-warning">No se encontraron productos relacionados <br> con tu búsqueda </h2>
 
                 @else
@@ -131,9 +128,7 @@
                 @endif
             </section>
             @if($productos instanceof \Illuminate\Pagination\LengthAwarePaginator )
-                <div class="pager-text">
-                    <p style="margin-bottom: 30px;">Mostrando {{ $productos->perPage() }} productos de {{ $productos->total() }}</p>
-                </div>
+
                 {{$productos->links()}}
 
             @endif

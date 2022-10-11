@@ -101,17 +101,7 @@ class CotizacionController extends Controller
 
     public function update(Request $request,$id)
     {
-        $cotizacion = Cotizacion::find($id);
-        if($cotizacion != null)
-        {
-            $cotizacion->status = $request->status;
-            $cotizacion->user_id = $request->user_id;
-            $cotizacion->save();
-        }
-
-        return response()->json([
-            'msg' => 'La cotizacion se actualizo correctamente'
-        ]);
+        dd($request->all());
     }
 
     public function delete($id)

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Models\Producto;
-use App\Models\Categoria;
 
 class ProductoController extends Controller
 {
@@ -31,48 +30,14 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $producto = Producto::find($id);
-        $categorias = Categoria::all();
         if($producto != null)
         {
             $imgs = json_decode($producto->images);
             return view('dashboard.productos.edit',[
                 'imgs' => $imgs,
-                'producto' => $producto,
-                'categorias' => $categorias
+                'producto' => $producto
             ]);
         }
-    }
-
-    public function update(Request $request, $id){
-        $rules = [
-            'nombre' =>       'required|string',
-            'modelo' =>       'required|string',
-            'categoria' =>    'required',
-            'subcategoria' => 'required',
-            'descripcion' =>  'required|string'
-        ];
-
-        $messages = [
-            'nombre.required' => 'Es necesario un Nombre',
-            'nombre.text' => 'Tipo de Nombre valido',
-            'modelo.required' => 'Es necesario un Modelo',
-            'modelo.text' => 'TIpo de modelo NO valido',
-            'categoria.required' => 'Es necesario llenar este campo',
-            'subcategoria.required' => 'Es necesario llenar este campo',
-            'descripcion.required' => 'Es necesaria una Descripcion',
-            'descripcion.text' => 'Tipo de descripcion NO valido',
-        ];
-
-        $this->validate($request, $rules, $messages);
-        $producto = Producto::find($id);
-        $producto->nombre = $request->nombre;
-        $producto->modelo = $request->modelo;
-        $producto->categoria_id = $request->categoria;
-        $producto->subcategoria_id = $request->subcategoria;
-        $producto->descripcion = $request->descripcion;
-
-        $producto->save();
-        return back();
     }
 
     public function delete($id)

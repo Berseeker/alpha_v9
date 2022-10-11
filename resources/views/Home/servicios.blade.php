@@ -166,6 +166,10 @@ $configData = Helper::applClasses();
                         <div class="column__img" style="background-image:url('/imgs/services/gota_resina.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/tampografia.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/serigrafia.png')"></div>
+                        <!--div class="column__img" style="background-image:url('/imgs/services/grabado_laser.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/bordado.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/sand_blast.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/sublimacion.png')"></div-->
                     </div>
                     <div class="column column--bottom">
                         <div class="column__img" style="background-image:url('/imgs/services/tampografia.png')"></div>
@@ -173,6 +177,10 @@ $configData = Helper::applClasses();
                         <div class="column__img" style="background-image:url('/imgs/services/vynil.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/gota_resina.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/tampografia.png')"></div>
+                        <!--div class="column__img" style="background-image:url('/imgs/services/impresion_digital.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/sand_blast.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/tampografia.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/gota_resina.png')"></div-->
                     </div>
                     <div class="column">
                         <div class="column__img" style="background-image:url('/imgs/services/bordado.png')"></div>
@@ -180,6 +188,11 @@ $configData = Helper::applClasses();
                         <div class="column__img" style="background-image:url('/imgs/services/sublimacion.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/grabado_laser.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/serigrafia.png')"></div>
+                        <!--div class="column__img" style="background-image:url('/imgs/services/tampografia.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/sublimacion.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/vynil.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/serigrafia.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/impresion_digital.png')"></div-->
                     </div>
                     <div class="column column--bottom">
                         <div class="column__img" style="background-image:url('/imgs/services/vynil.png')"></div>
@@ -187,6 +200,10 @@ $configData = Helper::applClasses();
                         <div class="column__img" style="background-image:url('/imgs/services/tampografia.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/bordado.png')"></div>
                         <div class="column__img" style="background-image:url('/imgs/services/sand_blast.png')"></div>
+                        <!--div class="column__img" style="background-image:url('/imgs/services/grabado_laser.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/serigrafia.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/impresion_digital.png')"></div>
+                        <div class="column__img" style="background-image:url('/imgs/services/vynil.png')"></div-->
                     </div>
                 </div><!--/columns-->
                 <nav class="menu">

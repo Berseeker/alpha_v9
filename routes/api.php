@@ -13,8 +13,6 @@ use App\Http\Controllers\API\Productos\ProductoController;
 use App\Http\Controllers\API\Ventas\VentasController;
 use App\Http\Controllers\API\Buscador\BuscadorController;
 use App\Http\Controllers\API\Slug\SlugController;
-use App\Http\Controllers\API\Users\UserController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +57,3 @@ Route::get('search-productos/{search}',[BuscadorController::class,'search']);
 
 Route::get('update-null-items',[ActualizarController::class,'index']);
 Route::get('restore-null-items',[ActualizarController::class,'restore']);
-
-Route::get('get-subcategorias/{id}',[BuscadorController::class,'getSubcategorias']);
-
-
-Route::get('get-users',[UserController::class,'empleados']);

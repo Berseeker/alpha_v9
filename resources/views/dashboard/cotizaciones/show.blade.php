@@ -253,16 +253,25 @@
                 <div class="cardMaster rounded border p-2 mb-1">
                     <div class="d-flex justify-content-between flex-sm-row flex-column">
                         <div class="card-information">
-                        @if ($cotizacion->logo_img != null)
-                            @php
-                                $archivos = json_decode($cotizacion->logo_img);
-                            @endphp
-                            @foreach ($archivos as $file)
-                                <iframe width="300" height="300" src="{{ Storage::url($file)}}" frameborder="0"></iframe>
-                            @endforeach
-                        @else 
-                            <p>No Contiene Archivos Multimedia</p>
-                        @endif 
+                        <img
+                            class="mb-1 img-fluid"
+                            src="{{asset('images/icons/payments/mastercard.png')}}"
+                            alt="Master Card"
+                        />
+                        <div class="d-flex align-items-center mb-50">
+                            <h6 class="mb-0">Tom McBride</h6>
+                            <span class="badge badge-light-primary ms-50">Primary</span>
+                        </div>
+                        <span class="card-number">∗∗∗∗ ∗∗∗∗ 9856</span>
+                        </div>
+                        <div class="d-flex flex-column text-start text-lg-end">
+                        <div class="d-flex order-sm-0 order-1 mt-1 mt-sm-0">
+                            <button class="btn btn-outline-primary me-75" data-bs-toggle="modal" data-bs-target="#editCard">
+                            Edit
+                            </button>
+                            <button class="btn btn-outline-secondary">Delete</button>
+                        </div>
+                        <span class="mt-2">Card expires at 12/24</span>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ class VentaController extends Controller
         $ventas = Venta::all();
 
         $breadcrumbs = [
-            ['link' => "/home", 'name' => "Dashboard"], ['name' => "Ventas"]
+            ['link' => "/", 'name' => "Home"], ['name' => "Ventas"]
         ];
 
         return view('dashboard.ventas.index',[

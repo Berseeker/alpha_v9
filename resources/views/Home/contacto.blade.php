@@ -169,6 +169,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     {!! htmlFormSnippet([
                                         "theme" => "light",

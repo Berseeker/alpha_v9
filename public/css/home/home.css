@@ -2219,8 +2219,8 @@ a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
   height: 500px;
 }
 
-@media (min-width: 1000px){
+@media(min-width: 1200px){
   .customImgSilder{
-    height: 600px;
+    height: 550;
   }
 }
