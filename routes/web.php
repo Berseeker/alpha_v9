@@ -27,7 +27,7 @@ Route::get('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'c
 Route::post('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'sendMessage'])->name('home.contacto');
 Route::get('/servicios',[App\Http\Controllers\WEB\Home\IndexController::class, 'servicios'])->name('home.servicios');
 Route::get('/displays',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'displays'])->name('home.displays');
-Route::get('/linea-alpha',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'hats'])->name('home.linea.displays');
+Route::get('/linea-alpha',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'hats'])->name('home.linea.alpha');
 Route::post('/linea-alpha',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'hatCotizacion']);
 
 

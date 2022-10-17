@@ -22,6 +22,7 @@
             <li class="nav-item"><a href="{{ url('/contacto') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Contacto</a></li>
             <li class="nav-item"><a href="{{ url('/servicios') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Servicios</a></li>
             <li class="nav-item"> <a href="{{ url('/displays') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Alpha Displays</a> </li>
+            <li class="nav-item"> <a href="{{ url('/linea-alpha') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Linea Alpha</a> </li>
         </ul>
         <ul class="navbar-nav mx-auto desktop-menu">
             <li class="nav-item"><a href="/" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Inicio</a></li>
@@ -59,6 +60,7 @@
             <li class="nav-item"><a href="{{ url('/contacto') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Contacto</a></li>
             <li class="nav-item"><a href="{{ url('/servicios') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Servicios</a></li>
             <li class="nav-item"> <a href="{{ url('/displays') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Alpha Displays</a> </li>
+            <li class="nav-item"> <a href="{{ url('/linea-alpha') }}" class="nav-link font-weight-bold text-uppercase hvr-underline-from-left">Linea Alpha</a> </li>
         </ul>
         <ul class="navbar-nav" id="auth-nav">
             <li>

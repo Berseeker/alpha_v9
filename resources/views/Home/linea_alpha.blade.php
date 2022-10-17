@@ -18,9 +18,8 @@ $configData = Helper::applClasses();
 @section('content')
 
 	<div class="display-header" style="margin-top: 100px;">
-		<h2 style="text-align: center;margin-top:30px;margin-bottom:30px;">Alpha Displays</h2>
-		<p>Ponemos a tus órdenes nuestro servicio de diseño y armado de stands para tus expos, convenciones o eventos sociales con personal calificado y precios 
-			accesibles, solicita cotización.</p>
+		<h2 style="text-align: center;margin-top:30px;margin-bottom:30px;">Línea Alpha</h2>
+		<p style="margin-bottom:60px;">Ponemos a tus órdenes una amplia gama de sombreros pintados a mano.</p>
 	</div>
 
 	<div class="row" style="padding:0px;">
