@@ -54,7 +54,6 @@ $(function () {
                 { data: 'nombre' },
                 { data: 'email' },
                 { data: 'celular' },
-                { data: 'total_productos' },
                 { data: 'status' },
                 { data: '' },
             ],
@@ -133,16 +132,8 @@ $(function () {
                     }
                 },
                 {
-                    targets: 4,
-                    render: function (data, type, full, meta) {
-                        var $celular = full['total_productos'];
-
-                        return '<span class="text-nowrap">' + $celular + '</span>';
-                    }
-                },
-                {
                     // User Status
-                    targets: 5,
+                    targets: 4,
                     render: function (data, type, full, meta) {
                         var $status = full['status'];
                         //console.log($status)

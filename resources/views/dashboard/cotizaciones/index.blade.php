@@ -109,7 +109,6 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Celular</th>
-            <th>Nº Productos</th>
             <th>Estatus</th>
             <th>Acciones</th>
           </tr>
@@ -174,7 +173,7 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-cotizaciones-listas.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-cotizaciones.js') }}"></script>
 
   <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
   <script>
