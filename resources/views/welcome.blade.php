@@ -23,8 +23,19 @@
         @endforeach
         <a href="{{ asset('catalogos/new_year.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/new_year.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/agendas_2023.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas_2023.png') }}" alt="" class=""></a>
+        <a href="#" data-toggle="modal" data-target="#videoAlpha" class="item"><img src="{{ asset('imgs/slider/viajes_2023.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/cat_futbol.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/cat_golf.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" class=""></a>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="videoAlpha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <video width="800" controls autoplay='autoplay' loop='true' style="margin-top: 80px;" muted>
+                <source src="{{ asset('imgs/viajes_video.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
     </div>
 
 
