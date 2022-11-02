@@ -10,10 +10,10 @@
 
     @include('_partials.social')
 
-    <video width="100%" height="600" controls autoplay='autoplay' loop='true' style="margin-top: 80px;" muted>
+    <!--video width="100%" height="600" controls autoplay='autoplay' loop='true' style="margin-top: 80px;" muted>
         <source src="{{ asset('imgs/viajes_video.mp4') }}" type="video/mp4">
         Your browser does not support the video tag.
-    </video>
+    </video-->
 
     <div class="owl-carousel owl-theme custom-t">
         @foreach ($imagenes as $imagen)
@@ -21,9 +21,9 @@
                 <a href="{{ ($imagen->pdf == null) ? '#' : Storage::url($imagen->pdf) }}" target="{{ ($imagen->pdf == null) ? '' : '_blank'}}" class="item"><img src="{{ Storage::url($imagen->path) }}" alt="" height="600px;" class="customImgSilder"></a>              
             @endif
         @endforeach
-        <a href="#" target="_blank" class="item"><img src="{{ asset('imgs/slider/new_year.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/new_year.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/new_year.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/agendas_2023.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas_2023.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/cat_futbol.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/futbol.jpg') }}" alt="" class=""></a>
-        <a href="{{ asset('catalogos/cat_agendas.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/banner_agendas.png') }}" alt="" class=""></a>
         <a href="{{ asset('catalogos/cat_golf.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/golf.png') }}" alt="" class=""></a>
     </div>
 
