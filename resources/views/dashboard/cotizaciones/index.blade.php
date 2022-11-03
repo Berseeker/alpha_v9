@@ -101,7 +101,7 @@
         <div class="col-md-4 user_status"></div>
       </div-->
     </div>
-    <div class="card-datatable table-responsive pt-0">
+    <div class="card-datatable table-responsive pt-0" style="overflow-x: inherit;">
       <table class="cotizacion-list-table table">
         <thead class="table-light">
           <tr>
@@ -124,25 +124,24 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Edición rapida cotizacion  #<span id="cotizacion-id"></span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      <div class="modal-body">
-        <form action="" method="get">
-          @csrf
-          <div class="form-group">
-            <label for="empleados">Asignar vendedor</label>
-            <select name="empleados" class="form-control" id="empleados-alpha">
-            </select>
-          </div>
-        </form>
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="close-modal" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <form action="{{ route('dashboard.update_quick.cotizacion') }}" method="POST">
+        <div class="modal-body">
+            @csrf
+            <div class="form-group">
+              <label for="empleados">Estatus</label>
+              <select name="estatus" class="form-control">
+                <option value="Aprobada">Aprobada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Cancelada">Cancelada</option>
+              </select>
+            </div>
+            <input type="hidden" name="cotizacion_id" id="cotizacion_id">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Editar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -173,7 +172,7 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-cotizaciones.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-coti.js') }}"></script>
 
   <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
   <script>

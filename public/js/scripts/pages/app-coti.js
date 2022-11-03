@@ -159,6 +159,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="#" onclick="fireModal(' + id + ');" class="dropdown-item">' +
+                            feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
+                            'Edicion Rapida</a>' +
                             '<a href="'+
                             assetPath + 'dashboard/edit-cotizacion/' + id +
                             '" class="dropdown-item">' +
@@ -326,7 +329,7 @@ $(function () {
 
 function fireModal(id)
 {
-    /*$.ajax({
+    $.ajax({
         url: "/api/get-users",
         method: "GET",
         dataType: "json",
@@ -346,14 +349,7 @@ function fireModal(id)
     $('#cotizacion-id').html('');
     $('#cotizacion-id').html(id);
 
-    var template = '<option value=""></option>'
-   
+    $('#cotizacion_id').val(id);
     $('#edicion-rapida').modal('show');
-    console.log(id);
-    //PONER EN LOS ACTIONS 
-    '<a href="#" onclick="fireModal('+id+');" class="dropdown-item">' +
-                            feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
-                            'Edicion Rapida</a>' +
-    */
 
 }

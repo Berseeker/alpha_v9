@@ -291,6 +291,58 @@ class CotizacionController extends Controller
         
     }
 
+    public function updateQuick(Request $request)
+    {
+ 
+        $cotizacion = Cotizacion::find((int) $request->cotizacion_id);
+        $cotizacion->status = $request->estatus;
+        $cotizacion->save();
+
+        if($request->estatus == 'Aprobada')
+        {
+            $prevVenta = Venta::where('cotizacion_id',$cotizacion->id)->first();
+            if($prevVenta == null)
+            {
+                $venta = new Venta();
+                $venta->cantidad_piezas = $total_pzas;
+                $venta->venta_realizada = now();
+                $venta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
+                $venta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
+                $venta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
+                $venta->status = 'Aprobada';
+                $venta->cotizacion_id = $cotizacion->id;
+                $venta->user_id = Auth::user()->id;
+                $venta->save();
+            }
+            else {
+                $prevVenta->cantidad_piezas = $total_pzas;
+                $prevVenta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
+                $prevVenta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
+                $prevVenta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
+                $prevVenta->user_id = Auth::user()->id;
+                if($prevVenta->isDirty())
+                {
+                    $prevVenta->venta_realizada = now();
+                    $prevVenta->save();
+                }
+            }          
+        }
+        //$cotizacion->id
+        //venta $cotizaion_id
+        if($request->estatus == 'Pendiente' || $request->estatus == 'Cancelada' ){
+            $preVenta = Venta::where('cotizacion_id', '=' , $cotizacion->id)->get();
+            if(!$preVenta->isEmpty()){
+                foreach($preVenta as $Venta){
+                    $Venta->delete();
+                }
+            }
+
+        }
+
+        return back()->with('success','La cotizacion se actualizo de manera correcta');
+        
+    }
+
     public function download($id){
         
         $cotizacion = Cotizacion::find($id);
