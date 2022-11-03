@@ -90,6 +90,49 @@ class CotizacionController extends Controller
 
         $this->validate($request,$rules,$messages);
 
+
+        $array = array_count_values($request->producto_id);
+
+        $cont = 0;
+        $index = null;
+        $repeated = false;
+        $unset = null;
+
+        foreach ($array as $key => $id) {
+            if ($id > 1){
+                $index = $key;
+                $repeated = true;
+            }
+        }
+
+        $productos_ids = $request->producto_id;
+        $numero_pzas = $request->numero_pzas;
+        $numero_tintas = $request->numero_tintas;
+        $fecha_deseable = $request->fecha_deseable;
+        $metodos_impresion = $request->metodos_impresion;
+        $tipografia = $request->tipografia;
+        $pantones = $request->pantones;
+        $total_produtos = $request->total_productos;
+
+        if ($repeated) {
+            foreach ($request->producto_id as $key => $producto) {
+                if ($index == $producto && $cont == 0) {
+                    $cont = 1;
+                } else if ($index == $producto && $cont == 1) {
+                    $unset = $key;
+                }
+            }
+            unset($productos_ids[$unset]);
+            unset($numero_pzas[$unset]);
+            unset($numero_tintas[$unset]);
+            unset($fecha_deseable[$unset]);
+            unset($metodos_impresion[$unset]);
+            unset($tipografia[$unset]);
+            unset($pantones[$unset]);
+            $total_productos = count($productos_ids);
+        }
+        
+
         $cotizacion = new Cotizacion();
         $cotizacion->nombre = $request->nombre;
         $cotizacion->apellidos = $request->apellidos;
@@ -99,36 +142,35 @@ class CotizacionController extends Controller
         $cotizacion->comentarios = $request->comentarios;
         $medidas_deseables = array();
         $string = 'Sin definir';
-        for($i = 0; $i < $request->total_productos; $i++)
+        for($i = 0; $i < $total_productos; $i++)
         {
             array_push($medidas_deseables,$string);
         }
 
         $precios_pzas = array();
         $string = 0;
-        for($i = 0; $i < $request->total_productos; $i++)
+        for($i = 0; $i < $total_productos; $i++)
         {
             array_push($precios_pzas,$string);
         }
         
             
-
         $cotizacion->medidas_deseables = json_encode($medidas_deseables);
-        $cotizacion->fecha_deseable = json_encode($request->fecha_deseable);
-        $cotizacion->pantones = json_encode($request->pantones);
-        $cotizacion->tipografia = json_encode($request->tipografia);
+        $cotizacion->fecha_deseable = json_encode($fecha_deseable);
+        $cotizacion->pantones = json_encode($pantones);
+        $cotizacion->tipografia = json_encode($tipografia);
         $cotizacion->precio_pza = json_encode($precios_pzas);
         $cotizacion->precio_x_producto = json_encode($precios_pzas);
         $cotizacion->precio_total = 0;
         $cotizacion->precio_subtotal = 0;
         $cotizacion->mano_x_obra = 0;
         
-        $cotizacion->numero_tintas = json_encode($request->numero_tintas);
+        $cotizacion->numero_tintas = json_encode($numero_tintas);
         $cotizacion->forma_pago = 'Tarjeta';
-        $cotizacion->numero_pzas = json_encode($request->numero_pzas);
-        $cotizacion->productos_id = json_encode($request->producto_id);
-        $cotizacion->metodos_impresion = json_encode($request->metodos_impresion);
-        $cotizacion->total_productos = $request->total_productos;
+        $cotizacion->numero_pzas = json_encode($numero_pzas);
+        $cotizacion->productos_id = json_encode($productos_ids);
+        $cotizacion->metodos_impresion = json_encode($metodos_impresion);
+        $cotizacion->total_productos = $total_productos;
         $cotizacion->calle = $request->calle;
         $cotizacion->cp = $request->cp;
         $cotizacion->no_ext = $request->no_ext;
