@@ -51,9 +51,9 @@ $(function () {
             columns: [
                 // columns according to JSON
                 { data: 'id' },
+                { data: 'id' },
                 { data: 'nombre' },
                 { data: 'email' },
-                { data: 'celular' },
                 { data: 'status' },
                 { data: '' },
             ],
@@ -74,28 +74,31 @@ $(function () {
                     responsivePriority: 4,
                     render: function (data, type, full, meta) {
                         //console.log(full);
-                        var name = full['nombre'] +' '+full['apellidos'] ,
-                            $id = 'Id: '+full['id'];
+                        var id = 'Id: '+full['id'];
 
-                        var colorClass = '';
                         // Creates full output for row
                         var $row_output =
                             '<div class="d-flex justify-content-left align-items-center">' +
                             '<div class="d-flex flex-column">' +
                             '<a href="#" class="user_name text-truncate text-body"><span class="fw-bolder">' +
-                            name +
-                            '</span></a>' +
-                            '<small class="emp_post text-muted">' +
-                            $id +
-                            '</small>' +
+                            id +
+                            '</span></a>'
                             '</div>' +
                             '</div>';
                         return $row_output;
                     }
                 },
                 {
-                    // User Role
                     targets: 2,
+                    render: function (data, type, full, meta) {
+                        var name = full['nombre'] + ' ' + full['apellidos'],
+
+                        return '<span class="text-nowrap">' + $name + '</span>';
+                    }
+                },
+                {
+                    // User Role
+                    targets: 3,
                     render: function (data, type, full, meta) {
                         var $email = full['email'];
                         var roleBadgeObj = {
@@ -121,14 +124,6 @@ $(function () {
                             20: feather.icons['briefcase'].toSvg({ class: 'font-medium-3 text-danger me-50' }),
                         };
                         return "<span class='text-truncate align-middle'>" + $email + '</span>';
-                    }
-                },
-                {
-                    targets: 3,
-                    render: function (data, type, full, meta) {
-                        var $celular = full['codigo_area'] + ' ' + full['celular'];
-
-                        return '<span class="text-nowrap">' + $celular + '</span>';
                     }
                 },
                 {

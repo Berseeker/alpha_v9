@@ -106,9 +106,9 @@
         <thead class="table-light">
           <tr>
             <th></th>
+            <th>Id</th>
             <th>Nombre</th>
-            <th>Email</th>
-            <th>Celular</th>
+            <th>Email</th> 
             <th>Estatus</th>
             <th>Acciones</th>
           </tr>
