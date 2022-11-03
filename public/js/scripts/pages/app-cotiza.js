@@ -91,7 +91,7 @@ $(function () {
                 {
                     targets: 2,
                     render: function (data, type, full, meta) {
-                        var name = full['nombre'] + ' ' + full['apellidos'],
+                        var name = full['nombre'] + ' ' + full['apellidos'];
 
                         return '<span class="text-nowrap">' + $name + '</span>';
                     }
