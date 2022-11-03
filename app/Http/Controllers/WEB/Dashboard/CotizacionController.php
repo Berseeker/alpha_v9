@@ -198,16 +198,7 @@ class CotizacionController extends Controller
         $cotizacion->email = $request->email;
         $cotizacion->celular = $request->celular;
         $cotizacion->comentarios = $request->comentarios;
-        /* Productos */
-        // = array();
-        /*foreach ($request->fecha_deseable as $item) {
-           
-            $date = new DateTime($item);
-            
-            array_push($date_transformed,$date->format('Y-m-d'));
-        }*/
-        
-        dd($request);
+        /* Productos */  
         $cotizacion->medidas_deseables = json_encode($request->medidas_deseables);
         $cotizacion->fecha_deseable = json_encode($request->fecha_deseable);
         $cotizacion->pantones = json_encode($request->pantones);
