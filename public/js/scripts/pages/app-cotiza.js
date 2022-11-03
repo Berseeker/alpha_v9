@@ -74,7 +74,7 @@ $(function () {
                     responsivePriority: 4,
                     render: function (data, type, full, meta) {
                         //console.log(full);
-                        var id = 'Id: '+full['id'];
+                        var id = full['id'];
 
                         // Creates full output for row
                         var $row_output =

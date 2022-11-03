@@ -172,7 +172,7 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-coti.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-cotiza.js') }}"></script>
 
   <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
   <script>
