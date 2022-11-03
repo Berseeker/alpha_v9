@@ -207,6 +207,7 @@ class CotizacionController extends Controller
             array_push($date_transformed,$date->format('Y-m-d'));
         }*/
         
+        dd($request);
         $cotizacion->medidas_deseables = json_encode($request->medidas_deseables);
         $cotizacion->fecha_deseable = json_encode($request->fecha_deseable);
         $cotizacion->pantones = json_encode($request->pantones);
