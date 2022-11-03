@@ -12,7 +12,7 @@ class CotizacionController extends Controller
 {
     public function index()
     {
-        $cotizaciones = Cotizacion::where('deleted_at',null)->get()->toJson();
+        $cotizaciones = Cotizacion::where('deleted_at',null)->orderByDesc('id')->get()->toJson();
         
         return $cotizaciones;
     }
