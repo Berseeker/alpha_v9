@@ -112,7 +112,7 @@ class CotizacionController extends Controller
         $metodos_impresion = $request->metodos_impresion;
         $tipografia = $request->tipografia;
         $pantones = $request->pantones;
-        $total_produtos = $request->total_productos;
+        $total_productos = $request->total_productos;
 
         if ($repeated) {
             foreach ($request->producto_id as $key => $producto) {
