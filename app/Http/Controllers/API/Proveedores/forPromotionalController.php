@@ -38,7 +38,6 @@ class forPromotionalController extends Controller
         $response_json = curl_exec ( $curl ); //execute curl
         curl_close ( $curl );
         $response = json_decode($response_json ,true); //decoding the response in json format
-        dd($response);
 
 
         //$products = $response->json();
@@ -47,7 +46,7 @@ class forPromotionalController extends Controller
 
         foreach ($response as $producto) 
         {
-
+            dd($producto);
 
             $product = DB::table('productos')->where('SDK', '=', $producto['id_articulo'])->get();
             if(count($product) == 0){

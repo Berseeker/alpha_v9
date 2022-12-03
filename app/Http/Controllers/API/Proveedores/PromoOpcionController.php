@@ -28,7 +28,6 @@ class PromoOpcionController extends Controller
             ]);
         }
         $count = 0;
-        dd($result);
         foreach ($result as $key => $item) 
         {
             $prevItem = Producto::where('SDK',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
@@ -50,6 +49,7 @@ class PromoOpcionController extends Controller
 
 function insertProduct($producto)
 {
+    dd($producto);
     $product = new Producto();
     $product->nombre = $producto['name'];
     $product->nickname = $producto['name'];

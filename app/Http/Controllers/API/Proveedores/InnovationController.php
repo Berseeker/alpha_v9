@@ -46,7 +46,6 @@ class InnovationController extends Controller
                 //dd($response);
                 /****** TU CÓDIGO AQUÍ ******/
                 // mostrar el resultado 
-                dd($response['data']);
                 $categoria = array();
                 foreach ($response['data'] as $key => $value) 
                 {
@@ -74,7 +73,7 @@ class InnovationController extends Controller
 function insertProductInnovation($producto){
 
     try {
-            //dd($producto);
+            dd($producto);
             $item = new Producto();
             $item->nombre = $producto['nombre'];
             $item->nickname = $producto['nombre'];
