@@ -37,6 +37,9 @@ Route::get('doble-vela',[DobleVelaController::class,'index']);
 Route::get('doble-vela-update-imgs',[DobleVelaController::class,'update']);
 Route::get('promoopcion',[PromoOpcionController::class,'index']);
 
+#v2 APIS
+Route::get('new-innova-v2',[InnovationController::class,'v2']);
+
 
 Route::get('slug-categorias',[SlugController::class,'categoriaSlug']);
 Route::get('slug-subcategorias',[SlugController::class,'subcategoriaSlug']);
