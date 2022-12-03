@@ -38,7 +38,7 @@ class forPromotionalController extends Controller
         $response_json = curl_exec ( $curl ); //execute curl
         curl_close ( $curl );
         $response = json_decode($response_json ,true); //decoding the response in json format
-        //dd($response);
+        dd($response);
 
 
         //$products = $response->json();

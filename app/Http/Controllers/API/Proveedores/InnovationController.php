@@ -31,7 +31,7 @@ class InnovationController extends Controller
         $pag=$client->call('Pages',$params);
         $pag = json_decode($pag,true);
         $page=1;
-        //dd($pag);
+        dd($pag);
         //condición para limitar el número de páginas a mostrar
         //for ($i = 1; $pag <= $pag;$i++ ) 
         //{

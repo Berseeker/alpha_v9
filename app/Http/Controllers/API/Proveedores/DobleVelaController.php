@@ -36,10 +36,17 @@ class DobleVelaController extends Controller
         /* ----- IMPLEMENTACION PARA CONSUMIR LA API ----- */
         $ObjectInfo = $this->soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
         $result = json_decode($ObjectInfo->GetExistenciaAllResult, true);
-
+     
         $count = 0;
+
+        if ($result['intCodigo'] == 100) {
+            return response()->json([
+                'status' => 'Error',
+                'msg' => 'Horario no permitido para hacer sync'
+        ]);
+        }
+
         foreach ($result['Resultado'] as $producto) {
-            //dd($producto);
             $product = DB::table('productos')->where('modelo', '=', $producto['MODELO'])->get();
             if($product->isEmpty()){
                 insertProductVela($producto);
