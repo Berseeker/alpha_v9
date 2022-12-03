@@ -31,10 +31,10 @@ class InnovationController extends Controller
         $pag=$client->call('Pages',$params);
         $pag = json_decode($pag,true);
         $page=1;
-        dd($pag);
+        //dd($pag);
         //condición para limitar el número de páginas a mostrar
-        //for ($i = 1; $pag <= $pag;$i++ ) 
-        //{
+        for ($i = 1; $i <= $pag;$i++ ) 
+        {
 
             //parámetros especificando la página
                 $params=array('user_api'=>'Pu7P5Qy602ea9d959f19Byo7','api_key'=>'76o602ea9d959f1f4awL8R-AzIa','format'=>'JSON','page'=>1);
@@ -46,6 +46,7 @@ class InnovationController extends Controller
                 //dd($response);
                 /****** TU CÓDIGO AQUÍ ******/
                 // mostrar el resultado 
+                dd($response['data']);
                 $categoria = array();
                 foreach ($response['data'] as $key => $value) 
                 {
@@ -58,7 +59,7 @@ class InnovationController extends Controller
          
             
             /****** TU CÓDIGO AQUÍ ******/
-        //}
+        }
 
 
 
