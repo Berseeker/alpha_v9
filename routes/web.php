@@ -22,9 +22,9 @@ Route::get('/producto/{slug}',[App\Http\Controllers\WEB\Home\IndexController::cl
 
 Route::get('/busqueda-resultado',[App\Http\Controllers\WEB\Home\IndexController::class, 'busqueda'])->name('home.busqueda');
 Route::get('/ver-cotizacion',[App\Http\Controllers\WEB\Home\CotizacionController::class, 'index'])->name('home.cotizacion');
-Route::post('/ver-cotizacion',[App\Http\Controllers\WEB\Home\CotizacionController::class, 'store'])->name('home.cotizacion');
+Route::post('/ver-cotizacion',[App\Http\Controllers\WEB\Home\CotizacionController::class, 'store'])->name('home.store.cotizacion');
 Route::get('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'contacto'])->name('home.contacto');
-Route::post('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'sendMessage'])->name('home.contacto');
+Route::post('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'sendMessage'])->name('home.sendMsg');
 Route::get('/servicios',[App\Http\Controllers\WEB\Home\IndexController::class, 'servicios'])->name('home.servicios');
 Route::get('/displays',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'displays'])->name('home.displays');
 Route::get('/linea-alpha',[App\Http\Controllers\WEB\Home\LineaAlphaController::class, 'hats'])->name('home.linea.alpha');

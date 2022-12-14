@@ -52,6 +52,92 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
+
+        'innova' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/innova'),
+            'url' => env('APP_URL').'/storage/innova',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+
+        'doblevela' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/doblevela'),
+            'url' => env('APP_URL').'/storage/doblevela',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+
+        'doblevela_img' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/doblevela/images'),
+            'url' => env('APP_URL').'/storage/doblevela/images',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+
+        'forpromotional' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/forpromotional'),
+            'url' => env('APP_URL').'/storage/forpromotional',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+
+        'promoopcion' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/promoopcion'),
+            'url' => env('APP_URL').'/storage/promoopcion',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+
         'cotizacion' => [
             'driver' => 'local',
             'root' => storage_path('app/public/cotizaciones_logo'),
@@ -68,6 +154,7 @@ return [
                 ],
             ],
         ],
+
         'custom_product' => [
             'driver' => 'local',
             'root' => storage_path('app/public/custom_product'),
@@ -102,6 +189,14 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('cotizacion') => storage_path('app/public/cotizaciones_logo'),
         public_path('custom_product') => storage_path('app/public/custom_product'),
+        public_path('innova') => storage_path('app/public/innova'),
+        public_path('doblevela') => storage_path('app/public/doblevela'),
+        public_path('forpromotional') => storage_path('app/public/forpromotional'),
+        public_path('promoopcion') => storage_path('app/public/promoopcion'),
+        public_path('innova_images') => storage_path('app/public/innova/images'),
+        public_path('doblevela_images') => storage_path('app/public/doblevela/images'),
+        public_path('forpromotional_images') => storage_path('app/public/forpromotional/images'),
+        public_path('promoopcion_images') => storage_path('app/public/promoopcion/images'),
         public_path('images') => storage_path('app/images'),
     ],
 

@@ -10,10 +10,10 @@
 
     @include('_partials.social')
 
-    <!--video width="100%" height="600" controls autoplay='autoplay' loop='true' style="margin-top: 80px;" muted>
-        <source src="{{ asset('imgs/viajes_video.mp4') }}" type="video/mp4">
+    <video width="100%" height="600" controls autoplay='autoplay' loop='true' style="margin-top: 80px;" muted>
+        <source src="{{ asset('imgs/alpha_navidad.mp4') }}" type="video/mp4">
         Your browser does not support the video tag.
-    </video-->
+    </video>
 
     <div class="owl-carousel owl-theme custom-t">
         @foreach ($imagenes as $imagen)

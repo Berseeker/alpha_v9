@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 use App\Models\Producto;
 
+use App\Models\Product;
+
 class PromoOpcionController extends Controller
 {
     public function index()
@@ -28,6 +30,7 @@ class PromoOpcionController extends Controller
             ]);
         }
         $count = 0;
+        dd($result);
         foreach ($result as $key => $item) 
         {
             $prevItem = Producto::where('SDK',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
@@ -44,12 +47,181 @@ class PromoOpcionController extends Controller
             'msg' => 'Se agregaron '.$count.' productos de PromoOpcion de manera exitosa'
         ]);
     }
+
+    public function v2()
+    {
+        $response = Http::withHeaders([
+            'user' => 'GDL8043',
+            'x-api-key' => 'e41f3d9771f94aa9c5e6edcc95d8e504'
+        ])->post('https://www.contenidopromo.com/wsds/mx/catalogo/');
+
+        $result = $response->json();
+
+        if(array_key_exists('error',$result))
+        {
+            return response()->json([
+                'status' => 'error',
+                'msg' => $result['error'] 
+            ]);
+        }
+
+        $cont_new_products = 0; #Contador global
+        $cont_update_products = 0; #Contador global
+        foreach ($result as $key => $item) 
+        {
+            $prevItem = Product::where('code',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
+            if($prevItem == null)
+            {
+                $this->insertProduct($item, $cont_new_products); 
+            } else {
+                $this->updateProduct($item, $cont_update_products);
+            }
+              
+        }
+
+        $msg = '';
+        if ($cont_new_products > 0) {
+            $msg = $msg.$cont_new_products. ' productos nuevos';
+        }
+        if ($cont_update_products > 0) {
+            $msg = $msg. ' y se actualizaron '. $cont_update_products. 'productos';
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'Se agregaron '.$msg.' de PromoOpcion'
+        ]);
+    }
+
+    private function insertProduct($item, &$cont_new_products) {
+
+        $product = new Product();
+        $product->name = $item['name'];
+        $product->code = $item['item_code'];
+        $product->code = $item['parent_code'];
+        $product->colors = $item['parent_code'];
+        $colors = explode('/', $item['colors']);
+        
+        $colors = [];
+        foreach ($colors as $color) {
+            if ($color == 'a') {
+                array_push($colors, 'azul');
+            } else if ($color == 'r') {
+                array_push($colors, 'rojo');
+            } else if ($color == 'v') {
+                array_push($colors, 'verde');
+            } else if ($color == 'be') {
+                array_push($colors, 'beige');
+            } else if ($color == 'c') {
+                array_push($colors, 'cafe');
+            } else if ($color == 'n') {
+                array_push($colors, 'negro');
+            } else if ($color == 't') {
+                array_push($colors, 'tinto');
+            } else if ($color == 'ac') {
+                array_push($colors, 'azul cielo');
+            } else {
+                array_push($colors, $color);
+            }
+        }
+
+        $product->colors = json_encode($colors);
+        $product->details = $item['description'];
+        $product->nw = $item['nw'];
+        $product->gw = $item['gw'];
+        $product->gw = $item['gw'];
+        $product->box_pieces = $item['count_box'];
+        $product->medida_producto_alto = $item['height'];
+        $product->medida_producto_ancho = $item['width'];
+        $product->printing_area = $item['printing_area'];
+
+        $printing = [];
+        $metodos_impresion = explode('/', $item['printing']);
+        foreach ($metodos_impresion as $impresion) {
+            array_push($printing, trim($impresion));
+        }
+
+        $product->printing_methods = json_encode($printing);
+        $product->category = $item['family'];
+        $product->material = $item['material'];
+
+        $images = [];
+        array_push($images, $item['img']);
+        $product->images = json_encode($images);
+        $product->batteries = (int) $item['batteries'];
+        $product->proveedor = 'PromoOpcion';
+        $product->save();
+
+    }
+
+    private function updateProduct($item, &$cont_new_products) {
+
+        $product =  Product::where('parent_code', $item['parent_code'])->first();
+        $product->name = $item['name'];
+        $product->code = $item['item_code'];
+        $product->code = $item['parent_code'];
+        $product->colors = $item['parent_code'];
+        $colors = explode('/', $item['colors']);
+        
+        $colors = [];
+        foreach ($colors as $color) {
+            if ($color == 'a') {
+                array_push($colors, Str::upper('azul'));
+            } else if ($color == 'r') {
+                array_push($colors, Str::upper('rojo'));
+            } else if ($color == 'v') {
+                array_push($colors, Str::upper('verde'));
+            } else if ($color == 'be') {
+                array_push($colors, Str::upper('beige'));
+            } else if ($color == 'c') {
+                array_push($colors, Str::upper('cafe'));
+            } else if ($color == 'n') {
+                array_push($colors, Str::upper('negro'));
+            } else if ($color == 't') {
+                array_push($colors, Str::upper('tinto'));
+            } else if ($color == 'ac') {
+                array_push($colors, Str::upper('azul cielo'));
+            } else {
+                array_push($colors, Str::upper($color));
+            }
+        }
+
+        $product->colors = json_encode($colors);
+        $product->details = $item['description'];
+        $product->nw = $item['nw'];
+        $product->gw = $item['gw'];
+        $product->gw = $item['gw'];
+        $product->box_pieces = $item['count_box'];
+        $product->medida_producto_alto = $item['height'];
+        $product->medida_producto_ancho = $item['width'];
+        $product->printing_area = $item['printing_area'];
+
+        $printing = [];
+        $metodos_impresion = explode('/', $item['printing']);
+        foreach ($metodos_impresion as $impresion) {
+            array_push($printing, trim($impresion));
+        }
+
+        $product->printing_methods = json_encode($printing);
+        $product->category = $item['family'];
+        $product->material = $item['material'];
+
+        $images = [];
+        array_push($images, $item['img']);
+        $product->images = json_encode($images);
+        $product->batteries = (int) $item['batteries'];
+        $product->proveedor = 'PromoOpcion';
+
+        if ($product->isDirty()) {
+            $product->save();
+        }
+
+    }
 }
 
 
 function insertProduct($producto)
 {
-    dd($producto);
     $product = new Producto();
     $product->nombre = $producto['name'];
     $product->nickname = $producto['name'];

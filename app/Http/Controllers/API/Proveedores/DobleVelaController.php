@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\API\Proveedores;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Bus\Batch;
+
+use App\Jobs\Proveedores\InsertDobleVela;
+use App\Jobs\Proveedores\UpdateImgDobleVela;
+use App\Jobs\Proveedores\UpdateBatchImgDobleVela;
 
 use SoapClient;
+use Throwable;
 //Para conexion a la base de datos
 use Illuminate\Support\Facades\DB;
 //Para conexiones a la API
@@ -17,16 +25,16 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Http\Client\RequestException;
 //Traer el modelo de Producto
 use App\Models\Producto;
+use App\Models\Product;
 use App\Imports\UrlImport;
 
 
 class DobleVelaController extends Controller
 {
-    protected $soapClient;
 
     public function __construct()
     {
-        $this->soapClient = new SoapClient('http://srv-datos.dyndns.info/doblevela/service.asmx?WSDL');
+        //
     }
 
     public function index()
@@ -84,6 +92,71 @@ class DobleVelaController extends Controller
         ]);
         //return back()->with('alert','Se agregaron '.$count.' productos nuevos de Grupo Vela.');
 
+    }
+
+    public function v2() {
+        dd('nigga');
+        InsertDobleVela::dispatch();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Se esta procesando la tarea'
+        ]);
+    }
+
+    public function imgsV2() {
+
+        $productos = Product::where('proveedor', 'DobleVela')->orderBy('id', 'asc')->count();
+        if ($productos % 4 == 0) {
+
+            $limit = $productos / 4;
+            $limit_2 = $limit + $limit;
+            $limit_3 = $limit_2 * $limit;
+            $limit_4 = $limit_3 * $limit;
+
+            $batch = Bus::batch([
+                new UpdateBatchImgDobleVela(0, $limit),
+                new UpdateBatchImgDobleVela($limit, $limit_2),
+                new UpdateBatchImgDobleVela($limit_2, $limit_3),
+                new UpdateBatchImgDobleVela($limit_3, $limit_4),
+            ])->then(function (Batch $batch) {
+                // All jobs completed successfully...
+            })->catch(function (Batch $batch, Throwable $e) {
+                Log::error(print_r($e));
+            })->finally(function (Batch $batch) {
+                // The batch has finished executing...
+            })->dispatch();
+        } else {
+            UpdateImgDobleVela::dispatch();
+        }
+
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Se esta procesando las imagenes para DobleVela'
+        ]);
+    }
+
+    public function updateImgV2() {
+        UpdateImgDobleVela::dispatch();
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Se esta procesando las imagenes para DobleVela'
+        ]);
+    }
+
+    public function empty() {
+
+        $productos = Product::where('proveedor','DobleVela')->where('images',null)->get();
+        dd(count($productos), $productos[0]);
+    }
+
+    private function xml2array ( $xmlObject, $out = array () )
+    {
+        foreach ( (array) $xmlObject as $index => $node )
+            $out[$index] = ( is_object ( $node ) ) ? xml2array ( $node ) : $node;
+
+        return $out;
     }
 
     public function update()
@@ -145,7 +218,7 @@ class DobleVelaController extends Controller
 function insertProductVela($producto){
 
     try {   
-        //dd($producto);
+        dd($producto);
 
         $item = new Producto;
         $item->SDK = trim($producto['CLAVE']); //string

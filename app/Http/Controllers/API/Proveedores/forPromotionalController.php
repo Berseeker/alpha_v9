@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
+use App\Jobs\Proveedores\InsertForPromotional;
+
 
 //Para conexion a la base de datos
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Http\Client\RequestException;
 //Traer el modelo de Producto
 use App\Models\Producto;
+use App\Models\Product;
 
 
 class forPromotionalController extends Controller
@@ -43,11 +46,10 @@ class forPromotionalController extends Controller
         //$products = $response->json();
         $count = 0;
         $update = 0;
-
+        //dd($response);
         foreach ($response as $producto) 
         {
             dd($producto);
-
             $product = DB::table('productos')->where('SDK', '=', $producto['id_articulo'])->get();
             if(count($product) == 0){
                 insertPromotional($producto);
@@ -84,7 +86,16 @@ class forPromotionalController extends Controller
             'msg' => 'Se agregaron '.$count.' y se actualizaron '.$update.'productos de Forpromotional.'
         ]);
 
+    }
 
+    public function v2() {
+
+        InsertForPromotional::dispatch();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Se esta procesando el job'
+        ]);
     }
 }
 

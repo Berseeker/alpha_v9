@@ -38,6 +38,19 @@ return new class extends Migration
             $table->string('material')->nullable()->default(null);
             $table->boolean('batteries')->default(false);
             $table->string('proveedor')->default('AlphaPromos');
+            $table->boolean('custom')->nullable();
+
+            //Texto para Busqueda
+            $table->longText('search')->nullable();
+
+            //FK de Producto --> Categorias
+            $table->unsignedBigInteger('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
+
+            //FK de Producto --> Subcategorias
+            $table->unsignedBigInteger('subcategoria_id');
+            $table->foreign('subcategoria_id')->references('id')->on('subcategorias');
+
             $table->timestamps();
         });
     }
