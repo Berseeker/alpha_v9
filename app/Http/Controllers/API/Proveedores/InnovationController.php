@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\API\Proveedores;
 
+use App\Jobs\Proveedores\InsertInnova;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
 //Traer el modelo de Producto
 use App\Models\Producto;
-
-use App\Models\Product;
 use App\Models\MetaKey;
 
 class InnovationController extends Controller
@@ -70,6 +68,16 @@ class InnovationController extends Controller
             'msg' => 'Se agregaron productos de Innovation '
         ]);
 
+    }
+
+    public function v2() {
+
+        InsertInnova::dispatch();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Se esta procesando el job'
+        ]);
     }
 }
 

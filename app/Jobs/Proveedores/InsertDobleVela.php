@@ -9,23 +9,15 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-
-//Para conexiones a la API
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Str;
 
 use App\Models\Product;
 use App\Models\Logs;
-
 use SoapClient;
 
 class InsertDobleVela implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $soapClient;
     /**
      * Create a new job instance.
      *
@@ -33,7 +25,7 @@ class InsertDobleVela implements ShouldQueue
      */
     public function __construct()
     {
-        $this->soapClient = new SoapClient('http://srv-datos.dyndns.info/doblevela/service.asmx?WSDL');
+        //
     }
 
     /**
@@ -43,14 +35,9 @@ class InsertDobleVela implements ShouldQueue
      */
     public function handle()
     {
-        /* ------ INTEGRACION GRUPO VELA ------ */
-        //ini_set('max_execution_time', 6000); //600 seconds = 10 minutes
-        /* ----- IMPLEMENTACION PARA CONSUMIR LA API ----- */
         $soapClient = new SoapClient('http://srv-datos.dyndns.info/doblevela/service.asmx?WSDL');
         $ObjectInfo = $soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
         $result = json_decode($ObjectInfo->GetExistenciaAllResult, true);
-     
-        $count = 0;
 
         if ($result['intCodigo'] == 100) {
             $log = new Logs();
@@ -78,7 +65,6 @@ class InsertDobleVela implements ShouldQueue
         if ($cont_update_products > 0) {
             $msg = $msg. ' y se actualizaron '. $cont_update_products. ' productos';
         }
-
 
         $log = new Logs();
         $log->status = 'success';
@@ -177,42 +163,51 @@ class InsertDobleVela implements ShouldQueue
             if($producto['SubFamilia'] == 'GORRAS')
             {
                 $subcategoria = 27;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].', TEXTÍL, '.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].', TEXTÍL, '.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             } 
             else if($producto['SubFamilia'] == 'MALETAS')
             {
                 $subcategoria = 25;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'MALETINES')
             {
                 $subcategoria = 29;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia']. ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'MOCHILAS'){
                 $subcategoria = 25;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'PARAGUAS E IMPERMEABLES'){
                 $item->categoria_id = 6;
                 $subcategoria = 32;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BOLSAS'){
                 $subcategoria = 23;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'HIELERAS Y LONCHERAS'){
                 $subcategoria = 26;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'CHALECOS'){
                 $subcategoria = 30;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 93;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->subcategoria_id = $subcategoria;
@@ -223,30 +218,37 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == 'CILINDROS PLÁSTICOS'){
                 $subcategoria = 71;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', CILÍNDROS, ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'TERMOS'){
                 $subcategoria = 95;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', TÉRMOS, ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'TAZAS Y TARROS'){
                 $subcategoria = 74;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'VASOS'){
                 $subcategoria = 75;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'CILINDROS DE VIDRIO'){
                 $subcategoria = 73;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ' , ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ' , ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'TAZAS Y TERMOS'){
                 $subcategoria = 95;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
                 $subcategoria = 78;
             }
 
@@ -260,18 +262,22 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == 'RECREACION'){
                 $subcategoria = 96;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', VIAJES, VACACIONES, ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ACCESORIOS PARA VIAJE'){
                 $subcategoria = 20;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BRAZALETES'){
                 $subcategoria = 21;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }else{
                 $subcategoria = 93;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->categoria_id = 4;
@@ -285,52 +291,64 @@ class InsertDobleVela implements ShouldQueue
             if($producto['SubFamilia'] == 'RELOJES'){
                 $subcategoria = 97;
                 $item->categoria_id = 17;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].', RELOJ, RELÓJ, '.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].', RELOJ, RELÓJ,'.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'LIBRETAS'){
                 $subcategoria = 48;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'PORTAGAFETES'){
                 $subcategoria = 53;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ACCESORIOS DE ESCRITORIO'){
                 $subcategoria = 47;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'CALCULADORAS'){
                 $subcategoria = 50;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'TARJETEROS'){
                 $subcategoria = 52;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ARTÍCULOS ESCOLARES'){
                 $item->categoria_id = 19;
                 $subcategoria = 92;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'MEMOS Y ADHESIVOS'){
                 $subcategoria = 47;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'CARPETAS'){
                 $subcategoria = 49;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'AGENDAS'){
                 $subcategoria = 54;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'PORTA DOCUMENTOS'){
                 $subcategoria = 51;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 47;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->subcategoria_id = $subcategoria;
@@ -342,40 +360,49 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == 'ACCESORIOS DE COCINA'){
                 $subcategoria = 42;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BBQ'){
                 $subcategoria = 44;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'MASCOTAS'){
                 $item->categoria_id = 11;
                 $subcategoria = 58;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'GOURMET'){
                 $subcategoria = 42;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ALCANCIAS'){
                 $subcategoria = 45;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'PELUCHE'){
                 $subcategoria = 45;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ACCESORIOS PARA VINO'){
                 $subcategoria = 45;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'INFANTIL'){
                 $subcategoria = 45;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 93;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->subcategoria_id = $subcategoria;
@@ -388,44 +415,54 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == 'BOLÍGRAFOS PLÁSTICOS'){
                 $subcategoria = 9;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BOLÍGRAFOS ECOLÓGICOS'){
                 $subcategoria = 10;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BOLÍGRAFOS MULTIFUNCION'){
                 $subcategoria = 8;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'SET DE BOLIGRAFOS'){
                 $subcategoria = 12;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BOLÍGRAFOS METÁLICOS'){
                 $subcategoria = 7;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'LAPICES'){
                 $subcategoria = 13;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ESTUCHES DE REGALO'){
                 $subcategoria = 11;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'CRAYOLAS'){
                 $item->categoria_id = 19;
                 $subcategoria = 92;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BOLÍGRAFO RESALTADOR'){
                 $subcategoria = 15;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 15;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->subcategoria_id = $subcategoria;   
@@ -436,31 +473,38 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == 'AUDIFONOS Y BOCINAS'){
                 $subcategoria = 1;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'USB'){
                 $subcategoria = 3;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BATERIAS'){
                 $subcategoria = 6;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ACCESORIOS DE CÓMPUTO'){
                 $subcategoria = 4;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'CABLES Y CARGADORES'){
                 $subcategoria = 5;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ACCESORIOS CELULAR Y TABLET'){
                 $subcategoria = 5;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 6;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->categoria_id = 1;
@@ -475,42 +519,51 @@ class InsertDobleVela implements ShouldQueue
             if($producto['SubFamilia'] == 'HERRAMIENTAS'){
                 $item->categoria_id = 7;
                 $subcategoria = 33;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'LLAVEROS PLÁSTICOS'){
                 $subcategoria = 81;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'LLAVEROS METÁLICOS'){
                 $subcategoria = 80;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'FLEXOMETRO'){
                 $item->categoria_id = 7;
                 $subcategoria = 36;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ACCESORIOS AUTO'){
                 $item->categoria_id = 18;
                 $subcategoria = 90;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'LINTERNAS'){
                 $item->categoria_id = 7;
                 $subcategoria = 33;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'LLAVEROS LUMINOSOS'){
                 $subcategoria = 82;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'LLAVERO MADERA'){
                 $subcategoria = 83;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 84;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->subcategoria_id = $subcategoria;   
@@ -522,19 +575,23 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == 'TAZAS Y TERMOS'){
                 $subcategoria = 61;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'FUNDAS'){
                 $subcategoria = 69;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'DECORATIVOS'){
                 $subcategoria = 70;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 68;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->subcategoria_id = $subcategoria;   
@@ -546,28 +603,34 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == 'CUIDADO PERSONAL'){
                 $subcategoria = 19;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'BELLEZA'){
                 $subcategoria = 17;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'SALUD'){
                 $subcategoria = 16;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'ANTIESTRES'){
                 $item->categoria_id = 12;
                 $subcategoria = 59;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'COVID'){
                 $subcategoria = 94;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 19;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->subcategoria_id = $subcategoria; 
@@ -578,11 +641,13 @@ class InsertDobleVela implements ShouldQueue
 
             if($producto['SubFamilia'] == '- Ninguna Subfamilia -'){
                 $item->categoria_id = 74;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else{
                 $subcategoria = 19;
-                $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+                $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
             $item->categoria_id = 14;
@@ -590,7 +655,8 @@ class InsertDobleVela implements ShouldQueue
             
         }
         else{
-            $item->search = $producto['Familia'].','.$producto['SubFamilia'];
+            $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
+            $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             $item->categoria_id = 20;
             $item->subcategoria_id = 93;  
         }

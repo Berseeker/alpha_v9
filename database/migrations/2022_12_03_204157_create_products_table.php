@@ -42,6 +42,7 @@ return new class extends Migration
 
             //Texto para Busqueda
             $table->longText('search')->nullable();
+            $table->longText('meta_keywords');
 
             //FK de Producto --> Categorias
             $table->unsignedBigInteger('categoria_id');
