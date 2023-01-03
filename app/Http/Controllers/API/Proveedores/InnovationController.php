@@ -74,7 +74,7 @@ class InnovationController extends Controller
 }
 
 function insertProductInnovation($producto){
-
+    dd($producto);
     try {
             dd($producto);
             $item = new Producto();

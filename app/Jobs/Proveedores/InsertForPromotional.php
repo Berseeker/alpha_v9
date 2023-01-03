@@ -58,7 +58,6 @@ class InsertForPromotional implements ShouldQueue
         curl_close ( $curl );
         $response = json_decode($response_json ,true); //decoding the response in json format
 
-
         $cont_new_products = 0; #Contador global
         $cont_update_products = 0; #Contador global
         foreach ($response as $producto) 
@@ -125,9 +124,11 @@ class InsertForPromotional implements ShouldQueue
         $product->proveedor = 'ForPromotional';
         
         $result = $this->setFamily($item);
-        if ($result == null)
-            dd($result, $product);
-
+        if ($result == null) {
+            $product->categoria_id = 20;
+            $product->subcategoria_id = 93;
+        }
+            
         $product->categoria_id = $result['category_id'];
         $product->subcategoria_id = $result['subcategory_id'];
         $product->search = $result['search'];
