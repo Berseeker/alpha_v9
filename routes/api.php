@@ -39,7 +39,7 @@ Route::get('promoopcion',[PromoOpcionController::class,'index']);
 
 #v2 APIS PROVIDERS
 Route::get('new-innova-v2',[InnovationController::class,'v2']); // Solo se puede testear en PROD
-Route::get('new-promoopcion-v2',[PromoOpcionController::class,'v2']);
+Route::get('new-promoopcion-v2', [PromoOpcionController::class, 'v2']);
 Route::get('forpromotional-v2',[forPromotionalController::class,'v2']);
 Route::get('doblevela-v2',[DobleVelaController::class,'v2']);
 Route::get('doblevela-imgs-v2',[DobleVelaController::class,'imgsV2']);

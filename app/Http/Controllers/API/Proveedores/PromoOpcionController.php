@@ -6,15 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use App\Jobs\Proveedores\InsertPromoOpcion;
 use App\Models\Producto;
-
 use App\Models\Product;
 
 class PromoOpcionController extends Controller
 {
     public function index()
     {
+        dd('holis');
         $response = Http::withHeaders([
             'user' => 'GDL8043',
             'x-api-key' => 'e41f3d9771f94aa9c5e6edcc95d8e504'
@@ -51,46 +51,12 @@ class PromoOpcionController extends Controller
 
     public function v2()
     {
-        $response = Http::withHeaders([
-            'user' => 'GDL8043',
-            'x-api-key' => 'e41f3d9771f94aa9c5e6edcc95d8e504'
-        ])->post('https://www.contenidopromo.com/wsds/mx/catalogo/');
 
-        $result = $response->json();
-
-        if(array_key_exists('error',$result))
-        {
-            return response()->json([
-                'status' => 'error',
-                'msg' => $result['error'] 
-            ]);
-        }
-
-        $cont_new_products = 0; #Contador global
-        $cont_update_products = 0; #Contador global
-        foreach ($result as $key => $item) 
-        {
-            $prevItem = Product::where('code',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
-            if($prevItem == null)
-            {
-                $this->insertProduct($item, $cont_new_products); 
-            } else {
-                $this->updateProduct($item, $cont_update_products);
-            }
-              
-        }
-
-        $msg = '';
-        if ($cont_new_products > 0) {
-            $msg = $msg.$cont_new_products. ' productos nuevos';
-        }
-        if ($cont_update_products > 0) {
-            $msg = $msg. ' y se actualizaron '. $cont_update_products. 'productos';
-        }
+        InsertPromoOpcion::dispatch();
 
         return response()->json([
-            'status' => 'success',
-            'msg' => 'Se agregaron '.$msg.' de PromoOpcion'
+            'status' => 'OK',
+            'msg' => 'Se esta procesando la tarea de PromoOpcion'
         ]);
     }
 

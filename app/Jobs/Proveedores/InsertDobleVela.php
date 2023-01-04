@@ -154,6 +154,9 @@ class InsertDobleVela implements ShouldQueue
             
         $item->printing_methods = json_encode($metodo_x_impresion); // string
         $item->material = $producto['Material']; //string
+        $item->custom = false;
+        $item->category = $producto['Familia'];
+        $item->category = $producto['SubFamilia'];
             
         if($producto['Familia'] == 'TEXTILES')
         {

@@ -42,7 +42,8 @@ class DobleVelaController extends Controller
         /* ------ INTEGRACION GRUPO VELA ------ */
         ini_set('max_execution_time', 6000); //600 seconds = 10 minutes
         /* ----- IMPLEMENTACION PARA CONSUMIR LA API ----- */
-        $ObjectInfo = $this->soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
+        $soapClient = new SoapClient('http://srv-datos.dyndns.info/doblevela/service.asmx?WSDL');
+        $ObjectInfo = $soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
         $result = json_decode($ObjectInfo->GetExistenciaAllResult, true);
      
         $count = 0;
@@ -94,8 +95,8 @@ class DobleVelaController extends Controller
 
     }
 
-    public function v2() {
-        dd('nigga');
+    public function v2()
+    {
         InsertDobleVela::dispatch();
 
         return response()->json([
