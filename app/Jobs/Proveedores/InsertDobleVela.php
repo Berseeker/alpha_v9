@@ -156,7 +156,7 @@ class InsertDobleVela implements ShouldQueue
         $item->material = $producto['Material']; //string
         $item->custom = false;
         $item->category = $producto['Familia'];
-        $item->category = $producto['SubFamilia'];
+        $item->subcategory = $producto['SubFamilia'];
             
         if($producto['Familia'] == 'TEXTILES')
         {

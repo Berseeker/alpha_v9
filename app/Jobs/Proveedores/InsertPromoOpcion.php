@@ -163,7 +163,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->medida_producto_ancho = $item['width']; //int
                     $product_T->material = $item['material']; //string 
                     $product_T->capacity = $item['capacity']; //string
-                    $product_T->family = $item['family'];
+                    $product_T->category = $item['family'];
                     $product_T->custom = false;
                     $product_T->subcategoria_id = 39;
                     $product_T->categoria_id = 8;
@@ -444,7 +444,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->medida_producto_ancho = $item['width']; //int
                     $product_T->material = $item['material']; //string 
                     $product_T->capacity = $item['capacity']; //string
-                    $product_T->family = $item['family'];
+                    $product_T->category = $item['family'];
                     $product_T->custom = false;
                     $product_T->subcategoria_id = 37;
                     $product_T->categoria_id = 8;
@@ -741,7 +741,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->medida_producto_ancho = $item['width']; //int
                     $product_T->material = $item['material']; //string 
                     $product_T->capacity = $item['capacity']; //string
-                    $product_T->family = $item['family'];
+                    $product_T->category = $item['family'];
                     $product_T->custom = false;
                     $product_T->search = "BOLIGRAFO PLASTICO,BOLIGRAFO DE PLASTICO, ECOLOGÍA, ECOLÓGICO, ECOLOGICO, ECOLÓGICA, " . $item['family'] . ', ' . Str::upper($item['name']);
                     $product_T->meta_keywords = "BOLIGRAFO PLASTICO,BOLIGRAFO DE PLASTICO, ECOLOGÍA, ECOLÓGICO, ECOLOGICO, ECOLÓGICA, " . $item['family'] . ', ' . Str::upper($item['name']);

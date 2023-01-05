@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use App\Models\Subcategoria;
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\Product;
 
 use App\Mail\newMessage;
 use App\Models\Imagen;
@@ -88,10 +89,10 @@ class IndexController extends Controller
             if($request->has('search_global'))
             {
                 $title = Str::upper($request->search_global);
-                $productos = Producto::search($request->search_global)->get();
+                $productos = Product::search($request->search_global)->get();
                 $total_items = count($productos);
             }else{
-                $productos = Producto::where('categoria_id', '=', $categoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
+                $productos = Product::where('categoria_id', '=', $categoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
                 $total_items = $productos->links()->paginator->total();
             }
 
@@ -168,10 +169,10 @@ class IndexController extends Controller
             if($request->has('search_global'))
             {
                 $title = Str::upper($request->search_global);
-                $productos = Producto::search($request->search_global)->get();
+                $productos = Product::search($request->search_global)->get();
                 $total_items = count($productos);
             }else{
-                $productos = Producto::where('subcategoria_id', '=', $subcategoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
+                $productos = Product::where('subcategoria_id', '=', $subcategoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
                 $total_items = $productos->links()->paginator->total();
             }
 
@@ -226,7 +227,7 @@ class IndexController extends Controller
         $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
 
         if(!$slug_producto->isEmpty()){
-            $producto = Producto::find($slug_producto[0]->fk_id);
+            $producto = Product::find($slug_producto[0]->fk_id);
             $title = $producto->nombre;
         }
         $categorias = Categoria::all();
@@ -237,16 +238,13 @@ class IndexController extends Controller
         //$images = json_decode($producto->images);
         $categoria = Categoria::find($producto->categoria_id);
 
-        if($producto->area_impresion != "S/MEDIDAS_IMP"){
-            $area_impresion = $producto->area_impresion;
+        if($producto->printing_area != "S/MEDIDAS_IMP"){
+            $area_impresion = $producto->printing_area;
         }
-        $colores = json_decode($producto->color);
-        $count_color = 0;
-        $productos_relacionados = Producto::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->get();
 
-        //dd($producto);
+        $productos_relacionados = Product::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
 
-        $colores = json_decode($producto->color);
+        $colores = json_decode($producto->colors);
         $count_color = 0;
         $images_collection = array();
         if( $producto->images != NULL)
@@ -262,23 +260,23 @@ class IndexController extends Controller
             }
         }
 
-        SEOMeta::setTitle('Producto - '.$producto->nombre);
-        SEOMeta::setDescription($producto->descripcion);
+        SEOMeta::setTitle('Producto - '.$producto->name);
+        SEOMeta::setDescription($producto->details);
         SEOMeta::addMeta('producto:published_time', $producto->created_at->toW3CString(), 'property');
-        SEOMeta::addKeyword($producto->busqueda);
+        SEOMeta::addKeyword($producto->meta_keywords);
 
-        OpenGraph::setDescription($producto->descripcion);
-        OpenGraph::setTitle($producto->nombre);
+        OpenGraph::setDescription($producto->details);
+        OpenGraph::setTitle($producto->name);
         OpenGraph::setUrl('https://alphapromos.mx/producto/ '.$slug_producto);
         OpenGraph::addProperty('type', 'producto');
         OpenGraph::addProperty('locale', 'es');
         OpenGraph::addImage($images_collection[0]);
 
-        Twitter::setTitle($producto->nombre);
+        Twitter::setTitle($producto->name);
         Twitter::setSite('@alphapromos');
         
-        JsonLd::setTitle($producto->nombre);
-        JsonLd::setDescription($producto->descripcion);
+        JsonLd::setTitle($producto->name);
+        JsonLd::setDescription($producto->details);
         JsonLd::setType('Producto');
         JsonLd::addImage($images_collection[0]);
 
@@ -289,7 +287,8 @@ class IndexController extends Controller
             'cont' => $cont,
             'producto' => $producto,
             'colores' => $colores,
-            'count_color' => $count_color
+            'count_color' => $count_color,
+            'productos_relacionados' => $productos_relacionados
         ]);
 
     }
@@ -316,7 +315,7 @@ class IndexController extends Controller
         if($request->has('search_global'))
         {
             $title = Str::upper($request->search_global);
-            $productos = Producto::where('nombre','LIKE','%'.$request->search_global.'%')->orWhere('descripcion','LIKE','%'.$request->search_global.'%')->get();
+            $productos = Product::where('nombre','LIKE','%'.$request->search_global.'%')->orWhere('descripcion','LIKE','%'.$request->search_global.'%')->get();
             $total_items = count($productos);
         }
 

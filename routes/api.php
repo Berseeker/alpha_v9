@@ -31,12 +31,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('for-promotional',[forPromotionalController::class,'index']);
-Route::get('innova-productos',[InnovationController::class,'index']);
-Route::get('doble-vela',[DobleVelaController::class,'index']);
-Route::get('doble-vela-update-imgs',[DobleVelaController::class,'update']);
-Route::get('promoopcion',[PromoOpcionController::class,'index']);
-
 #v2 APIS PROVIDERS
 Route::get('new-innova-v2',[InnovationController::class,'v2']); // Solo se puede testear en PROD
 Route::get('new-promoopcion-v2', [PromoOpcionController::class, 'v2']);
@@ -51,6 +45,7 @@ Route::get('doblevela-count-images-v2',[DobleVelaController::class,'empty']);
 Route::get('slug-categorias',[SlugController::class,'categoriaSlug']);
 Route::get('slug-subcategorias',[SlugController::class,'subcategoriaSlug']);
 Route::get('slug-productos',[SlugController::class,'productoSlug']);
+Route::get('slug-productos-v2',[SlugController::class,'productoV2Slug']);
 
 
 Route::get('all-products',[ProductoController::class,'index']);

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\API\Slug;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
-use App\Models\Categoria;
 use App\Models\Subcategoria;
+use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\Product;
 use App\Models\Slug;
 
 class SlugController extends Controller
@@ -69,6 +69,30 @@ class SlugController extends Controller
             {
                 $item = new Slug();
                 $item->original_name = $producto->nombre;
+                $item->slug = $slug;
+                $item->fk_id = $producto->id;
+                $item->path = "producto";
+                $item->created_at = now();
+                $item->updated_at = now();
+                $item->save();
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'msg' =>  "Slugs de productos creados exitosamente"
+        ]);
+    }
+
+    public function productoV2Slug(){
+        $productos = Product::all();
+        foreach ($productos as $producto) {
+            $slug = Str::slug($producto->name." ".$producto->code, '-');
+            $prevSlug = Slug::where('slug',$slug)->get();
+            if($prevSlug->isEmpty())
+            {
+                $item = new Slug();
+                $item->original_name = $producto->name;
                 $item->slug = $slug;
                 $item->fk_id = $producto->id;
                 $item->path = "producto";

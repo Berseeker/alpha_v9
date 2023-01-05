@@ -158,7 +158,7 @@ $(document).ready(function(){
             dataType : "json",
             success:function(data)
             {  
-              //console.log(data);
+              console.log(data);
               var items = [];
               if(Cookies.get('carrito_cotizaciones') == undefined)
               {

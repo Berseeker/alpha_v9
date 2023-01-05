@@ -133,6 +133,7 @@ class InsertForPromotional implements ShouldQueue
         $product->subcategoria_id = $result['subcategory_id'];
         $product->search = $result['search'];
         $product->meta_keywords = $result['meta_keywords'];
+        $product->custom = false;
         $product->save();
 
         $cont_new_products++;
@@ -296,7 +297,7 @@ class InsertForPromotional implements ShouldQueue
                     }
                     $product->images = json_encode($images);
                     $product->proveedor = 'ForPromotional';
-
+                    $product->custom = false;
                     $product->categoria_id = 8;
                     $product->subcategoria_id = 37;
                     $product->search = $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', ECOLOGICO,BOLIGRAFOS, ECOLÓGICO, ECOLOGÍA, RECICLABLE, ESCRITURA, ' . Str::upper($producto['nombre_articulo']);
@@ -477,7 +478,7 @@ class InsertForPromotional implements ShouldQueue
                     }
                     $product->images = json_encode($images);
                     $product->proveedor = 'ForPromotional';
-
+                    $product->custom = false;
                     $product->categoria_id = 8;
                     $product->subcategoria_id = 40;
                     $product->search = 'ECOLOGIA, ECOLOGÍA, ' . $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', BOLSA, ECOLÓGICA, ' . Str::upper($producto['nombre_articulo']);

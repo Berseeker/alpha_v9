@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="{{ asset('css/home/second_style.css') }}">
 <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+<link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.carousel.min.css')}}">
+<link rel="stylesheet" href="{{ asset('css/old/owl-carousel/owl.theme.default.min.css') }}">
 @endsection
 
     
@@ -38,12 +40,12 @@
                                 $image = $img;
                                 if(!Str::contains($img,['https','http']))
                                 {
-                                    $image = Storage::url($img);
+                                    $img = Storage::disk('doblevela_img')->url($img);
                                 }
                                 $imgCont = 0;
                             @endphp
     
-                            <img src="{{ $image }}" alt='{{$producto->nombre}}'data-zoom-image="{{ $image }}" id="img_{{$imgCont}}" />
+                            <img src="{{ $image }}" alt='{{$producto->name}}'data-zoom-image="{{ $image }}" id="img_{{$imgCont}}" />
              
                             
                             @php
@@ -60,7 +62,7 @@
         </div>
         <div class="col-12 col-sm-6 col-md-7">
             <div id="product-descripction">
-                <h4> {{ $producto->nombre ?? 'Desconocido'}}</h4>
+                <h4> {{ $producto->name ?? 'Desconocido'}}</h4>
                 <span><small>By <a href="">AlphaPromos</a></small></span>
                 <ul class="unstyled-list list-inline" style="display: flex;">
                     <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
@@ -79,25 +81,26 @@
             </div>
             <div id="ficha-tecnica">
                 <h4>Especificaciones</h4>
-                <p class="detail-product" style="margin-bottom: 20px;">{{ $producto->descripcion }}</p>
+                <p class="detail-product" style="margin-bottom: 20px;">{{ $producto->details }}</p>
                 @php
-                    if($producto->are_impresion != NULL){                  
-                        echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: '.$producto->area_impresion.' </p>';
+                    if($producto->printing_area != NULL){                  
+                        echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: '.$producto->printing_area.' </p>';
                     }else{
                         echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: No Especificado. </p>';
                     }
-
-                    if($producto->medidas_producto_general == NULL){
-                        
-                        echo "<p class='detail-product'><i class='fas fa-ruler-combined' style='margin-right:10px;''></i>Medidas del Producto: ".$producto->medida_producto_ancho." (ancho) x ".$producto->medida_producto_alto." (alto)</p>";
-                        
-                    }else{
-                        
-                        echo "<p class='detail-product'><i class='fas fa-ruler-combined' style='margin-right:10px;''></i>Medidas del Producto: ".$producto->medidas_producto_general."</p>";
+                    $printing_methods = '';
+                    $cont = 0;
+                    foreach (json_decode($producto->printing_methods) as $printing) {
+                        if ($cont > 0) {
+                            $printing_methods = $printing_methods . ', ' . $printing;
+                        } else {
+                            $printing_methods = $printing;
+                        }
+                        $cont++;
                     }
                 @endphp
-                <p class="detail-product"><i class="fas fa-fill-drip" style="margin-right:10px;"></i> Metodos de Impresión: {{ $producto->metodos_impresion ?? 'No Especificado' }} </p>
-                <p class="detail-product"> <i class="fas fa-hashtag" style="margin-right:10px;"></i> Piezas x Caja: {{ $producto->piezas_caja ?? 'No Especificado' }} </p>
+                <p class="detail-product"><i class="fas fa-fill-drip" style="margin-right:10px;"></i> Metodos de Impresión: {{ $printin_methods ?? 'No Especificado' }} </p>
+                <p class="detail-product"> <i class="fas fa-hashtag" style="margin-right:10px;"></i> Piezas x Caja: {{ $producto->box_pieces ?? 'No Especificado' }} </p>
                 <p class="detail-product"> <i class="fas {{ $producto->categoria->icon ?? 'fa-question' }}" style="margin-right: 10px;"></i> Categoría: {{ $producto->subcategoria->nombre ?? 'Desconocido'}} </p>
             </div>
             <div id="product-colors">
@@ -124,14 +127,14 @@
                             @endforeach
                         @endif 
                     </div>
-                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->SDK}}'>
+                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->code}}'>
                         <i class="fa-solid fa-cart-plus"></i>
                         <span class="add-to-cart">Agregar al Carrito</span>
                      </a>
                     <!--button class="item_add_cart info-product-cart">
                         <i class="fas fa-shopping-cart"></i> Agregar al Carrito
                     </button-->
-                    <button class="btn add_detalle_producto info-product-cotizar btn-cart-add" sdk ='{{$producto->SDK}}' slug={{ Str::slug($producto->nombre.' '.$producto->modelo) }}>
+                    <button class="btn add_detalle_producto info-product-cotizar btn-cart-add" sdk ='{{$producto->code}}' slug={{ Str::slug($producto->name.' '.$producto->code) }}>
                         <i class="fas fa-store"></i>Cotizar
                     </button>
             </div>
@@ -186,13 +189,47 @@
         <div class="divider-custom" style="color: #AADD35;">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon">
-                <img src="{{ asset('img/logos/alpha_icon.png') }}" alt="" class="alpha_icon">
+                <img src="{{ asset('imgs/logos/alpha_icon.png') }}" alt="" class="alpha_icon">
             </div>
             <div class="divider-custom-line"></div>
         </div>
         <div class="owl-carousel owl-theme">
-            
-            
+            @foreach ($productos_relacionados as $producto)
+                <div class="item">
+                    @if( $producto->images != NULL)
+                        @php
+                            $image = json_decode($producto->images);
+                            if(!Str::contains($image[0],['https','http']))
+                            {
+                                $img = Storage::disk('doblevela_img')->url($image[0]);
+                            }
+                            $imgCont = 0;
+                        @endphp
+    
+                        <img src="{{ $image[0] }}" alt='{{$producto->name}}'data-zoom-image="{{ $image[0] }}" id="img_{{$imgCont}}" /> 
+                    @else
+                        <img src="{{ asset('imgs/no_disp.png') }}" alt="Imagen no Encontrado">
+                    @endif
+                    <div>
+                        <h4> {{ $producto->name ?? 'Desconocido'}}</h4>
+                        <span><small>By <a href="">AlphaPromos</a></small></span>
+                        <ul class="unstyled-list list-inline" style="display: block;">
+                            <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
+                            <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
+                            <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
+                            <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
+                            @php
+                                $star = 'fa-star-half-stroke';
+                                $rand = rand(1,3);
+                                if($rand == 1)
+                                    $star = 'fa-star';
+
+                            @endphp
+                            <li class="ratings-list-item"><i class="fa-solid {{$star}} gold-s"></i></li>
+                        </ul>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 
@@ -209,4 +246,23 @@
 <script src="{{ asset('vendors/js/extensions/nouislider.min.js') }}"></script>
 <script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
 <script src="{{ asset('js/scripts/pages/app-ecom.js') }}"></script>
+<script src="{{ asset('js/old/owl-carousel/owl.carousel.min.js') }}"></script>
+<script type="text/javascript">
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+        nav:true,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:5
+            }
+        }
+    })
+</script>
 @endsection
