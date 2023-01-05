@@ -1,0 +1,24 @@
+/* Navbar */
+#logo-img {
+    width: 200px;
+}
+
+#navbar-menu {
+    margin-left: 200px;
+}
+
+.custom-li {
+    margin-left: 50px;
+}
+
+.mr-20 {
+    margin-right: 20px;
+}
+
+#menu-alpha {
+    display: none;
+}
+
+.menu-active {
+    display: block !important;
+}

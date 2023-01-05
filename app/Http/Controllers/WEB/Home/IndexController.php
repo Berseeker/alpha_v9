@@ -32,23 +32,6 @@ class IndexController extends Controller
         $cont = 1;
         $imagen = Imagen::all();
 
-        SEOMeta::setTitle('AlphaPromos');
-        SEOMeta::setDescription('Pagina de articulos Promocionales');
-        SEOMeta::setCanonical('https://alphapromos.mx');
-
-        OpenGraph::setDescription('Pagina de articulos Promocionales');
-        OpenGraph::setTitle('AlphaPromos');
-        OpenGraph::setUrl('https://alphapromos.mx');
-        OpenGraph::addProperty('type', 'articulos');
-
-        Twitter::setTitle('AlphaPromos');
-        Twitter::setSite('@alphapromos');
-
-        JsonLd::setTitle('AlphaPromos');
-        JsonLd::setDescription('Pagina de articulos Promocionales');
-        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
-
-
         return view('welcome',[
             'categorias' => $categorias,
             'cont' => $cont,

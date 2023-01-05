@@ -1,36 +1,30 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ asset('imgs/logos/alpha.ico') }}">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- <title>{{ config('app.name', 'AlphaPromos') }}</title>-->
-
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('css/home/index_master.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home/items.css') }}">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('fonts/feather/iconfont.css') }}">
-    <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/old/js.cookie.js') }}" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="{{ asset('css/home/home_smart.css') }}">
-    
-
-    @yield('page-styles')
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="{{ asset('imgs/logos/alpha.ico') }}">
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>AlphaPromos @yield('title')</title>
+  <!-- JQUERY 3.x -->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <!-- COOKIE JS PLUGIN - -->
+  <script type="module" src="{{ asset('js/old/js.cookie.js') }}"></script>
+  <script nomodule defer src="{{ asset('js/old/js.cookie.js') }}"></script>
+  <!-- CSS BOOTSTRAP V5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <!-- CARROUSEL PLUGIN - https://swiperjs.com -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <!-- FONT AWESOME -->
+  <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
+  <!-- GLOBAL CSS -->
+  <link rel="stylesheet" href="{{ asset('css/home/global_style.css') }}">
+  <!-- CUSTOM CSS FOR EACH PAGE -->
+  @yield('page-styles')
+  <!-- Chat en vivo -->
   <script src="//code-sa1.jivosite.com/widget/DuWHrZwtML" async></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-525GD06J3K"></script>
@@ -41,24 +35,26 @@
 
     gtag('config', 'G-525GD06J3K');
   </script>
-
-  {!! SEOMeta::generate() !!}
-  {!! OpenGraph::generate() !!}
-  {!! Twitter::generate() !!}
-  {!! JsonLd::generate() !!}
-
 </head>
-<body class="pace-done vertical-layout vertical-menu-modern content-detached-left-sidebar navbar-floating footer-static menu-expanded">
+<body>
     <div id="app">
-       @include('menu.index')
-
+        @include('Home._partials.navbar')
         <main class="py-4">
             @yield('content')
         </main>
-
-        @include('_partials.footer')
     </div>
 </body>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#categoria-nav").click(function() {
+      if ($( "#menu-alpha" ).hasClass( "menu-active" )) {
+        $("#menu-alpha").removeClass('menu-active');
+      } else {
+        $("#menu-alpha").addClass('menu-active');
+      }
+    });
+  });
+</script>
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('search-global');
@@ -72,7 +68,7 @@
         {  
           var template = '';
           data.forEach(function(element, indice, array) {
-            string = element.nombre + ' ' + element.modelo;
+            string = element.name + ' ' + element.codigo;
             //quitar acentos 
             string = string
                       .normalize('NFD')
@@ -98,7 +94,7 @@
                 }
                 
             }
-            template = template + '<li><a href="/producto/'+ slug +'"><p> <img src="'+img+'" style="width:50px;" />'+ element.nombre +'</p><span style="color:black;">'+ element.descripcion +'</span></a></li>';
+            template = template + '<li><a href="/producto/'+ slug +'"><p> <img src="'+img+'" style="width:50px;" />'+ element.name +'</p><span style="color:black;">'+ element.details +'</span></a></li>';
           });
           $('#searched-items').html('');
           $('#searched-items').css('display','block');
@@ -132,7 +128,7 @@ $(document).ready(function(){
             dataType : "json",
             success:function(data)
             {  
-                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
                 $(".items-hooked").append(template);  
             }
           });
@@ -164,9 +160,9 @@ $(document).ready(function(){
               {
                   //console.log('Se inicializa el carrito de compras');
                   $('.items-hooked').html('');
-                  var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+                  var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
                   $(".items-hooked").append(template);
-                  items.push(data.sdk);
+                  items.push(data.code);
                   $("#shop-cart").css('display','inline-flex');
                   $(".contador-cart").html('');
                   $(".contador-cart").html('1');
@@ -191,10 +187,10 @@ $(document).ready(function(){
                   });
                   
                 });
-                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
                 $(".items-hooked").append(template);
 
-                items.push(data.sdk);
+                items.push(data.code);
                 var cont = items.length;
                 $("#shop-cart").css('display','inline-flex');
                 $(".contador-cart").html('');
@@ -223,9 +219,9 @@ $(document).ready(function(){
             {
                 //console.log('Se inicializa el carrito de compras');
                 $('.items-hooked').html('');
-                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
                 $(".items-hooked").append(template);
-                items.push(data.sdk);
+                items.push(data.code);
                 $("#shop-cart").css('display','inline-flex');
                 $(".contador-cart").html('');
                 $(".contador-cart").html('1');
@@ -244,16 +240,16 @@ $(document).ready(function(){
                   dataType : "json",
                   success:function(data)
                   {  
-                      var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+                      var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
                       $(".items-hooked").append(template);  
                   }
                 });
                 
               });
-              var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
+              var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
               $(".items-hooked").append(template);
 
-              items.push(data.sdk);
+              items.push(data.code);
               var cont = items.length;
               $("#shop-cart").css('display','inline-flex');
               $(".contador-cart").html('');
@@ -272,6 +268,6 @@ function deleteCart(sdk)
   console.log(sdk);
 }
 </script>
-
+<!-- CUSTOM SCRIPTS FOR EACH PAGE-->
 @yield('page-scripts')
 </html>
