@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary" id="navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="{{ asset('imgs/logos/logo_alpha.png') }}" id="logo-img" alt="AlphaPromos"></a>
+        <a class="navbar-brand" href="#"><img src="{{ asset('imgs/v3/logos/logo_alpha.png') }}" id="logo-img" alt="AlphaPromos"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -39,26 +39,43 @@
     </div>
 </nav>
 <div id="menu-alpha">
-    <div class="row">
-        <div class="col-xs-12 col-md-8">
-            @php
-                $cont = 1;
-            @endphp
-            @foreach ($categorias as $categoria)
-                @if ($cont == 9 || $cont == 17)
-                    </div>
-                @elseif ($cont == 1 || $cont == 9 || $cont == 17)   
-                    <div class="col-xs-12 col-md-4">
-                @endif
-                <a href="#"> {{ $categoria->nombre }} </a>
-                @if ($cont == 20)
-                    </div>
-                @endif
-                @php
-                    $cont++;
-                @endphp
-            @endforeach
+    <div id="holder">
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div class="row">
+                    @php
+                        $contador = 1;
+                    @endphp
+                    @foreach ($categorias as $categoria)
+                        @if ($contador == 9 || $contador == 17)
+                            </div>
+                        @endif
+                        @if ($contador == 1 || $contador == 9 || $contador == 17)   
+                            <div class="col-xs-12 col-md-4">
+                        @endif
+
+                        <div class="btn-group dropend catalogo">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid {{ $categoria->icon }} icon-menu alpha-color"></i> {{ $categoria->nombre }}
+                            </button>
+                            <ul class="dropdown-menu" style="padding: 8px;">
+                                @foreach ($categoria->customSubcategory as $subcategory)
+                                    <a href="{{ url('/subcategoria/' . Str::slug($subcategory->nombre, '-')) }}" class="link-catalogo" data="{{ Str::slug($subcategory->nombre, '_') }}" > {{ $subcategory->nombre }} </a>
+                                @endforeach
+                                <a href="{{ url('/categoria/' . Str::slug($categoria->nombre, '-')) }}" class='link-catalogo' data="textil"> Ver más</a>
+                            </ul>
+                        </div>
+                        @if ($contador == 20)
+                            </div>
+                        @endif
+                        @php
+                            $contador++;
+                        @endphp
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4" id="img-menu">
+            </div>
         </div>
-        <div class="col-xs-12 col-md-4"></div>
     </div>
 </div>

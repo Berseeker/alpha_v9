@@ -21,7 +21,7 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
   <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="{{ asset('css/home/global_style.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/v3/home/master_styles.css') }}">
   <!-- CUSTOM CSS FOR EACH PAGE -->
   @yield('page-styles')
   <!-- Chat en vivo -->
@@ -42,17 +42,83 @@
         <main class="py-4">
             @yield('content')
         </main>
+        @include('Home._partials.footer')
     </div>
 </body>
+
 <script type="text/javascript">
+
+  // When the user scrolls down 80px from the top of the document, resize the navbar's padding and the logo's font size
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      document.getElementById("logo-img").style.width = "120px";
+    } else {
+      document.getElementById("logo-img").style.width = "200px";
+    }
+  }
+
   $(document).ready(function() {
-    $("#categoria-nav").click(function() {
-      if ($( "#menu-alpha" ).hasClass( "menu-active" )) {
-        $("#menu-alpha").removeClass('menu-active');
-      } else {
-        $("#menu-alpha").addClass('menu-active');
+
+    $( "#categoria-nav" ).hover(
+      function() {
+        if (!$( "#menu-alpha" ).hasClass( "menu-active" )) {
+          $("#menu-alpha").addClass('menu-active');
+        }
+      }, function() {
+        
       }
+    );
+
+    $( "#holder" ).hover(
+      function() {
+
+      }, function() {
+        if ($( "#menu-alpha" ).hasClass( "menu-active" )) {
+          $("#menu-alpha").removeClass('menu-active');
+        }
+      }
+    );
+
+    $( ".link-catalogo" ).hover(
+      function() {
+        console.log($(this).attr('data'));
+        $("#img-menu").append( $( "<img src='/imgs/v3/menu_navbar/" + $(this).attr('data') + ".jpeg' />" ) );
+      }, function() {
+        $("#img-menu").find( "img" ).last().remove();
+      }
+    );
+
+    $( "li.fade" ).hover(function() {
+      $("#img-menu").fadeOut( 100 );
+      $("#img-menu").fadeIn( 500 );
     });
+
+    $( "#newsletter" ).submit(function( event ) {
+      console.log('acepto');
+      console.log($("#news-email").val().length);
+      event.preventDefault();
+      if( $("#news-email").val().length == 0 )
+      {
+        if( $('#email-news-error').hasClass('warning-not') ) {
+          $("#email-news-error").removeClass('warning-not');
+          $("#email-news-error").addClass('warning-visible');
+          $("#errorMessageEmail").text('');
+          $("#errorMessageEmail").text('Es necesario ingresar un email');
+          console.log('here');
+        }
+        
+      } else {
+        if ( $('#email-news-error').hasClass('warning-visible') ) {
+          $("#email-news-error").removeClass('warning-visible');
+          $("#email-news-error").addClass('warning-not');
+        }
+        // AJAX
+      }
+
+    });
+ 
   });
 </script>
 <script type="text/javascript">

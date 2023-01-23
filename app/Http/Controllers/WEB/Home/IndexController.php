@@ -41,15 +41,7 @@ class IndexController extends Controller
 
     public function showCategoria(Request $request,$slug)
     {
-        $pageConfigs = [
-            'contentLayout' => "content-detached-left-sidebar",
-            'pageClass' => 'ecommerce-application',
-        ];
-
-        $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "eCommerce"], ['name' => "Shop"]
-        ];
-
+ 
         $categoria = NULL;
         $title = null;
         $cont = 1; 
@@ -63,50 +55,31 @@ class IndexController extends Controller
             $flag = 1;
         }
         $categorias = Categoria::all();
-        if($categoria == NULL){
+
+        if ($categoria == NULL) {
             $productos = NULL;
             $flag = 0;
             
-        }else{
+        } else {
 
-            if($request->has('search_global'))
+            if ($request->has('search_global'))
             {
                 $title = Str::upper($request->search_global);
                 $productos = Product::search($request->search_global)->get();
                 $total_items = count($productos);
-            }else{
-                $productos = Product::where('categoria_id', '=', $categoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
+            } else {
+                $productos = Product::where('categoria_id', '=', $categoria->id)->where('deleted_at' ,'=', NULL)->paginate(30);
                 $total_items = $productos->links()->paginator->total();
             }
-
 
             if(count($productos) == 0)
                 $flag=0;
         }
-
-        SEOMeta::setTitle('Categoria - '.$title);
-        SEOMeta::setDescription('Articulos que pertenecen a la categoria '.$title);
-        SEOMeta::setCanonical('https://alphapromos.mx/');
-
-        OpenGraph::setDescription('Articulos que pertenecen a la categoria '.$title);
-        OpenGraph::setTitle('Categoria - '.$title);
-        OpenGraph::setUrl('https://alphapromos.mx/');
-        OpenGraph::addProperty('type', 'categoria');
-
-        Twitter::setTitle('Categoria - '.$title);
-        Twitter::setSite('@alphapromos');
-
-        JsonLd::setTitle('Categoria - '.$title);
-        JsonLd::setDescription('Articulos que pertenecen a la categoria '.$title);
-        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
-
-        
+           
         return view('Home.categoria',[
-            'pageConfigs' => $pageConfigs,
             'categoria' => $categoria,
             'productos' => $productos,
             'categorias' => $categorias,
-            'breadcrumbs' => $breadcrumbs,
             'total' => $total_items,
             'flag' => $flag,
             'title' => $title,

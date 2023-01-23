@@ -15,6 +15,10 @@ class Categoria extends Model
         return $this->hasMany(Subcategoria::class,'categoria_id')->orderBy('nombre');
     }
 
+    public function customSubcategory() {
+        return $this->hasMany(Subcategoria::class,'categoria_id')->limit(4);
+    }
+
     public function searchableAs()
     {
         return 'categorias_index';
