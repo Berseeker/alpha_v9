@@ -16,10 +16,21 @@
             <div class="col-xs-12 col-sm-12 col-md-3"></div>
             <div class="col-xs-12 col-sm-12 col-md-9">
                 {{ $productos->links() }}
-                @foreach ($productos as $categoria)
+                @foreach ($productos as $producto)
                     <div class="col-xs-12 col-md-4">
                         <div class="product-header">
-                            <img src="{{ asset('') }}" alt="">
+                            @php
+                                $img = asset('imgs/v3/productos/no_disp.png');
+                                if($producto->images != null)
+                                {
+                                    $img = json_decode($producto->images)[0];
+                                    if(!Str::contains($img,['https','http']))
+                                    {
+                                        $img = Storage::url($img);
+                                    }
+                                }
+                            @endphp 
+                            <img src="{{ $img }}" alt="{{ $producto->name }}">
                         </div>
                     </div>
                 @endforeach
