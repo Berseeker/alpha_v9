@@ -53,7 +53,7 @@ class UpdateBatchImgDobleVela implements ShouldQueue
             return;
         }
 
-        $productos = Product::where('proveedor','DobleVela')->orderBy('id', 'asc')->offset($this->offset)->limit($this->limit)->get();
+        $productos = Producto::where('proveedor','DobleVela')->orderBy('id', 'asc')->offset($this->offset)->limit($this->limit)->get();
         foreach ($productos as $producto) 
         {
             /* PROCESO DE OBTENCION DE IMAGENES */

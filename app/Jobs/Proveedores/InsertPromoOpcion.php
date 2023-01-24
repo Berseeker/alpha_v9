@@ -55,7 +55,7 @@ class InsertPromoOpcion implements ShouldQueue
             $cont_new_products = 0; #Contador global
             foreach ($result as $key => $item) 
             {
-                $prevItem = Product::where('code',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
+                $prevItem = Producto::where('code',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
                 if($prevItem == null)
                 {
                     $this->insertProduct($item, $cont_new_products); 

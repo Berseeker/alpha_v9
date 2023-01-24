@@ -34,7 +34,7 @@ class DobleVelaController extends Controller
 
     public function imgsV2() {
 
-        $productos = Product::where('proveedor', 'DobleVela')->orderBy('id', 'asc')->count();
+        $productos = Producto::where('proveedor', 'DobleVela')->orderBy('id', 'asc')->count();
         if ($productos % 4 == 0) {
 
             $limit = $productos / 4;
@@ -75,7 +75,7 @@ class DobleVelaController extends Controller
 
     public function empty() {
 
-        $productos = Product::where('proveedor','DobleVela')->where('images',null)->get();
+        $productos = Producto::where('proveedor','DobleVela')->where('images',null)->get();
         dd(count($productos), $productos[0]);
     }
 }

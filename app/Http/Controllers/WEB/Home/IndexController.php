@@ -89,10 +89,10 @@ class IndexController extends Controller
             if($request->has('search_global'))
             {
                 $title = Str::upper($request->search_global);
-                $productos = Product::search($request->search_global)->get();
+                $productos = Producto::search($request->search_global)->get();
                 $total_items = count($productos);
             }else{
-                $productos = Product::where('categoria_id', '=', $categoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
+                $productos = Producto::where('categoria_id', '=', $categoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
                 $total_items = $productos->links()->paginator->total();
             }
 
@@ -169,10 +169,10 @@ class IndexController extends Controller
             if($request->has('search_global'))
             {
                 $title = Str::upper($request->search_global);
-                $productos = Product::search($request->search_global)->get();
+                $productos = Producto::search($request->search_global)->get();
                 $total_items = count($productos);
             }else{
-                $productos = Product::where('subcategoria_id', '=', $subcategoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
+                $productos = Producto::where('subcategoria_id', '=', $subcategoria->id)->where('deleted_at' ,'=', NULL)->paginate(40);
                 $total_items = $productos->links()->paginator->total();
             }
 
@@ -227,7 +227,7 @@ class IndexController extends Controller
         $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
 
         if(!$slug_producto->isEmpty()){
-            $producto = Product::find($slug_producto[0]->fk_id);
+            $producto = Producto::find($slug_producto[0]->fk_id);
             $title = $producto->nombre;
         }
         $categorias = Categoria::all();
@@ -242,7 +242,7 @@ class IndexController extends Controller
             $area_impresion = $producto->printing_area;
         }
 
-        $productos_relacionados = Product::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
+        $productos_relacionados = Producto::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
 
         $colores = json_decode($producto->colors);
         $count_color = 0;
@@ -315,7 +315,7 @@ class IndexController extends Controller
         if($request->has('search_global'))
         {
             $title = Str::upper($request->search_global);
-            $productos = Product::where('nombre','LIKE','%'.$request->search_global.'%')->orWhere('descripcion','LIKE','%'.$request->search_global.'%')->get();
+            $productos = Producto::where('nombre','LIKE','%'.$request->search_global.'%')->orWhere('descripcion','LIKE','%'.$request->search_global.'%')->get();
             $total_items = count($productos);
         }
 

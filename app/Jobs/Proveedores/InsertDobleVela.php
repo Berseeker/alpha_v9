@@ -49,7 +49,7 @@ class InsertDobleVela implements ShouldQueue
         $cont_new_products = 0; #Contador global
         $cont_update_products = 0; #Contador global
         foreach ($result['Resultado'] as $producto) {
-            $product = Product::where('parent_code', $producto['MODELO'])->first();
+            $product = Producto::where('parent_code', $producto['MODELO'])->first();
             if($product == null){
                 $this->insertProduct($producto, $cont_new_products);
               
@@ -670,7 +670,7 @@ class InsertDobleVela implements ShouldQueue
 
     private function updateProduct($item, &$cont_update_products) {
 
-        $product = Product::where('parent_code', $item['MODELO'])->first();
+        $product = Producto::where('parent_code', $item['MODELO'])->first();
         $colors = json_decode($product->colors);
 
         $item_color = explode("-", $item['COLOR']);;

@@ -14,7 +14,7 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        $productos = DB::table('products')
+        $productos = DB::table('productos')
             ->join('categorias', 'productos.categoria_id', '=', 'categorias.id')
             ->join('subcategorias', 'productos.subcategoria_id', '=', 'subcategorias.id')
             ->select('productos.id','productos.nombre','productos.modelo', 'productos.categoria_id','productos.SDK','productos.proveedor', 'productos.images', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria')
@@ -25,7 +25,7 @@ class ProductoController extends Controller
 
     public function producto($sdk)
     {
-        $producto = Product::where('code',$sdk)->first();
+        $producto = Producto::where('code',$sdk)->first();
 
         $img = asset('imgs/no_disp.png');
         if($producto->images != null)

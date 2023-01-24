@@ -62,7 +62,7 @@ class InsertForPromotional implements ShouldQueue
         $cont_update_products = 0; #Contador global
         foreach ($response as $producto) 
         {
-            $product = Product::where('parent_code', $producto['id_articulo'])->first();
+            $product = Producto::where('parent_code', $producto['id_articulo'])->first();
             if($product == null){
                 $this->insertProduct($producto, $cont_new_products);
             } else {
@@ -142,7 +142,7 @@ class InsertForPromotional implements ShouldQueue
 
     private function updateProduct($item, &$cont_update_products) {
 
-        $product = Product::where('parent_code', $item['id_articulo'])->first();
+        $product = Producto::where('parent_code', $item['id_articulo'])->first();
         $colors = json_decode($product->colors);
         
         $pointer = false;

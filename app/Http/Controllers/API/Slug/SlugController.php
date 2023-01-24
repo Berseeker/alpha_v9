@@ -85,7 +85,7 @@ class SlugController extends Controller
     }
 
     public function productoV2Slug(){
-        $productos = Product::all();
+        $productos = Producto::all();
         foreach ($productos as $producto) {
             $slug = Str::slug($producto->name." ".$producto->code, '-');
             $prevSlug = Slug::where('slug',$slug)->get();
