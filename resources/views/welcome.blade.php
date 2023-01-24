@@ -17,8 +17,8 @@
             @endif
         @endforeach
         <a href="{{ asset('catalogos/superbowl.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/superbowl.jpg') }}" alt="" class=""></a>
-        <a href="{{ asset('catalogos/new_year.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/new_year.png') }}" alt="" class=""></a>
-        <a href="{{ asset('catalogos/agendas_2023.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas_2023.png') }}" alt="" class=""></a>
+        <!--a href="{{ asset('catalogos/new_year.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/new_year.png') }}" alt="" class=""></a>
+        <a href="{{ asset('catalogos/agendas_2023.pdf') }}" target="_blank" class="item"><img src="{{ asset('imgs/slider/agendas_2023.png') }}" alt="" class=""></a-->
         <a href="#" data-toggle="modal" data-target="#videoAlpha" class="item"><img src="{{ asset('imgs/slider/viajes_2023.png') }}" alt="" class=""></a>
     </div>
 
