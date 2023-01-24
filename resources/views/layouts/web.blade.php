@@ -21,7 +21,7 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
   <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="{{ asset('css/v3/home/master_styles.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/v3/home/head.css') }}">
   <!-- CUSTOM CSS FOR EACH PAGE -->
   @yield('page-styles')
   <!-- Chat en vivo -->
@@ -60,6 +60,9 @@
   }
 
   $(document).ready(function() {
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
     $( "#categoria-nav" ).hover(
       function() {

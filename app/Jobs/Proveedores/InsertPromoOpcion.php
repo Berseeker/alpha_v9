@@ -77,6 +77,7 @@ class InsertPromoOpcion implements ShouldQueue
 
     private function insertProduct($item, &$cont_new_products)
     {
+        dd($item);
         $product = new Product();
         $product->name = $item['name'];
         $product->code = $item['item_code'];
@@ -125,6 +126,7 @@ class InsertPromoOpcion implements ShouldQueue
         $product->material = $item['material'];
         $product->custom = false;
         $product->proveedor = 'PromoOpcion';
+        $product->images = json_encode(array($item['img'])); //JSON
 
         switch (Str::upper($item['family'])) {
             case 'BAR':
