@@ -260,6 +260,8 @@ class IndexController extends Controller
             }
         }
 
+        $metodos_impresion = explode(',',$producto->metodos_impresion);
+
         SEOMeta::setTitle('Producto - '.$producto->nombre);
         SEOMeta::setDescription($producto->descripcion);
         SEOMeta::addMeta('producto:published_time', $producto->created_at->toW3CString(), 'property');
@@ -288,7 +290,8 @@ class IndexController extends Controller
             'producto' => $producto,
             'colores' => $colores,
             'count_color' => $count_color,
-            'productos_relacionados' => $productos_relacionados
+            'productos_relacionados' => $productos_relacionados,
+            'metodos_impresion' => $metodos_impresion
         ]);
 
     }
