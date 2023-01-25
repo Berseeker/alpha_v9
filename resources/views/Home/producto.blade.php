@@ -99,7 +99,7 @@
                         $cont++;
                     }
                 @endphp
-                <p class="detail-product"><i class="fas fa-fill-drip" style="margin-right:10px;"></i> Metodos de Impresión: {{ $printin_methods ?? 'No Especificado' }} </p>
+                <p class="detail-product"><i class="fas fa-fill-drip" style="margin-right:10px;"></i> Metodos de Impresión: {{ $printing_methods ?? 'No Especificado' }} </p>
                 <p class="detail-product"> <i class="fas fa-hashtag" style="margin-right:10px;"></i> Piezas x Caja: {{ $producto->piezas_caja ?? 'No Especificado' }} </p>
                 <p class="detail-product"> <i class="fas {{ $producto->categoria->icon ?? 'fa-question' }}" style="margin-right: 10px;"></i> Categoría: {{ $producto->subcategoria->nombre ?? 'Desconocido'}} </p>
             </div>

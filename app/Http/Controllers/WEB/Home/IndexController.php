@@ -244,7 +244,7 @@ class IndexController extends Controller
 
         $productos_relacionados = Producto::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
 
-        $colores = json_decode($producto->colors);
+        $colores = json_decode($producto->color);
         $count_color = 0;
         $images_collection = array();
         if( $producto->images != NULL)
