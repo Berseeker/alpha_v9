@@ -90,6 +90,7 @@
                     }
                     $printing_methods = '';
                     $cont = 0;
+                    dd($producto);
                     foreach (json_decode($producto->metodos_impresion) as $printing) {
                         if ($cont > 0) {
                             $printing_methods = $printing_methods . ', ' . $printing;
