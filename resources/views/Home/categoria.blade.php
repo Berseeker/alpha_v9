@@ -61,7 +61,7 @@
                         <div class="col-sm-4 col-md-3">
                             <div class="card ecommerce-card">
                                 <div class="item-img text-center">
-                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->SDK,'-'))}}">
+                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}">
                                         @php
                                             $img = asset('imgs/no_disp.png');
                                             if($producto->images != null)
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                     <h6 class="item-name">
-                                        <a class="text-body" href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->SDK,'-'))}}">{{ $producto->nombre }}</a>
+                                        <a class="text-body" href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}">{{ $producto->nombre }}</a>
                                         <span class="card-text item-company">By <a href="#" class="company-name">{{ $producto->SDK }}</a></span>
                                     </h6>
                                     <p class="card-text item-description">
@@ -116,7 +116,7 @@
                                             <!--h4 class="item-price">$339.99</h4-->
                                         </div>
                                     </div>
-                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->SDK,'-'))}}" class="btn btn-light btn-wishlist">
+                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}" class="btn btn-light btn-wishlist">
                                         <i class="fa-solid fa-info"></i>
                                         <span>Detalles</span>
                                     </a>

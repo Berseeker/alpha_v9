@@ -234,7 +234,7 @@ class IndexController extends Controller
         $cont = 1;
         $area_impresion = NULL;
         
-        dd($producto, $slug, $slug_producto);
+        //dd($producto, $slug, $slug_producto);
         //$images = json_decode($producto->images);
         $categoria = Categoria::find($producto->categoria_id);
 
