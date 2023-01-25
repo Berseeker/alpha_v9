@@ -105,7 +105,7 @@
                                         <span class="card-text item-company">By <a href="#" class="company-name">{{ $producto->SDK }}</a></span>
                                     </h6>
                                     <p class="card-text item-description">
-                                        {{ $producto->description }}
+                                        {{ $producto->descripcion }}
                                     </p>
                                 </div>
 

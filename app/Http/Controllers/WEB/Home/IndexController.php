@@ -238,8 +238,8 @@ class IndexController extends Controller
         //$images = json_decode($producto->images);
         $categoria = Categoria::find($producto->categoria_id);
 
-        if($producto->printing_area != "S/MEDIDAS_IMP"){
-            $area_impresion = $producto->printing_area;
+        if($producto->area_impresion != "S/MEDIDAS_IMP"){
+            $area_impresion = $producto->area_impresion;
         }
 
         $productos_relacionados = Producto::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
@@ -260,23 +260,23 @@ class IndexController extends Controller
             }
         }
 
-        SEOMeta::setTitle('Producto - '.$producto->name);
-        SEOMeta::setDescription($producto->details);
+        SEOMeta::setTitle('Producto - '.$producto->nombre);
+        SEOMeta::setDescription($producto->descripcion);
         SEOMeta::addMeta('producto:published_time', $producto->created_at->toW3CString(), 'property');
         SEOMeta::addKeyword($producto->meta_keywords);
 
-        OpenGraph::setDescription($producto->details);
+        OpenGraph::setDescription($producto->descripcion);
         OpenGraph::setTitle($producto->name);
         OpenGraph::setUrl('https://alphapromos.mx/producto/ '.$slug_producto);
         OpenGraph::addProperty('type', 'producto');
         OpenGraph::addProperty('locale', 'es');
         OpenGraph::addImage($images_collection[0]);
 
-        Twitter::setTitle($producto->name);
+        Twitter::setTitle($producto->nombre);
         Twitter::setSite('@alphapromos');
         
-        JsonLd::setTitle($producto->name);
-        JsonLd::setDescription($producto->details);
+        JsonLd::setTitle($producto->nombre);
+        JsonLd::setDescription($producto->descripcion);
         JsonLd::setType('Producto');
         JsonLd::addImage($images_collection[0]);
 
