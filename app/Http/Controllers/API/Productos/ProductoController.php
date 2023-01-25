@@ -25,7 +25,7 @@ class ProductoController extends Controller
 
     public function producto($sdk)
     {
-        $producto = Producto::where('code',$sdk)->first();
+        $producto = Producto::where('SDK',$sdk)->first();
 
         $img = asset('imgs/no_disp.png');
         if($producto->images != null)
