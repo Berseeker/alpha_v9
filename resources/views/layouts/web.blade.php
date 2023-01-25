@@ -150,6 +150,7 @@ $(document).ready(function(){
   $('.btn-cart').on('click', function (e) {
       var sdk = $(this).attr("sdk"),
       url = "{{ url('/')}}";
+      console.log(sdk);
       if(!$(this).hasClass('btn-loaded'))
       {
         $.ajax({
