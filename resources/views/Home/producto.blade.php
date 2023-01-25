@@ -81,16 +81,16 @@
             </div>
             <div id="ficha-tecnica">
                 <h4>Especificaciones</h4>
-                <p class="detail-product" style="margin-bottom: 20px;">{{ $producto->details }}</p>
+                <p class="detail-product" style="margin-bottom: 20px;">{{ $producto->descripcion }}</p>
                 @php
                     if($producto->printing_area != NULL){                  
-                        echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: '.$producto->printing_area.' </p>';
+                        echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: '.$producto->area_impresion.' </p>';
                     }else{
                         echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: No Especificado. </p>';
                     }
                     $printing_methods = '';
                     $cont = 0;
-                    foreach (json_decode($producto->printing_methods) as $printing) {
+                    foreach (json_decode($producto->metodos_impresion) as $printing) {
                         if ($cont > 0) {
                             $printing_methods = $printing_methods . ', ' . $printing;
                         } else {
@@ -100,7 +100,7 @@
                     }
                 @endphp
                 <p class="detail-product"><i class="fas fa-fill-drip" style="margin-right:10px;"></i> Metodos de Impresión: {{ $printin_methods ?? 'No Especificado' }} </p>
-                <p class="detail-product"> <i class="fas fa-hashtag" style="margin-right:10px;"></i> Piezas x Caja: {{ $producto->box_pieces ?? 'No Especificado' }} </p>
+                <p class="detail-product"> <i class="fas fa-hashtag" style="margin-right:10px;"></i> Piezas x Caja: {{ $producto->piezas_caja ?? 'No Especificado' }} </p>
                 <p class="detail-product"> <i class="fas {{ $producto->categoria->icon ?? 'fa-question' }}" style="margin-right: 10px;"></i> Categoría: {{ $producto->subcategoria->nombre ?? 'Desconocido'}} </p>
             </div>
             <div id="product-colors">
@@ -127,14 +127,14 @@
                             @endforeach
                         @endif 
                     </div>
-                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->code}}'>
+                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->SDK}}'>
                         <i class="fa-solid fa-cart-plus"></i>
                         <span class="add-to-cart">Agregar al Carrito</span>
                      </a>
                     <!--button class="item_add_cart info-product-cart">
                         <i class="fas fa-shopping-cart"></i> Agregar al Carrito
                     </button-->
-                    <button class="btn add_detalle_producto info-product-cotizar btn-cart-add" sdk ='{{$producto->code}}' slug={{ Str::slug($producto->name.' '.$producto->code) }}>
+                    <button class="btn add_detalle_producto info-product-cotizar btn-cart-add" sdk ='{{$producto->SDK}}' slug={{ Str::slug($producto->nombre.' '.$producto->SDK) }}>
                         <i class="fas fa-store"></i>Cotizar
                     </button>
             </div>
@@ -201,17 +201,17 @@
                             $image = json_decode($producto->images);
                             if(!Str::contains($image[0],['https','http']))
                             {
-                                $img = Storage::disk('doblevela_img')->url($image[0]);
+                                $img = Storage::url($image[0]);
                             }
                             $imgCont = 0;
                         @endphp
     
-                        <img src="{{ $image[0] }}" alt='{{$producto->name}}'data-zoom-image="{{ $image[0] }}" id="img_{{$imgCont}}" /> 
+                        <img src="{{ $image[0] }}" alt='{{$producto->nombre}}'data-zoom-image="{{ $image[0] }}" id="img_{{$imgCont}}" /> 
                     @else
                         <img src="{{ asset('imgs/no_disp.png') }}" alt="Imagen no Encontrado">
                     @endif
                     <div>
-                        <h4> {{ $producto->name ?? 'Desconocido'}}</h4>
+                        <h4> {{ $producto->nombre ?? 'Desconocido'}}</h4>
                         <span><small>By <a href="">AlphaPromos</a></small></span>
                         <ul class="unstyled-list list-inline" style="display: block;">
                             <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>

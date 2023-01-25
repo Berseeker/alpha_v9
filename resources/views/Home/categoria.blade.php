@@ -61,7 +61,7 @@
                         <div class="col-sm-4 col-md-3">
                             <div class="card ecommerce-card">
                                 <div class="item-img text-center">
-                                    <a href="{{url('/producto/'.Str::slug($producto->name." ".$producto->code,'-'))}}">
+                                    <a href="{{url('/producto/'.Str::slug($producto->nombre,'-'))}}">
                                         @php
                                             $img = asset('imgs/no_disp.png');
                                             if($producto->images != null)
@@ -69,7 +69,7 @@
                                                 $img = json_decode($producto->images)[0];
                                                 if(!Str::contains($img,['https','http']))
                                                 {
-                                                    $img = Storage::disk('doblevela_img')->url($img);
+                                                    $img = Storage::url($img);
                                                 }
                                             }
                                         @endphp 
@@ -102,11 +102,11 @@
                                         </div>
                                     </div>
                                     <h6 class="item-name">
-                                        <a class="text-body" href="{{url('/producto/'.Str::slug($producto->name." ".$producto->code,'-'))}}">{{ $producto->name }}</a>
-                                        <span class="card-text item-company">By <a href="#" class="company-name">{{ $producto->code }}</a></span>
+                                        <a class="text-body" href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->SDK,'-'))}}">{{ $producto->nombre }}</a>
+                                        <span class="card-text item-company">By <a href="#" class="company-name">{{ $producto->SDK }}</a></span>
                                     </h6>
                                     <p class="card-text item-description">
-                                        {{ $producto->details }}
+                                        {{ $producto->description }}
                                     </p>
                                 </div>
 
@@ -116,11 +116,11 @@
                                             <!--h4 class="item-price">$339.99</h4-->
                                         </div>
                                     </div>
-                                    <a href="{{url('/producto/'.Str::slug($producto->name." ".$producto->code,'-'))}}" class="btn btn-light btn-wishlist">
+                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->SDK,'-'))}}" class="btn btn-light btn-wishlist">
                                         <i class="fa-solid fa-info"></i>
                                         <span>Detalles</span>
                                     </a>
-                                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->code}}'>
+                                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->SDK}}'>
                                         <i class="fa-solid fa-cart-plus"></i>
                                         <span class="add-to-cart">Agregar al Carrito</span>
                                     </a>
