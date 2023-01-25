@@ -38,8 +38,8 @@ class ProductoController extends Controller
         }
 
         return response()->json([
-            'nombre' => $producto->name,
-            'sdk' => $producto->code,
+            'nombre' => $producto->nombre,
+            'sdk' => $producto->SDK,
             'img' => $img
         ]);
 
