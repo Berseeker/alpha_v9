@@ -90,7 +90,8 @@
                     }
                     $printing_methods = '';
                     $cont = 0;
-                    foreach (json_decode($metodos_impresion) as $printing) {
+                    
+                    foreach ($metodos_impresion as $printing) {
                         if ($cont > 0) {
                             $printing_methods = $printing_methods . ', ' . $printing;
                         } else {
