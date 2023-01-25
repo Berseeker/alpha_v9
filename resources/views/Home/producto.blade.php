@@ -40,12 +40,12 @@
                                 $image = $img;
                                 if(!Str::contains($img,['https','http']))
                                 {
-                                    $img = Storage::disk('doblevela_img')->url($img);
+                                    $img = Storage::url($img);
                                 }
                                 $imgCont = 0;
                             @endphp
     
-                            <img src="{{ $image }}" alt='{{$producto->name}}'data-zoom-image="{{ $image }}" id="img_{{$imgCont}}" />
+                            <img src="{{ $image }}" alt='{{$producto->nombre}}'data-zoom-image="{{ $image }}" id="img_{{$imgCont}}" />
              
                             
                             @php
@@ -62,7 +62,7 @@
         </div>
         <div class="col-12 col-sm-6 col-md-7">
             <div id="product-descripction">
-                <h4> {{ $producto->name ?? 'Desconocido'}}</h4>
+                <h4> {{ $producto->nombre ?? 'Desconocido'}}</h4>
                 <span><small>By <a href="">AlphaPromos</a></small></span>
                 <ul class="unstyled-list list-inline" style="display: flex;">
                     <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
@@ -83,7 +83,7 @@
                 <h4>Especificaciones</h4>
                 <p class="detail-product" style="margin-bottom: 20px;">{{ $producto->descripcion }}</p>
                 @php
-                    if($producto->printing_area != NULL){                  
+                    if($producto->area_impresion != NULL){                  
                         echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: '.$producto->area_impresion.' </p>';
                     }else{
                         echo '<p class="detail-product"><i class="fas fa-chart-area" style="margin-right:10px;"></i>Area de Impresión: No Especificado. </p>';

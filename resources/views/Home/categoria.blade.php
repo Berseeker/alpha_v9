@@ -61,7 +61,7 @@
                         <div class="col-sm-4 col-md-3">
                             <div class="card ecommerce-card">
                                 <div class="item-img text-center">
-                                    <a href="{{url('/producto/'.Str::slug($producto->nombre,'-'))}}">
+                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->SDK,'-'))}}">
                                         @php
                                             $img = asset('imgs/no_disp.png');
                                             if($producto->images != null)
