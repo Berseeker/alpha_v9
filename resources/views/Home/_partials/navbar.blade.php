@@ -1,15 +1,16 @@
 <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary" id="navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="{{ asset('imgs/v3/logos/logo_alpha.png') }}" id="logo-img" alt="AlphaPromos"></a>
+        <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('imgs/v3/logos/logo_alpha.png') }}" id="logo-img" alt="AlphaPromos"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav d-flex align-items-center" id="navbar-menu">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">INICIO</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('index') }}">INICIO</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" id="categoria-nav-mob" href="#">CATEGORIAS <i class="fa-solid fa-caret-down"></i></a>
                     <a class="nav-link" id="categoria-nav" href="#">CATEGORIAS <i class="fa-solid fa-caret-down"></i></a>
                 </li>
                 <li class="nav-item">

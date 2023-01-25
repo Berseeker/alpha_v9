@@ -21,6 +21,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
-        "lightgallery": "^2.6.0"
+        "lightgallery": "^2.6.0",
+        "owl.carousel": "^2.3.4"
     }
 }

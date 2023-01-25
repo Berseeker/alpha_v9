@@ -1,18 +1,18 @@
 @extends('layouts.web')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/v3/home/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/v3/home/masters.css') }}">
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container pd-0">
         @include('Home._partials.slider')
     </div> 
 
     <div class="container">
         <section class="row" id="catalogos">
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
-                <div class="item" style="background: url('{{ asset('imgs/v3/catalogos/botellas.jpeg') }}')">
+                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/botellas.jpeg') }}')">
                     <h2>Botellas y Bidones</h2>
                     <p>La mejor selección de botellas y bidones.</p>
                     <p class="mb-30">Personalizados con el logotipo de tu empresa</p>
@@ -20,7 +20,7 @@
                 </div>  
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
-                <div class="item" style="background: url('{{ asset('imgs/v3/catalogos/novedades.jpeg') }}')">
+                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/novedades.jpeg') }}')">
                     <h2>Novedades</h2>
                     <p>Consulta todas las novedades en Merchandising y</p>
                     <p class="mb-30">Artículos Promocionales para este 2023.</p>
@@ -114,24 +114,16 @@
     <div class="container" style="overflow: hidden;">
         <section id="clientes">
             <h3>Clientes que confiaron en nosotros</h3>
-            <div class="swipert">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/krystal_cancun.png') }}" class="clientes-img" alt=""> </div>
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/marriot_logo.png') }}" class="clientes-img" alt=""> </div>
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/oasis_logo.png') }}" class="clientes-img" alt=""> </div>
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/palace_resort_logo.png') }}" class="clientes-img" alt=""> </div>
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/paradisus_logo.jpeg') }}" class="clientes-img" alt=""> </div>
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/park_logo.png') }}" class="clientes-img" alt=""> </div>
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/presidente_logo.svg') }}" class="clientes-img" alt=""> </div>
-                    <div class="swiper-slide cbox d-flex align-items-center"> <img src="{{ asset('imgs/v3/clientes/royalton_logo.png') }}" class="clientes-img" alt=""> </div>
-                </div>
-                <!-- If we need pagination -->
-                <div class="swiper-paginationt"></div>
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prevt"></div>
-                <div class="swiper-button-nextt"></div>
+            <div class="owl-carousel owl-theme clientes-slider">
+                <!-- Slides -->
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/krystal_cancun.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/marriot_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/oasis_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/palace_resort_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/paradisus_logo.jpeg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/park_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/presidente_logo.svg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/royalton_logo.png') }}" class="clientes-img" alt=""> </div>
             </div>
         </section>
     </div>
@@ -141,45 +133,33 @@
 @section('page-scripts')
 
 <script type="text/javascript">
-    const swiper = new Swiper('.swiper', {
-        // Optional parameters
-        loop: true,
+    $(document).ready(function (){
 
-        // If we need pagination
-        pagination: {
-          el: ".swiper-pagination",
-          type: "progressbar",
-        },
+        $('.home-slider').owlCarousel({
+            items:1,
+        });
 
-        // Navigation arrows
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
+        $('.clientes-slider').owlCarousel({
+            loop:true,
+            nav:false,
+            margin:10,
+            responsiveClass:true,
+            autoplay:true,
+            autoplayTimeout:3000,
+            autoplayHoverPause:true,
+            responsive:{
+                0:{
+                    items:2
+                },
+                600:{
+                    items:2
+                },
+                1000:{
+                    items:4
+                }
+            }
+        });
 
-    const swipert = new Swiper('.swipert', {
-        // Optional parameters
-        slidesPerView: 4,
-        centeredSlides: true,
-        spaceBetween: 10,
-        loop: true,
-        autoplay: {
-            delay: 2500,
-            disableOnInteraction: true,
-        },
-
-        // If we need pagination
-        pagination: {
-          el: ".swiper-paginationt",
-          type: "progressbar",
-        },
-
-        // Navigation arrows
-        navigation: {
-            nextEl: '.swiper-button-nextt',
-            prevEl: '.swiper-button-prevt',
-        },
     });
 </script>
 

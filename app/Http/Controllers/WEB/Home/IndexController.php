@@ -80,28 +80,17 @@ class IndexController extends Controller
             'categoria' => $categoria,
             'productos' => $productos,
             'categorias' => $categorias,
-            'total' => $total_items,
-            'flag' => $flag,
             'title' => $title,
-            'cont' => $cont
         ]);
     }
 
 
     public function showSubcategoria(Request $request,$slug)
     {
-        $pageConfigs = [
-          'contentLayout' => "content-detached-left-sidebar",
-          'bodyClass' => 'ecommerce-application',
-        ];
-
-        $breadcrumbs = [
-            ['link'=>"dashboard-analytics",'name'=>"Home"],['link'=>"dashboard-analytics",'name'=>"eCommerce"], ['name'=>"Shop"]
-        ];
 
         $subcategoria = NULL;
         $title = null;
-        $slug_subcategoria = DB::table('slugs')->where('slug',$slug)->get();
+        $slug_subcategoria = DB::table('slugs')->where('slug','sub-'.$slug)->get();
         if(!$slug_subcategoria->isEmpty())
         {
             $subcategoria = Subcategoria::find($slug_subcategoria[0]->fk_id);
@@ -136,55 +125,24 @@ class IndexController extends Controller
                 $flag=0;
 
         }
-
-        SEOMeta::setTitle('Subcategoria - '.$title);
-        SEOMeta::setDescription('Articulos que pertenecen a la subcategoria '.$title);
-        SEOMeta::setCanonical('https://alphapromos.mx/');
-
-        OpenGraph::setDescription('Articulos que pertenecen a la subcategoria '.$title);
-        OpenGraph::setTitle('Subcategoria - '.$title);
-        OpenGraph::setUrl('https://alphapromos.mx/');
-        OpenGraph::addProperty('type', 'subcategoria');
-
-        Twitter::setTitle('Subcategoria - '.$title);
-        Twitter::setSite('@alphapromos');
-
-        JsonLd::setTitle('Subcategoria - '.$title);
-        JsonLd::setDescription('Articulos que pertenecen a la Subcategoria '.$title);
-        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
-            
+        
         return view('Home.subcategoria',[
-            'pageConfigs' => $pageConfigs,
             'subcategoria' => $subcategoria,
             'productos' => $productos,
             'categorias' => $categorias,
-            'cont' => $cont,
-            'breadcrumbs' => $breadcrumbs,
-            'total' => $total_items,
             'categoria' => $categoria,
-            'flag' => $flag,
             'title' => $title
         ]);
     }
 
-    public function showProducto($slug){
-
-        $pageConfigs = [
-          'contentLayout' => "content-detached-left-sidebar",
-          'bodyClass' => 'ecommerce-application',
-        ];
-
-        $breadcrumbs = [
-            ['link'=>"dashboard-analytics",'name'=>"Home"],['link'=>"dashboard-analytics",'name'=>"eCommerce"], ['name'=>"Shop"]
-        ];
-
+    public function showProducto($slug)
+    {
         $producto = NULL;
         $title = null;
         $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
-
         if(!$slug_producto->isEmpty()){
             $producto = Product::find($slug_producto[0]->fk_id);
-            $title = $producto->nombre;
+            $title = $producto->name;
         }
         $categorias = Categoria::all();
         $cont = 1;
@@ -215,26 +173,6 @@ class IndexController extends Controller
                 array_push($images_collection,$image);
             }
         }
-
-        SEOMeta::setTitle('Producto - '.$producto->name);
-        SEOMeta::setDescription($producto->details);
-        SEOMeta::addMeta('producto:published_time', $producto->created_at->toW3CString(), 'property');
-        SEOMeta::addKeyword($producto->meta_keywords);
-
-        OpenGraph::setDescription($producto->details);
-        OpenGraph::setTitle($producto->name);
-        OpenGraph::setUrl('https://alphapromos.mx/producto/ '.$slug_producto);
-        OpenGraph::addProperty('type', 'producto');
-        OpenGraph::addProperty('locale', 'es');
-        OpenGraph::addImage($images_collection[0]);
-
-        Twitter::setTitle($producto->name);
-        Twitter::setSite('@alphapromos');
-        
-        JsonLd::setTitle($producto->name);
-        JsonLd::setDescription($producto->details);
-        JsonLd::setType('Producto');
-        JsonLd::addImage($images_collection[0]);
 
         
         return view('Home.producto',[
