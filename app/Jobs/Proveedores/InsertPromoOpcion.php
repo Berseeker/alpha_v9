@@ -77,7 +77,6 @@ class InsertPromoOpcion implements ShouldQueue
 
     private function insertProduct($item, &$cont_new_products)
     {
-        dd($item);
         $product = new Product();
         $product->name = $item['name'];
         $product->code = $item['item_code'];

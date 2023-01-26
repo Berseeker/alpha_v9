@@ -33,7 +33,23 @@
         <div>
             <ul class="navbar-nav">
                 <li class="nav-item mr-20">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div class="dropdown">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-cart-shopping alpha-color" aria-hidden="true"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-number">
+                                
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu" id="menu-carrito">
+                            <div class="carrito">
+                                <p>Mi Cesta</p>
+                                <ul class="items-hooked">
+                                    <li>Sin productos!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

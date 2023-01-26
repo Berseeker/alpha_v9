@@ -331,3 +331,44 @@ footer {
 #redes-sociales li a {
     font-size: 25px;
 }
+
+/* Carrito de Cotizaciones */
+
+#menu-carrito {
+    margin-left: -250px;
+}
+
+.carrito {
+    width: 250px;
+}
+
+.carrito p {
+    text-align: center;
+}
+
+.carrito ul {
+    padding-left: 0px;
+    list-style: none;
+}
+
+.carrito ul li {
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+.carrito ul li:hover {
+    background-color: #f8f8f8;
+}
+
+#cart-number {
+    display: none;
+}
+
+.alert-warning,
+.alert-success {
+    display: none;
+    position: fixed;
+    right: 10px;
+}

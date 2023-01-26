@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\Buscador;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Producto;
+use App\Models\Product;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
 
@@ -24,5 +24,12 @@ class BuscadorController extends Controller
             $subcategorias = Subcategoria::where('categoria_id','=',$categoria->id)->get();
             return $subcategorias->toJson();
         }
+    }
+
+    public function buscador($phrase)
+    {
+        $product = Product::search($phrase)->get();
+        dd($product);
+
     }
 }

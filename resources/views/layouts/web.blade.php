@@ -10,8 +10,7 @@
   <!-- JQUERY 3.x -->
   <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <!-- COOKIE JS PLUGIN - -->
-  <script type="module" src="{{ asset('js/old/js.cookie.js') }}"></script>
-  <script nomodule defer src="{{ asset('js/old/js.cookie.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
   <!-- CSS BOOTSTRAP V5.3 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -22,7 +21,7 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
   <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="{{ asset('css/v3/home/queen.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/v3/home/global.css') }}">
   <!-- CUSTOM CSS FOR EACH PAGE -->
   @yield('page-styles')
   <!-- Chat en vivo -->
@@ -40,6 +39,14 @@
 <body>
     <div id="app">
         @include('Home._partials.navbar')
+        <div class="alert alert-warning" role="alert">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Este producto ya se encuentra en el carrito!
+        </div>
+        <div class="alert alert-success" role="alert">
+          <i class="fa-solid fa-cart-plus"></i>
+          Producto agregado!
+        </div>
         <main class="py-4">
             @yield('content')
         </main>
@@ -186,10 +193,10 @@ $(document).ready(function(){
 
       if (items.length === 0) 
       {
-        var template = '<p class="text-warning" style="text-align:center;margin-top:20px;margin-bottom:20px;">No hay Productos!!</p>';
+        var template = '<li>Sin Productos!!</li>';
         $(".items-hooked").append(template);  
       }else{
-    
+        console.log(items);
         items.forEach(element => {
     
           $.ajax({
@@ -198,7 +205,7 @@ $(document).ready(function(){
             dataType : "json",
             success:function(data)
             {  
-                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
+                var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
                 $(".items-hooked").append(template);  
             }
           });
@@ -206,16 +213,19 @@ $(document).ready(function(){
         });  
       }
       var cont = items.length;
-      $("#shop-cart").css('display','inline-flex');
-      $(".contador-cart").html('');
-      $(".contador-cart").html(cont);
-      //console.log(test);
+      $("#cart-number").css('display','block');
+      $("#cart-number").html('');
+      $("#cart-number").html(cont);
       
+  } else {
+    console.log('cookie no definida');
   }
 
+  // Cuando se agrega un producto al carrito
   $('.btn-cart').on('click', function (e) {
       var sdk = $(this).attr("sdk"),
       url = "{{ url('/')}}";
+      console.log(sdk);
       if(!$(this).hasClass('btn-loaded'))
       {
         $.ajax({
@@ -224,53 +234,67 @@ $(document).ready(function(){
             dataType : "json",
             success:function(data)
             {  
-              console.log(data);
+              //console.log(data);
               var items = [];
               if(Cookies.get('carrito_cotizaciones') == undefined)
               {
                   //console.log('Se inicializa el carrito de compras');
                   $('.items-hooked').html('');
-                  var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
+                  var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
                   $(".items-hooked").append(template);
-                  items.push(data.code);
-                  $("#shop-cart").css('display','inline-flex');
-                  $(".contador-cart").html('');
-                  $(".contador-cart").html('1');
+                  items.push(data.sdk);
+                  $("#cart-number").css('display','block');
+                  $("#cart-number").html('');
+                  $("#cart-number").html('1');
                   var value = JSON.stringify(items);
                   Cookies.set('carrito_cotizaciones',value);
+                  $('.alert-success').css('display','inline-block');
+                  $(".alert-success").fadeOut(5000); 
               }
               else
               {
                 var items = JSON.parse(Cookies.get('carrito_cotizaciones'));
-                $('.items-hooked').html('');
-                items.forEach(element => {
-    
-                  $.ajax({
-                    url:"/api/producto/"+element,
-                    method:"GET",
-                    dataType : "json",
-                    success:function(data)
-                    {  
-                        var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
-                        $(".items-hooked").append(template);  
-                    }
+                if(items.includes(sdk)){ // Ya existe este producto en el carrito
+                    $('.alert-warning').css('display','inline-block');
+                    $(".alert-warning").fadeOut(5000);
+                }
+                else {
+                  $('.items-hooked').html('');
+                  items.forEach(element => {
+      
+                    $.ajax({
+                      url:"/api/producto/"+element,
+                      method:"GET",
+                      dataType : "json",
+                      success:function(data)
+                      {  
+                          var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
+                          $(".items-hooked").append(template);  
+                      }
+                    });
+                    
                   });
-                  
-                });
-                var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
-                $(".items-hooked").append(template);
+                  var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
+                  $(".items-hooked").append(template);
 
-                items.push(data.code);
-                var cont = items.length;
-                $("#shop-cart").css('display','inline-flex');
-                $(".contador-cart").html('');
-                $(".contador-cart").html(cont);
-                var value = JSON.stringify(items);
-                Cookies.set('carrito_cotizaciones',value);
-              }   
+                  items.push(data.sdk);
+                  var cont = items.length;
+                  $("#cart-number").css('display','block');
+                  $("#cart-number").html('');
+                  $("#cart-number").html(cont);
+                  var value = JSON.stringify(items);
+                  Cookies.set('carrito_cotizaciones',value);
+                  $('.alert-success').css('display','inline-block');
+                  $(".alert-success").fadeOut(5000); 
+                }
+              }
             }
         });
-      }   
+        $(this).addClass('btn-loaded');
+      } else {
+        $('.alert-warning').css('display','inline-block');
+        $(".alert-warning").fadeOut(5000);
+      }
   });
 
   $('.btn-cart-add').on('click', function (e) {

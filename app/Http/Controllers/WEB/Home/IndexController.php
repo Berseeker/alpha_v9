@@ -18,11 +18,6 @@ use App\Models\Product;
 use App\Mail\newMessage;
 use App\Models\Imagen;
 
-use SEOMeta;
-use OpenGraph;
-use JsonLd;
-use Twitter;
-
 
 class IndexController extends Controller
 {
