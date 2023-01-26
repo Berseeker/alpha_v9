@@ -1,7 +1,7 @@
 @extends('layouts.web')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/v3/home/masters.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/v3/home/welcome.css') }}">
 @endsection
 
 @section('content')

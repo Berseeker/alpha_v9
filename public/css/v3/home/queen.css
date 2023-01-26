@@ -10,6 +10,10 @@
     padding: 0px;
 }
 
+.pd-top-20 {
+    padding-top: 20px;
+}
+
 .pd-16c {
     padding-left: 16px;
     padding-right: 16px;
@@ -23,8 +27,16 @@
     margin-bottom: 20px;
 }
 
+.mb-15 {
+    margin-bottom: 15px;
+}
+
 .mb-0 {
     margin-bottom: 0px;
+}
+
+.mb-5c {
+    margin-bottom: 5px;
 }
 
 .mr-10 {
@@ -74,6 +86,16 @@
 
 .green {
     color: green;
+}
+
+.d-md {
+    display: none;
+}
+
+@media (min-width:768px) {
+    .d-md {
+        display: grid;
+    }
 }
 
 
@@ -187,7 +209,7 @@
 }
 
 .custom-li {
-    margin-left: 50px;
+    margin-left: 0px;
 }
 
 .mr-20 {
@@ -239,7 +261,17 @@
 }
 
 #search-global {
-    width: 350px;
+    width: 280px;
+}
+
+@media (min-width:1000px) {
+    .custom-li {
+        margin-left: 50px;
+    }
+
+    #search-global {
+        width: 350px;
+    }
 }
 
 /* FOOTER STYLES */

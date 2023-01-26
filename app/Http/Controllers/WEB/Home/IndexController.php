@@ -144,45 +144,48 @@ class IndexController extends Controller
             $producto = Product::find($slug_producto[0]->fk_id);
             $title = $producto->name;
         }
-        $categorias = Categoria::all();
-        $cont = 1;
-        $area_impresion = NULL;
-        
 
-        //$images = json_decode($producto->images);
+
+        $categorias = Categoria::all();     
         $categoria = Categoria::find($producto->categoria_id);
+        $area_impresion = NULL; 
 
         if($producto->printing_area != "S/MEDIDAS_IMP"){
             $area_impresion = $producto->printing_area;
         }
 
-        $productos_relacionados = Product::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
-
-        $colores = json_decode($producto->colors);
-        $count_color = 0;
-        $images_collection = array();
-        if( $producto->images != NULL)
-        {
-            foreach (json_decode($producto->images) as $img) {
-                $image = $img;
-                if(!Str::contains($img,['https','http']))
-                {
-                    $image = url('/'.$img);
-                }
-
-                array_push($images_collection,$image);
-            }
+        if ($producto->printing_area == NULL) {
+            $area_impresion = 'Sin especificar';
         }
 
+        $productos_relacionados = Product::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
+
+        $metodos_impresion = '';
+        $cont = 0;
+        foreach (json_decode($producto->printing_methods) as $item) {
+            if ($cont == 0) {
+                $metodos_impresion = $metodos_impresion . $item;
+            } else {
+                $metodos_impresion = $metodos_impresion . ',' . $item;
+            }
+            $cont++;
+        }
+
+        $colors = NULL;
+        $cont_colors = count(json_decode($producto->colors));
+        if ($cont_colors > 0) {
+            $colors = json_decode($producto->colors);
+        }
         
         return view('Home.producto',[
             'title' => $title,
             'categorias' => $categorias,
-            'cont' => $cont,
+            'categoria' => $categoria,
             'producto' => $producto,
-            'colores' => $colores,
-            'count_color' => $count_color,
-            'productos_relacionados' => $productos_relacionados
+            'productos_relacionados' => $productos_relacionados,
+            'area_impresion' => $area_impresion,
+            'metodos_impresion' => $metodos_impresion,
+            'colors' => $colors
         ]);
 
     }

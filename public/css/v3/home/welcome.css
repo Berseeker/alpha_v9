@@ -69,8 +69,14 @@
 }
 
 .features p {
-  text-align: justify;
+  text-align: center;
   font-size: 14px;
+}
+
+@media (min-width:1000px) {
+  .features p {
+    text-align: justify;
+  }
 }
 
 #categorias-destacadas {

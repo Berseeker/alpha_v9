@@ -2,7 +2,7 @@
 
 @section('page-styles')
 <!-- Page css files -->
-<link rel="stylesheet" href="{{ asset('css/v3/home/categorias.css') }}">
+<link rel="stylesheet" href="{{ asset('css/v3/home/category.css') }}">
 @endsection
 
     

@@ -110,6 +110,7 @@
 .list-categoria li a {
     text-decoration: none;
     color: black;
+    font-size: 14px;
 }
 
 .list-categoria li a:hover {
@@ -120,14 +121,12 @@
 .selector {
     padding: 10px;
     background-color: white;
+    color: black;
     border-radius: 8px;
+    border: 1px solid #255992;
     box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
 }
 
 .selector h5 {
     margin-top: 10px;
-}
-
-.list-categoria li a{
-    font-size: 14px;
 }
