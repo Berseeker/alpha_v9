@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 use App\Models\Categoria;
 use App\Models\Cotizacion;
-use App\Models\Producto;
+use App\Models\Product;
 
 use App\Mail\newCotizacion;
 use App\Mail\UserNotification;
@@ -19,44 +19,37 @@ class CotizacionController extends Controller
 {
     public function index()
     {
-        $pageConfigs = [
-            'pageClass' => 'ecommerce-application',
-        ];
-
-        $breadcrumbs = [
-            ['link' => "/", 'name' => "Inicio"], ['name' => "Carrito Cotizacion"]
-        ];
-
         $categorias = Categoria::all();
 
         $productos = array();
+
         if(Cookie::get('carrito_cotizaciones') != null)
         {
             $items = json_decode(Cookie::get('carrito_cotizaciones'));
+            
+            if (count($items) > 0) {
 
-            foreach ($items as $item) 
-            {
-                $producto = Producto::where('SDK',$item)->first();
-                $impresion = array();
-                if(Str::contains($producto->metodos_impresion, ','))
+                foreach ($items as $item) 
                 {
-                    $metodos = Str::of($producto->metodos_impresion)->explode(',');
-                    $impresion = $metodos;
-                }else {
-                    array_push($impresion,$producto->metodos_impresion);
+                    $producto = Product::where('code',$item)->first();
+                    $img ='imgs/no_disp.png';
+                    $imgs = json_decode($producto->images)[0];
+                    if(!Str::contains($imgs,['https','http']))
+                    {
+                        $img = Storage::disk('doblevela_img')->url($imgs);
+                    } else {
+                        $img = $imgs;
+                    }
+        
+                    $producto->imagen = $img;
+                    array_push($productos,$producto);
                 }
-
-                $producto->impresiones = json_encode($impresion);
-                array_push($productos,$producto);
-            }
-           
+            }   
         }
 
         $total_productos = count($productos);
         
         return view('Home.cotizacion', [
-            'pageConfigs' => $pageConfigs,
-            'breadcrumbs' => $breadcrumbs,
             'categorias' => $categorias,
             'productos' => $productos,
             'total_productos' => $total_productos

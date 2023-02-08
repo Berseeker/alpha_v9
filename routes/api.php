@@ -70,5 +70,5 @@ Route::get('get-subcategorias/{id}',[BuscadorController::class,'getSubcategorias
 
 Route::get('get-users',[UserController::class,'empleados']);
 
-#Searchable api
+#Searchable ALGOLIA
 Route::get('search/{phrase}', [BuscadorController::class, 'buscador']);

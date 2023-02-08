@@ -241,22 +241,6 @@ class IndexController extends Controller
         $categorias = Categoria::all();
 
         
-        SEOMeta::setTitle('Contacto');
-        SEOMeta::setDescription('Formulario de contacto para quejas o sugerencias');
-        SEOMeta::setCanonical('https://alphapromos.mx/');
-
-        OpenGraph::setDescription('Formulario de contacto para quejas o sugerencias');
-        OpenGraph::setTitle('Contacto');
-        OpenGraph::setUrl('https://alphapromos.mx/');
-        OpenGraph::addProperty('type', 'contacto');
-
-        Twitter::setTitle('Contacto');
-        Twitter::setSite('@alphapromos');
-
-        JsonLd::setTitle('Contacto');
-        JsonLd::setDescription('Formulario de contacto para quejas o sugerencias');
-        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
-        
         return view('Home.contacto', [
             'pageConfigs' => $pageConfigs,
             'breadcrumbs' => $breadcrumbs,

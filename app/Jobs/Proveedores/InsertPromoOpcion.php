@@ -59,7 +59,9 @@ class InsertPromoOpcion implements ShouldQueue
                 if($prevItem == null)
                 {
                     $this->insertProduct($item, $cont_new_products); 
-                }   
+                } else {
+                    $this->updateProduct($prevItem);
+                }
             }
 
             $msg = '';
@@ -77,6 +79,7 @@ class InsertPromoOpcion implements ShouldQueue
 
     private function insertProduct($item, &$cont_new_products)
     {
+        //dd($item);
         $product = new Product();
         $product->name = $item['name'];
         $product->code = $item['item_code'];
@@ -85,7 +88,7 @@ class InsertPromoOpcion implements ShouldQueue
         
         $colors = [];
         foreach ($colors as $color) {
-            if ($color == 'a') {
+           /* if ($color == 'a') {
                 array_push($colors, 'azul');
             } else if ($color == 'r') {
                 array_push($colors, 'rojo');
@@ -103,7 +106,8 @@ class InsertPromoOpcion implements ShouldQueue
                 array_push($colors, 'azul cielo');
             } else {
                 array_push($colors, $color);
-            }
+            }*/
+            array_push($colors,Str::upper($color));
         }
 
         $product->colors = json_encode($colors);
@@ -815,5 +819,37 @@ class InsertPromoOpcion implements ShouldQueue
         }
 
         $product->save();
+    }
+
+    private function updateProduct($item) 
+    {
+        $colors = explode('/', $item['colors']);
+        
+        $colors = [];
+        foreach ($colors as $color) {
+           /* if ($color == 'a') {
+                array_push($colors, 'azul');
+            } else if ($color == 'r') {
+                array_push($colors, 'rojo');
+            } else if ($color == 'v') {
+                array_push($colors, 'verde');
+            } else if ($color == 'be') {
+                array_push($colors, 'beige');
+            } else if ($color == 'c') {
+                array_push($colors, 'cafe');
+            } else if ($color == 'n') {
+                array_push($colors, 'negro');
+            } else if ($color == 't') {
+                array_push($colors, 'tinto');
+            } else if ($color == 'ac') {
+                array_push($colors, 'azul cielo');
+            } else {
+                array_push($colors, $color);
+            }*/
+            array_push($colors,Str::upper($color));
+        }
+
+        $item->colors = json_encode($colors);
+        $item->save();
     }
 }

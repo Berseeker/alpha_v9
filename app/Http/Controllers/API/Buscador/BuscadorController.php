@@ -28,8 +28,8 @@ class BuscadorController extends Controller
 
     public function buscador($phrase)
     {
-        $product = Product::search($phrase)->get();
-        dd($product);
+        $products = Product::search($phrase)->get();
+        return $products->toJson();
 
     }
 }

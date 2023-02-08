@@ -19,6 +19,10 @@
     padding-right: 16px;
 }
 
+.mrb-5 {
+    margin-bottom: 5px;
+}
+
 .mb-30 {
     margin-bottom: 30px;
 }
@@ -43,12 +47,20 @@
     margin-right: 10px;
 }
 
+.ml-10 {
+    margin-left: 10px;
+}
+
 .mr-0 {
     margin-right: 0px;
 }
 
 .ml-0 {
     margin-left: 0px;
+}
+
+.mt-10 {
+    margin-top: 10px;
 }
 
 .br-16 {
@@ -196,7 +208,7 @@
 
 @media (min-width:1000px) {
     #navbar-menu {
-        margin-left: 200px;
+        margin-left: 40px;
     }
 
     #categoria-nav {
@@ -208,12 +220,32 @@
     }
 }
 
+@media (min-width:1400px) {
+    #navbar-menu {
+        margin-left: 100px;
+    }
+}
+
+@media (min-width:1600px) {
+    #navbar-menu {
+        margin-left: 200px;
+    }
+}
+
 .custom-li {
     margin-left: 0px;
 }
 
 .mr-20 {
     margin-right: 20px;
+}
+
+.mr-40 {
+    margin-right: 40px !important;
+}
+
+.fs-30 {
+    font-size: 30px;
 }
 
 #menu-alpha {
@@ -261,18 +293,47 @@
 }
 
 #search-global {
-    width: 280px;
+    width: 200px;
 }
 
 @media (min-width:1000px) {
+    .custom-li {
+        margin-left: 20px;
+    }
+
+    #search-global {
+        width: 150px;
+    }
+}
+@media (min-width:1320px) {
     .custom-li {
         margin-left: 50px;
     }
 
     #search-global {
+        width: 250px;
+    }
+}
+
+@media (min-width:1500px) {
+    #search-global {
         width: 350px;
     }
 }
+
+.sent-cart {
+    display: block;
+    text-align: center;
+    background-color: #255992;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    padding: 8px;
+    font-size: 18px !important;
+    border-radius: 8px;
+}
+
+
 
 /* FOOTER STYLES */
 
@@ -372,3 +433,31 @@ footer {
     position: fixed;
     right: 10px;
 }
+
+#searched-items {
+    display: none;
+    position: absolute;
+    width: 250px;
+    list-style: none;
+    background-color: white;
+    height: 200px;
+    overflow-y: scroll;
+    padding-left: 0px;
+    padding: 16px;
+}
+
+#searched-items li a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+.empty-cart {
+    color: orange;
+}
+
+.empty-cart:hover {
+    color: red;
+}
+
+

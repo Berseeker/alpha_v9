@@ -17,14 +17,10 @@ return [
     */
 
     'searchableAttributes' => [
-        'name',
         'code',
-        'colors',
-        'details',
-        'category',
-        'subcategory',
-        'proveedor',
         'search',
+        'categoria_name',
+        'subcategoria_name',
     ],
 
     /*

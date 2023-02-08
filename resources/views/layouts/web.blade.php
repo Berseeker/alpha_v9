@@ -21,7 +21,7 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
   <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="{{ asset('css/v3/home/global.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/v3/home/head_master.css') }}">
   <!-- CUSTOM CSS FOR EACH PAGE -->
   @yield('page-styles')
   <!-- Chat en vivo -->
@@ -42,6 +42,10 @@
         <div class="alert alert-warning" role="alert">
           <i class="fa-solid fa-triangle-exclamation"></i>
           Este producto ya se encuentra en el carrito!
+        </div>
+        <div class="alert alert-warning remove-cart-warning" role="alert">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Producto eliminado!
         </div>
         <div class="alert alert-success" role="alert">
           <i class="fa-solid fa-cart-plus"></i>
@@ -133,51 +137,58 @@
   });
 </script>
 <script type="text/javascript">
+  //BUSCADOR
   document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('search-global');
-
     input.addEventListener('keyup', event => {
+      console.log(event.target.value);
       $.ajax({
-        url:"/api/search-productos/" + event.target.value,
+        url:"/api/search/" + event.target.value,
         method:"GET",
         dataType : "json",
         success:function(data)
-        {  
+        {
           var template = '';
-          data.forEach(function(element, indice, array) {
-            string = element.name + ' ' + element.codigo;
-            //quitar acentos 
-            string = string
-                      .normalize('NFD')
-                      .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
-                      .normalize();
-            string = string.replace(/\s+/g, "-");
-            string = string.replace(/[^\w\-]+/g, "");
-            string = string.replace(/\-\-+/g, "-");
-            string = string.replace(/^-+/, "");
-            string = string.replace(/-+$/, "");
-            slug = string.replace(/\s+/g, '-');
-            lower = string.toLowerCase();
-            slug = lower.replace(/\s/g,'-');
-            console.log(slug);
-            img = "{{ asset('imgs/no_disp.png') }}";
-            if(element.images != null){
-                var obj = jQuery.parseJSON(element.images);
-                if(obj[0].includes('http'))
-                {
-                  img = obj[0];
-                }else{
-                  img = '{{ asset("storage") }}' +'/'+ obj[0];                         
-                }
-                
-            }
-            template = template + '<li><a href="/producto/'+ slug +'"><p> <img src="'+img+'" style="width:50px;" />'+ element.name +'</p><span style="color:black;">'+ element.details +'</span></a></li>';
-          });
+          if (data.length == 0) {
+            template = template + '<li><p style="text-align:center;"><i class="fa-brands fa-searchengin" style="margin-right:10px;"></i> Sin resultados..</p></li>';
+            $('#searched-items').css('height','50px');
+          } else {
+
+            data.forEach(function(element, indice, array) {
+              string = element.name + ' ' + element.code;
+              //quitar acentos 
+              string = string
+                        .normalize('NFD')
+                        .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+                        .normalize();
+              string = string.replace(/\s+/g, "-");
+              string = string.replace(/[^\w\-]+/g, "");
+              string = string.replace(/\-\-+/g, "-");
+              string = string.replace(/^-+/, "");
+              string = string.replace(/-+$/, "");
+              slug = string.replace(/\s+/g, '-');
+              lower = string.toLowerCase();
+              slug = lower.replace(/\s/g,'-');
+              console.log(slug);
+              img = "{{ asset('imgs/no_disp.png') }}";
+              if(element.images != null){
+                  var obj = jQuery.parseJSON(element.images);
+                  console.log(obj);
+                  if(obj[0].includes('http'))
+                  {
+                    img = obj[0];
+                  }else{
+                    img = '{{ asset("storage/doblevela/images") }}' +'/'+ obj[0];                         
+                  }
+                  
+              }
+              template = template + '<li><a href="/producto/'+ slug +'"><p> <img src="'+img+'" style="width:50px;margin-right:10px;" />'+ element.name +'</p></a></li>';
+            });
+            $('#searched-items').css('height','200px');
+          }
           $('#searched-items').html('');
           $('#searched-items').css('display','block');
           $('#searched-items').html(template);
-          //var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</a>';
-            //$(".items-hooked").append(template);
         }
       });
     });
@@ -196,7 +207,7 @@ $(document).ready(function(){
         var template = '<li>Sin Productos!!</li>';
         $(".items-hooked").append(template);  
       }else{
-        console.log(items);
+        //console.log(items);
         items.forEach(element => {
     
           $.ajax({
@@ -211,6 +222,8 @@ $(document).ready(function(){
           });
           
         });  
+        var template = '<li><button class="btn empty-cart" onclick="emptyCart()"> <i class="fa-solid fa-trash-can" style="margin-right:10px;"></i> Vaciar cesta</button></li>';
+        $(".items-hooked").append(template);
       }
       var cont = items.length;
       $("#cart-number").css('display','block');
@@ -242,12 +255,14 @@ $(document).ready(function(){
                   $('.items-hooked').html('');
                   var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
                   $(".items-hooked").append(template);
+                  template = '<li><button class="btn empty-cart" onclick="emptyCart()"> <i class="fa-solid fa-trash-can" style="margin-right:10px;"></i> Vaciar cesta</button></li>';
+                  $(".items-hooked").append(template);
                   items.push(data.sdk);
                   $("#cart-number").css('display','block');
                   $("#cart-number").html('');
                   $("#cart-number").html('1');
                   var value = JSON.stringify(items);
-                  Cookies.set('carrito_cotizaciones',value);
+                  Cookies.set('carrito_cotizaciones',value,{ expires: 2 });
                   $('.alert-success').css('display','inline-block');
                   $(".alert-success").fadeOut(5000); 
               }
@@ -274,8 +289,11 @@ $(document).ready(function(){
                     });
                     
                   });
-                  var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
+                  var template = '<li><button class="btn empty-cart" onclick="emptyCart()"> <i class="fa-solid fa-trash-can" style="margin-right:10px;"></i> Vaciar cesta</button></li>';
                   $(".items-hooked").append(template);
+                  template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
+                  $(".items-hooked").append(template);
+                  
 
                   items.push(data.sdk);
                   var cont = items.length;
@@ -283,7 +301,7 @@ $(document).ready(function(){
                   $("#cart-number").html('');
                   $("#cart-number").html(cont);
                   var value = JSON.stringify(items);
-                  Cookies.set('carrito_cotizaciones',value);
+                  Cookies.set('carrito_cotizaciones',value, { expires: 2 });
                   $('.alert-success').css('display','inline-block');
                   $(".alert-success").fadeOut(5000); 
                 }
@@ -296,7 +314,7 @@ $(document).ready(function(){
         $(".alert-warning").fadeOut(5000);
       }
   });
-
+  // NOSE QUE HACE
   $('.btn-cart-add').on('click', function (e) {
       var sdk = $(this).attr("sdk"),
       url = "{{ url('/')}}";
@@ -320,7 +338,7 @@ $(document).ready(function(){
                 $(".contador-cart").html('');
                 $(".contador-cart").html('1');
                 var value = JSON.stringify(items);
-                Cookies.set('carrito_cotizaciones',value);
+                Cookies.set('carrito_cotizaciones',value, { expires: 2 });
             }
             else
             {
@@ -349,7 +367,7 @@ $(document).ready(function(){
               $(".contador-cart").html('');
               $(".contador-cart").html(cont);
               var value = JSON.stringify(items);
-              Cookies.set('carrito_cotizaciones',value);
+              Cookies.set('carrito_cotizaciones',value, { expires: 2 });
             }
             window.location.href="/ver-cotizacion";   
           }
@@ -357,9 +375,14 @@ $(document).ready(function(){
   });
   
 });
-function deleteCart(sdk)
+function emptyCart()
 {
-  console.log(sdk);
+  Cookies.remove('carrito_cotizaciones');
+  $('.items-hooked').html('');
+  var template = '<li>Sin Productos!!</li>';
+  $(".items-hooked").append(template);
+  $("#cart-number").css('display','none');
+  $("#cart-number").html('');
 }
 </script>
 <!-- CUSTOM SCRIPTS FOR EACH PAGE-->

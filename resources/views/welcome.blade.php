@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-    <div class="container pd-0">
-        @include('Home._partials.slider')
-    </div> 
+
+    @include('Home._partials.slider')
+
 
     <div class="container">
         <section class="row" id="catalogos">
@@ -33,22 +33,22 @@
     <div class="container">
         <section class="row" id="features-row">
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <i class="fa-solid fa-handshake" style="color: #255992"></i>
+                <img src="{{ asset('imgs/v3/iconos/trust.png') }}" alt="">
                 <h4>Atencion Eficáz</h4>
                 <p>Atención personalizada, con asesorías para una inteligente selección, acorde a sus necesidades y presupuesto.</p>
             </div>
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <i class="fa-solid fa-shield" style="color: green;"></i>
+                <img src="{{ asset('imgs/v3/iconos/light.png') }}" alt="">
                 <h4>Experiencia</h4>
                 <p>Con más de 25 años en el mercado. Hemos amalgamado la experiencia con las innovaciones del mundo actual.</p>
             </div>
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <i class="fa-solid fa-truck-ramp-box" style="color: brown"></i>
+                <img src="{{ asset('imgs/v3/iconos/deliver.png') }}" alt="">
                 <h4>Flete Grátis</h4>
                 <p>A todo México en pedidos grandes.</p>
             </div>
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <i class="fa-solid fa-trophy" style="color:#ffd700;"></i>
+                <img src="{{ asset('imgs/v3/iconos/engine.png') }}" alt="">
                 <h4>Confianza</h4>
                 <p>Más de 200 compañías ya han confiado en nuestra experiencia.</p>
             </div>

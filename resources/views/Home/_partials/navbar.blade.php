@@ -27,12 +27,16 @@
                         <input type="text" class="form-control" placeholder="Buscador" aria-label="Buscador" aria-describedby="basic-addon2" id="search-global">
                         <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
                     </div>
+                    <ul id="searched-items"></ul>
                 </li>
             </ul>
         </div>
         <div>
-            <ul class="navbar-nav">
-                <li class="nav-item mr-20">
+            <ul class="navbar-nav" id="redes-sociales">
+                <li><a href="https://www.facebook.com/alphapromos.mx" target="_blank"><i class="fa-brands fa-facebook fb-color fs-30"></i></a></li>
+                <li><a href="https://www.instagram.com/alpha.promos.mx" target="_blank"><i class="fa-brands fa-instagram insta-color fs-30"></i></a></li>
+                <li><a href="" target="_blank"><i class="fa-brands fa-whatsapp whats-color fs-30"></i></a></li>
+                <li class="nav-item mr-40">
                     <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-cart-shopping alpha-color" aria-hidden="true"></i>
@@ -47,6 +51,9 @@
                                 <ul class="items-hooked">
                                     <li>Sin productos!</li>
                                 </ul>
+                                <div style="padding: 8px;">
+                                    <a href="{{ route('home.cotizacion') }}" class="sent-cart"> <i class="fa-solid fa-check" style="margin-right: 10px;"></i>Cotizar</a>
+                                </div>
                             </div>
                         </div>
                     </div>
