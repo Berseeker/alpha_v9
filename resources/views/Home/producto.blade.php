@@ -63,7 +63,7 @@
         <div class="col-12 col-sm-6 col-md-7">
             <div id="product-descripction">
                 <h4> {{ $producto->nombre ?? 'Desconocido'}}</h4>
-                <span><small>By <a href="">AlphaPromos</a></small></span>
+                <span><small>By <a href="">AlphaPromosv2</a></small></span>
                 <ul class="unstyled-list list-inline" style="display: flex;">
                     <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
                     <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
