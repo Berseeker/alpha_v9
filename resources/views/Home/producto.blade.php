@@ -40,7 +40,7 @@
                                 $image = $img;
                                 if(!Str::contains($img,['https','http']))
                                 {
-                                    $img = Storage::url($img);
+                                    $img = '/storage/' . $img;
                                 }
                                 $imgCont = 0;
                             @endphp
