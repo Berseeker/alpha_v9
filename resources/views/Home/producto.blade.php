@@ -40,7 +40,7 @@
                                 $imagen = $img;
                                 if(!Str::contains($img,['https','http']))
                                 {
-                                    $imagen = asset('storage/') . $img;
+                                    $imagen = 'https://alphapromos.mx/storage/'. $img;
                                 }
                                 $imgCont = 0;
                             @endphp
