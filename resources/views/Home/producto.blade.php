@@ -37,15 +37,15 @@
                     @if( $producto->images != NULL)
                         @foreach (json_decode($producto->images) as $img)
                             @php
-                                $image = $img;
+                                $imagen = $img;
                                 if(!Str::contains($img,['https','http']))
                                 {
-                                    $img = asset('storage/') . $img;
+                                    $imagen = asset('storage/') . $img;
                                 }
                                 $imgCont = 0;
                             @endphp
     
-                            <img src="{{ $image }}" alt='{{$producto->nombre}}'data-zoom-image="{{ $image }}" id="img_{{$imgCont}}" />
+                            <img src="{{ $imagen }}" alt='{{$producto->nombre}}'data-zoom-image="{{ $imagen }}" id="img_{{$imgCont}}" />
              
                             
                             @php
@@ -63,7 +63,7 @@
         <div class="col-12 col-sm-6 col-md-7">
             <div id="product-descripction">
                 <h4> {{ $producto->nombre ?? 'Desconocido'}}</h4>
-                <span><small>By <a href="">AlphaPromosv2</a></small></span>
+                <span><small>By <a href="">AlphaPromos</a></small></span>
                 <ul class="unstyled-list list-inline" style="display: flex;">
                     <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
                     <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
