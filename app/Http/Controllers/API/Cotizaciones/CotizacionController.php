@@ -5,14 +5,14 @@ namespace App\Http\Controllers\API\Cotizaciones;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Cotizacion;
+use App\Models\Order;
 use App\Models\Venta;
 
 class CotizacionController extends Controller
 {
     public function index()
     {
-        $cotizaciones = Cotizacion::where('deleted_at',null)->orderByDesc('id')->get()->toJson();
+        $cotizaciones = Order::where('deleted_at',null)->get()->toJson();
         
         return $cotizaciones;
     }

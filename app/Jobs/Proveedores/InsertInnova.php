@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
+use App\Events\ProviderUpdated;
 use App\Models\Product;
 use App\Models\Logs;
 
@@ -62,6 +63,7 @@ class InsertInnova implements ShouldQueue
         $response = $this->client->call('Pages', $params);
         //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
         $response = json_decode($response, true);
+        $api_ids = array();
 
         for ($i = 1; $i <= (int) $response['pages']; $i++ ) 
         {
@@ -77,7 +79,14 @@ class InsertInnova implements ShouldQueue
             if(isset($response['response']) && $response['response'] == true) {
                 foreach ($response['data'] as $key => $value) 
                 {
-                    insertProduct($value);
+                    array_push($api_ids, $value['codigo']);
+                    $product = Product::where('code',$value['codigo'])->where('proveedor','Innova')->first();
+                    if ($product != null) {
+                        $this->insertProduct($value);
+                    } else {
+                        $this->updateProduct($value);
+                    }
+                    
                 }
             } else {
                 $log = new Logs();
@@ -87,6 +96,9 @@ class InsertInnova implements ShouldQueue
                 Log::error($response['message'] . 'en Innova.');
             }
         }
+
+        Product::where('proveedor','Innova')->whereNotIn('parent_code', $api_ids)->delete();
+        ProviderUpdated::dispatch('Innova');
     }
 
     private function insertProduct($producto)
@@ -891,4 +903,51 @@ class InsertInnova implements ShouldQueue
 
         $item->save();
     }
+
+    private function updateProduct($producto)
+    {
+        $item = Product::where('code', $producto['codigo'])->first();
+        $item->name = $producto['nombre'];
+        $item->code = $producto['codigo'];
+        $item->parent_code = $producto['codigo'];
+        $item->discount = 0.0;
+        /* Manipulacion de Colores e Imagenes */
+        $images = array();
+        $colores = array();
+        array_push($images, $producto['imagen_principal']);
+        
+        foreach ($producto['colores'] as $color) {
+            array_push($colores, $color['codigo_color']);
+            array_push($images, $color['image']);
+        }
+        foreach ($producto['images'] as $image) {
+            array_push($images, $image['image']);
+        }
+        foreach ($producto['imagenes_adicionales'] as $image) {
+            array_push($images, $image);
+        }
+
+        $item->colors = json_encode($colores);
+        $item->details = $producto['descripcion'];
+        $item->stock = 0;
+        $item->price = 0;
+        $item->nw = $producto['peso_paquete'];
+        $item->gw = 'Sin definir';
+        $item->weight_product = $producto['peso_producto'];
+        $item->medida_producto_alto = $producto['medidas_producto'];
+        $item->printing_area = $producto['area_impresion'];
+        $printing_methods = array();
+        foreach ($product['tecnicas_impresion'] as $printing) {
+            array_push($printing_methods, $printing['codigo']);
+        }
+        $item->printing_methods = json_encode($printing_methods);
+        $item->category = $producto['categorias']['categorias'][0]['nombre'];
+        $item->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+        $item->box_pieces = $producto['cantidad_por_paquete'];
+        $item->images = $images;
+        $item->material = Str::ucfirst($producto['material']);
+        $item->save();
+    }
+
+
 }

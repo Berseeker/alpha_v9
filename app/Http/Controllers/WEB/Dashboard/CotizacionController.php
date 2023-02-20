@@ -10,8 +10,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-use App\Models\Cotizacion;
-use App\Models\Producto;
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+
+use App\Models\OrderProduct;
+use App\Models\Product;
+use App\Models\Order;
 use App\Models\Venta;
 
 use DateTime;
@@ -23,7 +28,7 @@ class CotizacionController extends Controller
 {
     public function index()
     {
-        $cotizaciones = Cotizacion::all();
+        $cotizaciones = Order::all();
 
         $breadcrumbs = [
             ['link' => "/home", 'name' => "Dashboard"], ['name' => "Cotizaciones"]
@@ -41,125 +46,32 @@ class CotizacionController extends Controller
             ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/cotizaciones", 'name' => "Cotizaciones"], ['name' => "Cotizacion"]
         ];
 
-        $cotizacion = Cotizacion::find($id);
-
-        $ids = json_decode($cotizacion->productos_id);
-        $fechas_deseables = json_decode($cotizacion->fecha_deseable);
-        $pantones = json_decode($cotizacion->pantones);
-        $tipografia = json_decode($cotizacion->tipografia);
-        $numero_tintas = json_decode($cotizacion->numero_tintas);
-        $colores = json_decode($cotizacion->color);
-        $num_pzas = json_decode($cotizacion->numero_pzas);
-        
-        $productos = DB::table('productos')
-                    ->whereIn('id', $ids)
-                    ->get();
-
-        
-        $items = array();
-        $void = 0;
-        foreach ($productos as $producto) 
-        {
-            $colors = json_decode($producto->color);
-            $colores = '';
-            $count = 0;
-            foreach ($colors as $key => $color) 
-            {
-                if($count == 0)
-                {
-                    $colores = $colores.' '.$color;
-                }
-                else {
-                    $colores = $colores.','.$color;
-                }
-                $count++;
-            }
-            $producto->colores = $colores;
-            $producto->fecha_deseable = $fechas_deseables[$void];
-            $producto->pantones = $pantones[$void];
-            $producto->tipografia = $tipografia[$void];
-            $producto->numero_tintas = $numero_tintas[$void];
-            $producto->num_pzas = $num_pzas[$void];
-            array_push($items,$producto);
-            $void++;
-        }
-
+        $order = Order::find($id);
+        $order_x_products = OrderProduct::where('order_id', $order->order_id)->get();
 
         return view('dashboard.cotizaciones.show',[
-            'cotizacion' => $cotizacion,
-            'productos' => $items,
+            'order' => $order,
+            'order_x_products' => $order_x_products,
             'breadcrumbs' => $breadcrumbs
         ]);
-        
     }
 
     public function edit($id)
     {
-        $cotizacion = Cotizacion::find($id);
-        $productosAll = Producto::all();
+        $order = Order::find($id);
 
         $breadcrumbs = [
-            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
+            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/", 'name' => "Cotizacion"], ['name' => "Order - " . $order->name . ' ' . $order->lastname ]
         ];
-        
-        $ids = json_decode($cotizacion->productos_id);
-        $fechas_deseables = json_decode($cotizacion->fecha_deseable);
-        $pantones = json_decode($cotizacion->pantones);
-        $tipografia = json_decode($cotizacion->tipografia);
-        $numero_tintas = json_decode($cotizacion->numero_tintas);
-        $colores = json_decode($cotizacion->color);
-        $num_pzas = json_decode($cotizacion->numero_pzas);
-        $medidas_deseables = json_decode($cotizacion->medidas_deseables);
-        $precio_pza = json_decode($cotizacion->precio_pza);
-        $metodos_impresion = ($cotizacion->metodos_impresion == null) ? null : json_decode($cotizacion->metodos_impresion);
-        
-        $productos = DB::table('productos')
-                    ->whereIn('id', $ids)
-                    ->get();
 
-        
-        $items = array();
-        $void = 0;
-        foreach ($productos as $producto) 
-        {
-            $colors = json_decode($producto->color);
-            $colores = '';
-            $count = 0;
-            foreach ($colors as $key => $color) 
-            {
-                if($count == 0)
-                {
-                    $colores = $colores.' '.$color;
-                }
-                else {
-                    $colores = $colores.','.$color;
-                }
-                $count++;
-            }
-            $impresion = null;
-            if($metodos_impresion != null){
-                if(array_key_exists($void,$metodos_impresion)){
-                    $impresion = $metodos_impresion[$void];
-                }
-            }
-            $producto->colores = $colores;
-            $producto->fecha_deseable = $fechas_deseables[$void];
-            $producto->pantones = $pantones[$void];
-            $producto->tipografia = $tipografia[$void];
-            $producto->numero_tintas = $numero_tintas[$void];
-            $producto->num_pzas = $num_pzas[$void];
-            $producto->medidas_deseables = $medidas_deseables[$void];
-            $producto->precio_pza = $precio_pza[$void];
-            $producto->impresion_metodo = $impresion;
-            array_push($items,$producto);
-            $void++;
-        }
+        $products = Product::all();
+        $order_x_products = OrderProduct::where('order_id',$order->order_id)->get();
 
         return view('dashboard.cotizaciones.edit',[
             'breadcrumbs' => $breadcrumbs,
-            'cotizacion' => $cotizacion,
-            'productos' => $productosAll,
-            'productos_cot' => $items
+            'order' => $order,
+            'products' => $products,
+            'order_x_products' => $order_x_products
         ]);
         
     }
@@ -191,7 +103,7 @@ class CotizacionController extends Controller
         $this->validate($request,$rules,$messages);
 
 
-        $cotizacion = Cotizacion::find($id);
+        $cotizacion = Order::find($id);
         /* Cliente */
         $cotizacion->nombre = $request->nombre;
         $cotizacion->apellidos = $request->apellidos;
@@ -207,6 +119,7 @@ class CotizacionController extends Controller
         $cotizacion->numero_pzas = json_encode($request->cantidad_pzas);
         $cotizacion->productos_id = json_encode($request->producto_id);
         $cotizacion->metodos_impresion = json_encode($request->servicio_id);
+        $cotizacion->tax = $request->tax;
         
         $precios_productos = array();
         $total_pzas = 0;
@@ -286,7 +199,7 @@ class CotizacionController extends Controller
     public function updateQuick(Request $request)
     {
  
-        $cotizacion = Cotizacion::find((int) $request->cotizacion_id);
+        $cotizacion = Order::find((int) $request->cotizacion_id);
         $cotizacion->status = $request->estatus;
         $cotizacion->save();
 
@@ -337,7 +250,7 @@ class CotizacionController extends Controller
 
     public function download($id){
         
-        $cotizacion = Cotizacion::find($id);
+        $cotizacion = Order::find($id);
         $path = public_path('storage');
         $public = public_path();
         if($cotizacion->logo_img != NULL){
@@ -360,7 +273,7 @@ class CotizacionController extends Controller
 
     public function preview($id)
     {
-        $cotizacion = Cotizacion::find($id);
+        $cotizacion = Order::find($id);
 
         $breadcrumbs = [
             ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/".$cotizacion->id, 'name' => "Cotizacion - ".$cotizacion->id], ['name' => "Editando Cotizacion"]
@@ -370,7 +283,7 @@ class CotizacionController extends Controller
         $num_pzas = json_decode($cotizacion->numero_pzas);
         $precio_pza = json_decode($cotizacion->precio_pza);
 
-        $productos = DB::table('productos')
+        $productos = DB::table('products')
                     ->whereIn('id', $ids)
                     ->get();
 
@@ -394,7 +307,7 @@ class CotizacionController extends Controller
 
     public function invoice_print($id)
     {
-        $cotizacion = Cotizacion::find($id);
+        $cotizacion = Order::find($id);
 
         $pageConfigs = ['pageHeader' => false];
 
@@ -402,7 +315,7 @@ class CotizacionController extends Controller
         $num_pzas = json_decode($cotizacion->numero_pzas);
         $precio_pza = json_decode($cotizacion->precio_pza);
 
-        $productos = DB::table('productos')
+        $productos = DB::table('products')
                     ->whereIn('id', $ids)
                     ->get();
 
@@ -422,6 +335,93 @@ class CotizacionController extends Controller
             'cotizacion' => $cotizacion,
             'productos' => $items
         ]);
+    }
+
+    public function deleteOrderProduct($order_id, $product_id)
+    {
+        $order = Order::find($order_id);
+        $product = Product::find($product_id);
+        $order_x_product = OrderProduct::where('order_id', $order->order_id)->where('product_id', $product->id)->first();
+        $order_x_product->delete();
+
+        return back()->with('success',"Producto elimnado de la cotización.");
+    }
+
+    public function invoice($order_id)
+    {
+        $order = Order::find($order_id);
+        $order_x_products = OrderProduct::where('order_id', $order->order_id)->get();
+
+        $client = new Party([
+            'name'          => 'Blanca Morales',
+            'phone'         => $order->code_area.' '.$order->phone,
+            'custom_fields' => [
+                'email'        => 'ventas@alphapromos.mx',
+                'business id' => '365#GG',
+            ],
+        ]);
+
+        $customer = new Party([
+            'name'          => $order->name .' '.$order->lastname,
+            'phone'         => $order->code_area.' '.$order->phone,
+            'code'          => '#22663214',
+            'custom_fields' => [
+                'email' => $order->email,
+                'direccion' => $order->city .', '. $order->state .', '. $order->address,
+                'cp' => $order->cp
+            ],
+        ]);
+
+        $items = array();
+        foreach ($order_x_products as $key => $order_x_product) {
+            array_push($items, (new InvoiceItem())
+                ->img($order_x_product->product->preview)
+                ->title($order_x_product->name)
+                ->description($order_x_product->product->details)
+                ->pricePerUnit(20)
+                ->quantity($order->total_products)
+                ->tax(6.4)
+                ->discount(0)
+            );
+        }
+
+        $notes = [
+            'Forma de pago: 30 días',
+            'Tiempo de Entrega: 14 días hábiles',
+            'LOGOTIPOS CONVERTIDOS EN CURVAS, TIPOGRAFÍA, PANTONES A TRABAJAR',
+        ];
+        
+        $notes = implode("<br>", $notes);
+
+        $invoice = Invoice::make('Cotización - '. $order->identifier)
+            ->series('BIG')
+            // ability to include translated invoice status
+            // in case it was paid
+            ->status('PENDIENTE')
+            ->sequence(667)
+            ->serialNumberFormat('{SEQUENCE}/{SERIES}')
+            ->seller($client)
+            ->buyer($customer)
+            ->date(now())
+            ->dateFormat('Y/m/d')
+            ->payUntilDays(14)
+            ->currencySymbol('$')
+            ->currencyCode('MXN')
+            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->currencyThousandsSeparator('.')
+            ->currencyDecimalPoint(',')
+            ->filename('invoice_' . $order->identifier . Str::slug($order->name .' '. $order->lastname, '_'))
+            ->addItems($items)
+            ->vatTax('Precios más 16% de I.V.A. incluye flete Guadalajara.')
+            ->notes($notes)
+            ->logo(public_path('imgs/v3/logos/logo_alpha.png'))
+            // You can additionally save generated invoice to configured disk
+            ->save('public');
+
+        $link = $invoice->url();
+        // Then send email to party with link
+        // And return invoice itself to browser or have a different view
+        return $invoice->stream();
     }
 }
 

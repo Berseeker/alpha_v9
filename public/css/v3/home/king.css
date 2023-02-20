@@ -83,6 +83,17 @@
     background-color: white;
 }
 
+.btn-cart {
+    background-color: rgb(38, 207, 142);
+    color: black;
+}
+
+.btn-cart:hover {
+    background-color: white;
+    border-color: rgb(38, 207, 142);
+    color: rgb(38, 207, 142);
+}
+
 .warning-visible {
     display: block;
     color: red;

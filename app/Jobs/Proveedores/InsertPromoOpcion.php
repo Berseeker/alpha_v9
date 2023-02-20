@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
+use App\Events\ProviderUpdated;
 use App\Models\Product;
 use App\Models\Logs;
 
@@ -42,6 +43,7 @@ class InsertPromoOpcion implements ShouldQueue
         ])->post('https://www.contenidopromo.com/wsds/mx/catalogo/');
 
         $result = $response->json();
+        $api_ids = array();
     
         if(array_key_exists('error',$result))
         {
@@ -55,12 +57,13 @@ class InsertPromoOpcion implements ShouldQueue
             $cont_new_products = 0; #Contador global
             foreach ($result as $key => $item) 
             {
-                $prevItem = Product::where('code',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
+                array_push($api_ids, $item['item_code']);
+                $prevItem = Product::where('code',$item['item_code'])->where('proveedor','PromoOpcion')->first();
                 if($prevItem == null)
                 {
                     $this->insertProduct($item, $cont_new_products); 
                 } else {
-                    $this->updateProduct($prevItem);
+                    $this->updateProduct($item);
                 }
             }
 
@@ -74,43 +77,53 @@ class InsertPromoOpcion implements ShouldQueue
             $log->message = $msg . 'en PromoOpcion.';
             $log->save();
             Log::error($msg . 'en PromoOpcion.');
+
+            Product::where('proveedor','PromoOpcion')->whereNotIn('code', $api_ids)->delete();
+            ProviderUpdated::dispatch('PromoOpcion');
         }   
     }
 
     private function insertProduct($item, &$cont_new_products)
     {
-        //dd($item);
         $product = new Product();
         $product->name = $item['name'];
         $product->code = $item['item_code'];
         $product->parent_code = $item['parent_code'];
-        $colors = explode('/', $item['colors']);
-        
-        $colors = [];
-        foreach ($colors as $color) {
-           /* if ($color == 'a') {
-                array_push($colors, 'azul');
-            } else if ($color == 'r') {
-                array_push($colors, 'rojo');
-            } else if ($color == 'v') {
-                array_push($colors, 'verde');
-            } else if ($color == 'be') {
-                array_push($colors, 'beige');
-            } else if ($color == 'c') {
-                array_push($colors, 'cafe');
-            } else if ($color == 'n') {
-                array_push($colors, 'negro');
-            } else if ($color == 't') {
-                array_push($colors, 'tinto');
-            } else if ($color == 'ac') {
-                array_push($colors, 'azul cielo');
-            } else {
-                array_push($colors, $color);
-            }*/
-            array_push($colors,Str::upper($color));
+        $colores = [];
+        if (str_contains($item['colors'], '/')) {
+            $colors = explode('/', $item['colors']);   
+            foreach ($colors as $color) {
+                if ($color == 'a') {
+                    array_push($colores, 'AZUL');
+                } else if ($color == 'r') {
+                    array_push($colores, 'ROJO');
+                } else if ($color == 'v') {
+                    array_push($colores, 'VERDE');
+                } else if ($color == 'be') {
+                    array_push($colores, 'BEIGE');
+                } else if ($color == 'c') {
+                    array_push($colores, 'CAFE');
+                } else if ($color == 'n') {
+                    array_push($colores, 'NEGRO');
+                } else if ($color == 't') {
+                    array_push($colores, 'TINTO');
+                } else if ($color == 'ac') {
+                    array_push($colores, 'AZUL CIELO');
+                } else if ($color == 'g') {
+                    array_push($colores, 'GRIS');
+                } else if ($color == 'b') {
+                    array_push($colores, 'BLANCO');
+                } else if ($color == 'm') {
+                    array_push($colores, 'MORADO');
+                } else if ($color == 'o') {
+                    array_push($colores, 'ORO');
+                }
+            }
+        } else {
+            array_push($colores,Str::upper($item['color']));
         }
-
-        $product->colors = json_encode($colors);
+        
+        $product->colors = json_encode($colores);
         $product->details = $item['description'];
         $product->nw = $item['nw'] . ' kg';
         $product->gw = $item['gw'] . ' kg';
@@ -157,7 +170,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->parent_code = $item['parent_code'];
                     $product_T->details = $item['description'];
                     $product_T->images = json_encode(array($item['img'])); //JSON
-                    $product_T->colors = json_encode($colors);
+                    $product_T->colors = json_encode($colores);
                     $product_T->proveedor = 'PromoOpcion';
                     $product_T->box_pieces = (int)$item['count_box']; // int
                     $product_T->printing_area = $item['printing_area']; //stirng
@@ -438,7 +451,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->parent_code = $item['parent_code'];
                     $product_T->details = $item['description'];
                     $product_T->images = json_encode(array($item['img'])); //JSON
-                    $product_T->colors = json_encode($colors);
+                    $product_T->colors = json_encode($colores);
                     $product_T->proveedor = 'PromoOpcion';
                     $product_T->box_pieces = (int)$item['count_box']; // int
                     $product_T->printing_area = $item['printing_area']; //stirng
@@ -616,7 +629,10 @@ class InsertPromoOpcion implements ShouldQueue
                 break;
             case 'IMPULSA':
                 //se elimina
-                
+                $product->categoria_id = 20; 
+                $product->subcategoria_id = 93;
+                $product->search = "NONE";
+                $product->meta_keywords = "NONE";
                 break;
             case 'LLAVEROS DE PLASTICO':
                 $product->categoria_id = 15; 
@@ -735,7 +751,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->parent_code = $item['parent_code'];
                     $product_T->details = $item['description'];
                     $product_T->images = json_encode(array($item['img'])); //JSON
-                    $product_T->colors = json_encode($colors);
+                    $product_T->colors = json_encode($colores);
                     $product_T->proveedor = 'PromoOpcion';
                     $product_T->box_pieces = (int)$item['count_box']; // int
                     $product_T->printing_area = $item['printing_area']; //stirng
@@ -823,33 +839,43 @@ class InsertPromoOpcion implements ShouldQueue
 
     private function updateProduct($item) 
     {
-        $colors = explode('/', $item['colors']);
-        
-        $colors = [];
-        foreach ($colors as $color) {
-           /* if ($color == 'a') {
-                array_push($colors, 'azul');
-            } else if ($color == 'r') {
-                array_push($colors, 'rojo');
-            } else if ($color == 'v') {
-                array_push($colors, 'verde');
-            } else if ($color == 'be') {
-                array_push($colors, 'beige');
-            } else if ($color == 'c') {
-                array_push($colors, 'cafe');
-            } else if ($color == 'n') {
-                array_push($colors, 'negro');
-            } else if ($color == 't') {
-                array_push($colors, 'tinto');
-            } else if ($color == 'ac') {
-                array_push($colors, 'azul cielo');
-            } else {
-                array_push($colors, $color);
-            }*/
-            array_push($colors,Str::upper($color));
+        $colores = [];
+        if (str_contains($item['colors'], '/')) {
+            $colors = explode('/', $item['colors']);   
+            foreach ($colors as $color) {
+                if ($color == 'a') {
+                    array_push($colores, 'AZUL');
+                } else if ($color == 'r') {
+                    array_push($colores, 'ROJO');
+                } else if ($color == 'v') {
+                    array_push($colores, 'VERDE');
+                } else if ($color == 'be') {
+                    array_push($colores, 'BEIGE');
+                } else if ($color == 'c') {
+                    array_push($colores, 'CAFE');
+                } else if ($color == 'n') {
+                    array_push($colores, 'NEGRO');
+                } else if ($color == 't') {
+                    array_push($colores, 'TINTO');
+                } else if ($color == 'ac') {
+                    array_push($colores, 'AZUL CIELO');
+                } else if ($color == 'g') {
+                    array_push($colores, 'GRIS');
+                } else if ($color == 'b') {
+                    array_push($colores, 'BLANCO');
+                } else if ($color == 'm') {
+                    array_push($colores, 'MORADO');
+                } else if ($color == 'o') {
+                    array_push($colores, 'ORO');
+                }
+            }
+        } else {
+            array_push($colores,Str::upper($item['color']));
         }
 
-        $item->colors = json_encode($colors);
-        $item->save();
+        Product::where('code', '=', $item['item_code'])
+            ->update([
+                'colors' => json_encode($colores)
+        ]);
     }
 }

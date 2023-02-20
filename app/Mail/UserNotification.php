@@ -16,11 +16,11 @@ class UserNotification extends Mailable
      *
      * @return void
      */
-    protected $cotizacion;
+ 
 
-    public function __construct($cotizacion)
+    public function __construct()
     {
-        $this->cotizacion = $cotizacion;
+       
     }
 
 
@@ -33,9 +33,6 @@ class UserNotification extends Mailable
     {
         return $this->markdown('Mails.userNotification')
             ->subject('Cotizacion pendiente')
-            ->from('noreply@alphapromos.mx', 'Alpha Promos')
-            ->with([
-                        'cotizacion' => $this->cotizacion,
-                    ]);
+            ->from('noreply@alphapromos.mx', 'Alpha Promos');
     }
 }

@@ -7,6 +7,10 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Events\OrderCreated;
+use App\Listeners\OrderCreatedNotification;
+use App\Listeners\OrderCreatedClientNotification;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -18,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        OrderShipped::class => [
+            ShipmentDeliveryNotification::class,
+            ShipmentDeliveredNotification::class,
+        ],
     ];
 
     /**
@@ -27,7 +35,20 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Event::listen(
+            OrderCreated::class,
+            [OrderCreatedNotification::class, 'handle']
+        );
+
+        Event::listen(
+            OrderCreated::class,
+            [OrderCreatedClientNotification::class, 'handle']
+        );
+
+        Event::listen(
+            ProviderUpdated::class,
+            [ProviderUpdatedNotification::class, 'handle']
+        );
     }
 
     /**

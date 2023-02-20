@@ -42,7 +42,7 @@ return new class extends Migration
 
             //Texto para Busqueda
             $table->longText('search')->nullable();
-            $table->longText('meta_keywords');
+            $table->longText('meta_keywords')->nullable();
 
             //FK de Producto --> Categorias
             $table->unsignedBigInteger('categoria_id');
@@ -53,6 +53,7 @@ return new class extends Migration
             $table->foreign('subcategoria_id')->references('id')->on('subcategorias');
 
             $table->timestamps();
+
         });
     }
 

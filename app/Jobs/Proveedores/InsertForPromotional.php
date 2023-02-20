@@ -60,9 +60,11 @@ class InsertForPromotional implements ShouldQueue
 
         $cont_new_products = 0; #Contador global
         $cont_update_products = 0; #Contador global
+        $api_ids = array();
         foreach ($response as $producto) 
         {
-            $product = Product::where('parent_code', $producto['id_articulo'])->first();
+            array_push($api_ids, $producto['id_articulo']);
+            $product = Product::where('parent_code', $producto['id_articulo'])->where('proveedor', 'ForPromotional')->first();
             if($product == null){
                 $this->insertProduct($producto, $cont_new_products);
             } else {
@@ -85,6 +87,8 @@ class InsertForPromotional implements ShouldQueue
         $log->save();
 
         Log::info('Se agregaron '.$msg.' de ForPromotional');
+
+        Product::where('proveedor','ForPromotional')->whereNotIn('parent_code', $api_ids)->delete();
     }
 
     private function insertProduct($item, &$cont_new_products) {
@@ -129,8 +133,8 @@ class InsertForPromotional implements ShouldQueue
             $product->subcategoria_id = 93;
         }
             
-        $product->categoria_id = $result['category_id'];
-        $product->subcategoria_id = $result['subcategory_id'];
+        $product->categoria_id = (isset($result['category_id'])) ? $result['category_id'] : 20;
+        $product->subcategoria_id = (isset($result['subcategory_id'])) ? $result['subcategory_id'] : 93;
         $product->search = $result['search'];
         $product->meta_keywords = $result['meta_keywords'];
         $product->custom = false;
@@ -140,7 +144,8 @@ class InsertForPromotional implements ShouldQueue
 
     }
 
-    private function updateProduct($item, &$cont_update_products) {
+    private function updateProduct($item, &$cont_update_products) 
+    {
 
         $product = Product::where('parent_code', $item['id_articulo'])->first();
         $colors = json_decode($product->colors);
@@ -159,7 +164,7 @@ class InsertForPromotional implements ShouldQueue
         
       
         $product->colors = json_encode($colors);
-        $product->save();
+        $product->update();
 
         $cont_update_products++;
     }
@@ -1086,6 +1091,43 @@ class InsertForPromotional implements ShouldQueue
                     ];
                     break;
             }
+        }
+        if ($producto['categoria'] == 'TARGUS') {
+            switch ($producto['sub_categoria']) {
+                case 'MOCHILAS':
+                    return [
+                        'category_id' => 5,
+                        'subcategory_id' => 24,
+                        'search' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', TEXTIL, BACKPACK, MOCHILAS, MORRAL, ' . Str::upper($producto['nombre_articulo']),
+                        'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ',TEXTIL, BACKPACK, MOCHILAS, MORRAL, ' . Str::upper($producto['nombre_articulo'])
+                    ];
+                    break;
+
+                case 'PORTAFOLIOS':
+                    return [
+                        'category_id' => 5,
+                        'subcategory_id' => 28,
+                        'search' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', TEXTIL, PORTAFOLIO, MALETIN, MALETÍN, ' . Str::upper($producto['nombre_articulo']),
+                        'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ',TEXTIL, PORTAFOLIO, MALETIN, MALETÍN, ' . Str::upper($producto['nombre_articulo'])
+                    ];
+                    break;
+                
+                default:
+                    return [
+                        'category_id' => 20,
+                        'subcategory_id' => 93,
+                        'search' => $producto['categoria'] . '-ni, ' . $producto['sub_categoria'] . ', TEXTIL, PORTAFOLIO, MALETIN, MALETÍN, ' . Str::upper($producto['nombre_articulo']),
+                        'meta_keywords' => $producto['categoria'] . '-ni, ' . $producto['sub_categoria'] . ',TEXTIL, PORTAFOLIO, MALETIN, MALETÍN, ' . Str::upper($producto['nombre_articulo'])
+                    ];
+                    break;
+            }
+        } else {
+            return [
+                'category_id' => 20,
+                'subcategory_id' => 93,
+                'search' => $producto['categoria'] . '-ni, ' . $producto['sub_categoria'] . ', TEXTIL, PORTAFOLIO, MALETIN, MALETÍN, ' . Str::upper($producto['nombre_articulo']),
+                'meta_keywords' => $producto['categoria'] . '-ni, ' . $producto['sub_categoria'] . ',TEXTIL, PORTAFOLIO, MALETIN, MALETÍN, ' . Str::upper($producto['nombre_articulo'])
+            ];
         }
     }
 }

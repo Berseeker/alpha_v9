@@ -4,16 +4,16 @@ namespace App\Http\Controllers\WEB\Home;
 
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use App\Events\OrderCreated;
+use App\Models\OrderProduct;
+use App\Models\Shippment;
 use App\Models\Categoria;
-use App\Models\Cotizacion;
+use App\Models\Payment;
 use App\Models\Product;
-
-use App\Mail\newCotizacion;
-use App\Mail\UserNotification;
+use App\Models\Order;
 
 class CotizacionController extends Controller
 {
@@ -60,156 +60,137 @@ class CotizacionController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => 'required',
-            'apellidos' => 'required',
+            'name' => 'required',
+            'lastname' => 'required',
             'email' => 'required|email',
-            'fecha_deseable' => 'required',
-            'pantones' => 'required',
-            'tipografia' => 'required',
-            'numero_tintas' => 'required',
-            'producto_id' => 'required'
+            'deadline' => 'required',
+            'fullNumber' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'producto_id' => 'required',
+            'noPzas' => 'required',
+            'cp' => 'required',
+            'address' => 'required',
+            'no_ink' => 'required'
         ];
 
         $messages = [
-            'nombre.required' => 'Es necesario asignar un nombre',
-            'apellidos.required' => 'Es necesario asignar un apellido',
+            'name.required' => 'Es necesario asignar un nombre',
+            'lastname.required' => 'Es necesario asignar un apellido',
             'email.required' => 'Es necesario proporcionar un email para contactarnos',
-            'fecha_deseable.required' => 'Es necesario indicar que dia quiere que se le entreguen los productos',
-            'pantones.required' => 'Es necesario determinar los pantones de los productos',
-            'tipografia.required' => 'Es necesario indicar la tipografia',
-            'numero_tintas' => 'Es necesario indicar el numero de tintas',
-            'producto_id' => 'Es necesario indicar el id de los productos'
+            'deadline.required' => 'Es necesario indicar que dia quiere que se le entreguen los productos',
+            'fullNumber.required' => 'Es necesario indicar un numero de contacto',
+            'country.required' => 'Es necesario indicar el pais de procedencia',
+            'city.required' => 'Es necesario indicar la ciudad a donde se enviarian los productos',
+            'producto_id' => 'Es necesario indicar el id de los productos',
+            'noPzas.required' => 'Es necesario indicar el numero de piezas a cotizar',
+            'cp.required' => 'Es necesario indicar tu codigo postal',
+            'address.required' => 'Es necesario indicar el nombre de tu calle',
+            'no_ink.required' => 'Es necesario indicar el numero de tintas que requiere el producto'
         ];
 
         $this->validate($request,$rules,$messages);
 
+        $total_productos = count($request->producto_id); 
 
-        $array = array_count_values($request->producto_id);
-
-        $cont = 0;
-        $index = null;
-        $repeated = false;
-        $unset = null;
-
-        foreach ($array as $key => $id) {
-            if ($id > 1){
-                $index = $key;
-                $repeated = true;
-            }
+        $uuid = (string) Str::uuid();
+        $order = new Order();
+        $order->order_id = $uuid;
+        $order->name = $request->name;
+        $order->lastname = $request->lastname;
+        $order->email = $request->email;
+        $order->code_area = substr($request->fullNumber, 0, 3);
+        $order->phone = $request->phone;
+        $order->isWhatsApp = ($request->isWhatsApp) ? 1 : 0;
+        $order->country = $request->country;
+        $order->state = $request->state;
+        $order->address = $request->address;
+        $order->cp = (int) $request->cp;
+        $order->city = $request->city;
+        $order->ext_num = $request->no_ext;
+        $order->comments = ($request->filled('comments')) ? trim($request->comments) : null;
+        $order->deadline = $request->deadline;
+        $order->order_status = 'PENDANT';
+        $total_count = 0;
+        if (Order::count() > 0) {
+            $total_count = Order::count();
         }
-
-        $productos_ids = $request->producto_id;
-        $numero_pzas = $request->numero_pzas;
-        $numero_tintas = $request->numero_tintas;
-        $fecha_deseable = $request->fecha_deseable;
-        $metodos_impresion = $request->metodos_impresion;
-        $tipografia = $request->tipografia;
-        $pantones = $request->pantones;
-        $total_productos = $request->total_productos;
-
-        if ($repeated) {
-            foreach ($request->producto_id as $key => $producto) {
-                if ($index == $producto && $cont == 0) {
-                    $cont = 1;
-                } else if ($index == $producto && $cont == 1) {
-                    $unset = $key;
-                }
-            }
-            unset($productos_ids[$unset]);
-            unset($numero_pzas[$unset]);
-            unset($numero_tintas[$unset]);
-            unset($fecha_deseable[$unset]);
-            unset($metodos_impresion[$unset]);
-            unset($tipografia[$unset]);
-            unset($pantones[$unset]);
-            $total_productos = count($productos_ids);
-        }
-        
-
-        $cotizacion = new Cotizacion();
-        $cotizacion->nombre = $request->nombre;
-        $cotizacion->apellidos = $request->apellidos;
-        $cotizacion->email = $request->email;
-        $cotizacion->codigo_area = '+52';
-        $cotizacion->celular = (int)Str::slug($request->celular,'');
-        $cotizacion->comentarios = $request->comentarios;
-        $medidas_deseables = array();
-        $string = 'Sin definir';
-        for($i = 0; $i < $total_productos; $i++)
+        $order->identifier = 'ALPH-' . ($total_count + 1);
+        if($request->hasFile('files'))
         {
-            array_push($medidas_deseables,$string);
-        }
-
-        $precios_pzas = array();
-        $string = 0;
-        for($i = 0; $i < $total_productos; $i++)
-        {
-            array_push($precios_pzas,$string);
-        }
-        
-            
-        $cotizacion->medidas_deseables = json_encode($medidas_deseables);
-        $cotizacion->fecha_deseable = json_encode($fecha_deseable);
-        $cotizacion->pantones = json_encode($pantones);
-        $cotizacion->tipografia = json_encode($tipografia);
-        $cotizacion->precio_pza = json_encode($precios_pzas);
-        $cotizacion->precio_x_producto = json_encode($precios_pzas);
-        $cotizacion->precio_total = 0;
-        $cotizacion->precio_subtotal = 0;
-        $cotizacion->mano_x_obra = 0;
-        
-        $cotizacion->numero_tintas = json_encode($numero_tintas);
-        $cotizacion->forma_pago = 'Tarjeta';
-        $cotizacion->numero_pzas = json_encode($numero_pzas);
-        $cotizacion->productos_id = json_encode($productos_ids);
-        $cotizacion->metodos_impresion = json_encode($metodos_impresion);
-        $cotizacion->total_productos = $total_productos;
-        $cotizacion->calle = $request->calle;
-        $cotizacion->cp = $request->cp;
-        $cotizacion->no_ext = $request->no_ext;
-        $cotizacion->estado = $request->estado;
-        $cotizacion->colonia = $request->colonia;
-        $cotizacion->ciudad = $request->ciudad;
-        $cotizacion->status = 'Pendiente';
-        $cotizacion->user_id = 1;
-
-        if($request->archivos)
-        {
-            $files = $request->file('archivos');
-            $array_img = array();
-            $fileName = "";
-            foreach ($files as $file) {
-                $fileName = uniqid().$file->getClientOriginalName();  
-                $path_logo = $file->storeAs(
-                    'cotizaciones_logo',
-                    $fileName,
-                    'public'
-                );
-                array_push($array_img,$path_logo);   
-            }
-            $imgs = json_encode($array_img);
+            // PUNTO A MEJORAR - COMPRIMIR ARCHIVOS
+            $file = $request->file('files');
+            $fileName = $uuid . '_' .$file->getClientOriginalName();  
+            $path_logo = $file->storeAs(
+                'orders_logo',
+                $fileName,
+                'public'
+            );
  
-            $cotizacion->logo_img = $imgs;
-            $cotizacion->img_name = $imgs;
-            $cotizacion->save();
+            $order->file_path = $path_logo;
 
         }else{
-            $cotizacion->logo_img = null;
-            $cotizacion->img_name = null;
+            $order->file_path = null;
+        }
+        $order->user_id = 1; // Default User
+        $order->total_products = count($request->producto_id);
+        $order->save();
+
+        foreach ($request->producto_id as $key => $id) {
+            $product = Product::find($id);
+            if ($product != null) {
+                $order_x_product = new OrderProduct();
+                $order_x_product->order_id = $uuid;
+                $order_x_product->product_id = $product->id;
+                $order_x_product->name = $product->name;
+                $order_x_product->printing_area = $product->printing_area;
+                $order_x_product->pantone = $request->pantone[$key];
+                $order_x_product->num_ink = (int) $request->no_ink[$key];
+                $order_x_product->num_pzas = $request->noPzas[$key];
+                $order_x_product->printing_method = $request->printing_methods[$key];
+                $order_x_product->provider = $product->proveedor;
+                $order_x_product->tax = 0.0;
+                $order_x_product->save();
+            } else {
+                $order_x_product = new OrderProduct();
+                $order_x_product->order_id = $uuid;
+                $order_x_product->product_id = $id;
+                $order_x_product->printing_area = 'Sin definir';
+                $order_x_product->pantone = $request->pantone[$key];
+                $order_x_product->num_ink = (int) $request->no_ink[$key];
+                $order_x_product->num_pzas = $request->noPzas[$key];
+                $order_x_product->printing_method = $request->printing_methods[$key];
+                $order_x_product->provider = 'Alphapromos';
+                $order_x_product->tax = 0.0;
+                $order_x_product->save();
+            }
         }
 
-        $cotizacion->save();
+        $payment = new Payment();
+        $payment->order_id = $uuid;
+        $payment->payment_status = 'IN_PROCESS';
+        $payment->payment_format = 'OTHER';
+        $payment->entity = 'OTRO';
+        $payment->save();
+
+        $shippment = new Shippment();
+        $shippment->order_id = $uuid;
+        $shippment->warehouse = 'AJUSCO';
+        $shippment->country = 'MÉXICO';
+        $shippment->destination = $order->state .', ' . $order->city . ', CP: ' . $order->cp . ', ' . $order->address;
+        $shippment->shippment_status = 'PENDANT';
+        $shippment->accompanion = 'Sin asignar';
+        $shippment->reciever = $order->name . ' ' . $order->lastname;
+        $shippment->code_area = $order->code_area;
+        $shippment->phone = $order->phone;
+        $shippment->details = NULL;
+        $shippment->user_id = 1;
+        $shippment->save();
 
         setcookie('carrito_cotizaciones', NULL);
-        $url = url('/').'/login';
 
-        Mail::to('juan.alucard.02@gmail.com')
-            ->cc(['alphapromos.rsociales@gmail.com','ventas@alphapromos.mx'])
-            ->send(new newCotizacion($url,$cotizacion));
-        
-        Mail::to($cotizacion->email)     
-            ->send(new UserNotification($cotizacion));
+        OrderCreated::dispatch($order);
 
-        return back()->with('success','La cotizacion se envio de forma exitosa!, nos pondremos en contacto con usted muy pronto.');
+        return back()->with('success','Hemos recibido tu solicitud, pronto nos pondremos en contacto con usted.');
     }
 }

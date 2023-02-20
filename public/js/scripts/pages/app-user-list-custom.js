@@ -52,8 +52,8 @@ $(function () {
       columns: [
         // columns according to JSON
         { data: 'id' },
-        { data: 'nombre' },
-        { data: 'SDK' },
+        { data: 'name' },
+        { data: 'code' },
         { data: 'subcategoria' },
         { data: 'proveedor' },
         { data: '' },
@@ -75,8 +75,8 @@ $(function () {
           responsivePriority: 4,
           render: function (data, type, full, meta) {
             //console.log(full);
-            var $name = full['nombre'],
-              $sdk = full['SDK'];
+            var $name = full['name'],
+              $sdk = full['code'];
 
             var images = '/imgs/no_disp.png';
             if(full['images'] != null){
@@ -149,6 +149,7 @@ $(function () {
         {
           targets: 4,
           render: function (data, type, full, meta) {
+            console.log(full);
             var $proveedor = full['proveedor'];
 
             return '<span class="text-nowrap">' + $proveedor + '</span>';

@@ -2,6 +2,8 @@
 
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/v3/home/welcome.css') }}">
+    <script src="{{ asset('js/v3/easing/jquery_easing.js') }}"></script>
+    <script src="{{ asset('js/v3/counter/counter.js') }}"></script>
 @endsection
 
 @section('content')
@@ -33,24 +35,28 @@
     <div class="container">
         <section class="row" id="features-row">
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <img src="{{ asset('imgs/v3/iconos/trust.png') }}" alt="">
+                <i class="fa-solid fa-handshake-simple alpha-color"></i>
+                <div id="counter">1</div>
                 <h4>Atencion Eficáz</h4>
-                <p>Atención personalizada, con asesorías para una inteligente selección, acorde a sus necesidades y presupuesto.</p>
+                <p>Atención personalizada, acorde a tus necesidades.</p>
             </div>
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <img src="{{ asset('imgs/v3/iconos/light.png') }}" alt="">
+                <i class="fa-solid fa-money-bill-trend-up" style="color: green;"></i>
+                <div id="counter-years">1</div>
                 <h4>Experiencia</h4>
-                <p>Con más de 25 años en el mercado. Hemos amalgamado la experiencia con las innovaciones del mundo actual.</p>
+                <p>Con más de 25 años en el mercado.</p>
             </div>
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <img src="{{ asset('imgs/v3/iconos/deliver.png') }}" alt="">
-                <h4>Flete Grátis</h4>
-                <p>A todo México en pedidos grandes.</p>
+                <i class="fa-solid fa-truck alpha-color"></i>
+                <div id="counter-flete">1</div>
+                <h4>Flete Incluido</h4>
+                <p>Envíos a todo México sin pago extra.</p>
             </div>
             <div class="col-xs-12 col-sm-2 col-md-3 features">
-                <img src="{{ asset('imgs/v3/iconos/engine.png') }}" alt="">
+                <i class="fa-solid fa-building" style="color: green;"></i>
+                <div id="counter-confianza">1</div>
                 <h4>Confianza</h4>
-                <p>Más de 200 compañías ya han confiado en nuestra experiencia.</p>
+                <p>Más de 500 compañías ya han confiado en nuestra experiencia.</p>
             </div>
         </section>
     </div>
@@ -133,34 +139,69 @@
 @section('page-scripts')
 
 <script type="text/javascript">
-    $(document).ready(function (){
+$(document).ready(function (){
 
-        $('.home-slider').owlCarousel({
-            items:1,
-        });
-
-        $('.clientes-slider').owlCarousel({
-            loop:true,
-            nav:false,
-            margin:10,
-            responsiveClass:true,
-            autoplay:true,
-            autoplayTimeout:3000,
-            autoplayHoverPause:true,
-            responsive:{
-                0:{
-                    items:2
-                },
-                600:{
-                    items:2
-                },
-                1000:{
-                    items:4
-                }
-            }
-        });
-
+    $('.home-slider').owlCarousel({
+        items:1,
     });
+
+    $('.clientes-slider').owlCarousel({
+        loop:true,
+        nav:false,
+        margin:10,
+        responsiveClass:true,
+        autoplay:true,
+        autoplayTimeout:3000,
+        autoplayHoverPause:true,
+        responsive:{
+            0:{
+                items:2
+            },
+            600:{
+                items:2
+            },
+            1000:{
+                items:4
+            }
+        }
+    });
+
+    $("#counter").counter({
+        autoStart: true,
+        duration: 7000,
+        countTo: 1024,
+        placeholder: 0,
+        easing: "easeOutCubic",
+        onStart: function() {
+          //document.getElementById("trigger").innerHTML = "Running.."
+        },
+        onComplete: function() {
+          //document.getElementById("trigger").innerHTML = "Restart counting!"
+        }
+    });
+
+    setCounter('counter', 7000, 1024);
+    setCounter('counter-years', 10000, 25);
+    setCounter('counter-flete', 7000, 3000);
+    setCounter('counter-confianza', 9000, 500);
+});
+
+function setCounter(object, tiempo, hasta) {
+    var counterObject = $('#' + object);
+    counterObject.counter({
+        autoStart: true,
+        duration: tiempo,
+        countTo: hasta,
+        placeholder: 0,
+        easing: "easeOutCubic",
+        onStart: function() {
+          //document.getElementById("trigger").innerHTML = "Running.."
+        },
+        onComplete: function() {
+          //document.getElementById("trigger").innerHTML = "Restart counting!"
+        }
+    });
+}
 </script>
 
 @endsection

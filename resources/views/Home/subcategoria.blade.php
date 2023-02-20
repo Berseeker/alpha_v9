@@ -18,7 +18,7 @@
                     <h5><i class="fa-solid fa-list-ul mr-10 alpha-color"></i>{{ $subcategoria->nombre }}</h5>
                     <ul class="list-categoria">
                         @foreach ($categoria->subcategorias as $subcategoria)
-                            <li><a href="#">{{ $subcategoria->nombre }}</a></li>
+                            <li><a href="{{ Str::slug($subcategoria->nombre, '-') }}">{{ $subcategoria->nombre }}</a></li>
                         @endforeach
                     </ul>
                 </div>

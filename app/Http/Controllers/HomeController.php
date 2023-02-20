@@ -30,9 +30,9 @@ class HomeController extends Controller
     public function index()
     {
         $cotizaciones = DB::table('cotizaciones')->count();
-        $productos = DB::table('productos')->count();
+        $productos = DB::table('products')->count();
+        $shippments = DB::table('shippment')->count();
         $ventas = Venta::sum('total');
-        //dd(Auth::user()->getAllPermissions());
     
         return view('home',[
             'cotizaciones' => $cotizaciones,

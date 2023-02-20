@@ -1,0 +1,13 @@
+.previewImg{
+    width: 150px;
+    display: block;
+    margin: 0px auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.headline {
+    font-weight: bolder;
+}

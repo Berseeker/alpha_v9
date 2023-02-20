@@ -48,8 +48,10 @@ class InsertDobleVela implements ShouldQueue
 
         $cont_new_products = 0; #Contador global
         $cont_update_products = 0; #Contador global
+        $api_ids = array();
         foreach ($result['Resultado'] as $producto) {
-            $product = Product::where('parent_code', $producto['MODELO'])->first();
+            array_push($api_ids, $producto['CLAVE']);
+            $product = Product::where('code', $producto['CLAVE'])->where('proveedor', 'DobleVela')->first();
             if($product == null){
                 $this->insertProduct($producto, $cont_new_products);
               
@@ -72,6 +74,8 @@ class InsertDobleVela implements ShouldQueue
         $log->save();
 
         Log::info('Se agregaron '.$msg.' de DobleVela');
+
+        Product::where('proveedor','DobleVela')->whereNotIn('code', $api_ids)->delete();
     }
 
     private function insertProduct($producto, &$cont_new_products){
@@ -111,7 +115,7 @@ class InsertDobleVela implements ShouldQueue
                         break;
 
                     case 'FC':
-                        array_push($metodo_x_impresion, "Full color");
+                        array_push($metodo_x_impresion, "Full Color");
                         break;
 
                     case 'TM':
@@ -135,7 +139,7 @@ class InsertDobleVela implements ShouldQueue
                         break;
 
                     case 'GR':
-                        array_push($metodo_x_impresion, "Gota de resina");
+                        array_push($metodo_x_impresion, "Gota de Resina");
                         break;
 
                     case 'VT':
@@ -143,10 +147,51 @@ class InsertDobleVela implements ShouldQueue
                         break;
 
                     case 'HS':
-                        array_push($metodo_x_impresion, "Hotstamping");
+                        array_push($metodo_x_impresion, "Hot Stamping");
+                        break;
+
+                    case 'SES':
+                        array_push($metodo_x_impresion, "Serigrafia");
+                        break;
+
+                    case 'GS':
+                        array_push($metodo_x_impresion, "Grabado Seco");
+                        break;
+
+                    case 'BP':
+                        array_push($metodo_x_impresion, "Brand Pach");
+                        break;
+
+                    case 'DTFUV':
+                        array_push($metodo_x_impresion, "DTF UV");
+                        break;
+
+                    case 'DTFUT':
+                        array_push($metodo_x_impresion, "DTF Textil");
+                        break;
+
+                    case 'GRR':
+                        array_push($metodo_x_impresion, "Gota de Resina Relieve");
+                        break;
+
+                    case 'GRT':
+                        array_push($metodo_x_impresion, "Gota de Resina Textil");
+                        break;
+
+                    case 'TC':
+                        array_push($metodo_x_impresion, "TermoCalca");
+                        break;
+
+                    case 'TCC':
+                        array_push($metodo_x_impresion, "Termo Calca Carton");
+                        break;
+
+                    case 'VTEX':
+                        array_push($metodo_x_impresion, "Vinil Textil");
                         break;
 
                     default:
+                        array_push($metodo_x_impresion, $impresion);
                         break;
                 }
             }
@@ -184,7 +229,7 @@ class InsertDobleVela implements ShouldQueue
             else if($producto['SubFamilia'] == 'MOCHILAS'){
                 $subcategoria = 25;
                 $item->search = $producto['Familia'] . ', ' . $producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
-                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] . Str::upper(trim($producto['NOMBRE']));
+                $item->meta_keywords = $producto['Familia'] . ', ' . $producto['SubFamilia'] .', ' . Str::upper(trim($producto['NOMBRE']));
             }
             else if($producto['SubFamilia'] == 'PARAGUAS E IMPERMEABLES'){
                 $item->categoria_id = 6;
@@ -670,7 +715,7 @@ class InsertDobleVela implements ShouldQueue
 
     private function updateProduct($item, &$cont_update_products) {
 
-        $product = Product::where('parent_code', $item['MODELO'])->first();
+        $product = Product::where('code', $item['CLAVE'])->where('proveedor', 'DobleVela')->first();
         $colors = json_decode($product->colors);
 
         $item_color = explode("-", $item['COLOR']);;
@@ -687,10 +732,12 @@ class InsertDobleVela implements ShouldQueue
             array_push($colors, trim(Str::upper($item_color[1])));
         }
         
-      
         $product->colors = json_encode($colors);
-        $product->save();
 
-        $cont_update_products++;
+        if ($product->isDirty()) {
+            $product->update();
+            $cont_update_products++;
+        }
+
     }
 }

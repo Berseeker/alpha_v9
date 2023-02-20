@@ -31,18 +31,7 @@
                             <div class="shadowx">
                                 <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="bg-producto br-16c">
                                     <div class="product-header pd-16c">
-                                        @php
-                                            $img = asset('imgs/v3/productos/no_disp.png');
-                                            if($producto->images != null)
-                                            {
-                                                $img = json_decode($producto->images)[0];
-                                                if(!Str::contains($img,['https','http']))
-                                                {
-                                                    $img = Storage::disk('doblevela_img')->url($img);
-                                                }
-                                            }
-                                        @endphp 
-                                        <img src="{{ $img }}" alt="{{ $producto->name }}">
+                                        <img src="{{ $producto->preview }}" alt="{{ $producto->name }}">
                                     </div>
                                     <div class="product-body pd-16c">
                                         <p class="title alpha-color">{{ $producto->name }}</p>

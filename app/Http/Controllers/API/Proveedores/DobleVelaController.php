@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Bus\Batch;
 use App\Models\Product;
+use App\Models\Items;
 
 
 
@@ -34,7 +35,7 @@ class DobleVelaController extends Controller
 
     public function imgsV2() {
 
-        $productos = Product::where('proveedor', 'DobleVela')->orderBy('id', 'asc')->count();
+        $productos = Product::where('proveedor', 'DobleVela')->where('images', NULL)->orderBy('id', 'asc')->count();
         if ($productos % 4 == 0) {
 
             $limit = $productos / 4;
@@ -77,5 +78,10 @@ class DobleVelaController extends Controller
 
         $productos = Product::where('proveedor','DobleVela')->where('images',null)->get();
         dd(count($productos), $productos[0]);
+    }
+
+    public function test() {
+        $product = Product::where('images', NULL)->where('proveedor', 'DobleVela')->first();
+        dd($product);
     }
 }

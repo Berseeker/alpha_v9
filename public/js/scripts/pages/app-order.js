@@ -16,7 +16,7 @@ $(function () {
         select = $('.select2'),
         dtContact = $('.dt-contact'),
         statusObj = {
-            'Pendiente': { title: 'Pendiente', class: 'badge-light-warning' },
+            'PENDANT': { title: 'Pendiente', class: 'badge-light-warning' },
             "Aprobada": { title: "Aprobada", class: 'badge-light-success' },
             'Cancelada': { title: 'Cancelada', class: 'badge-light-danger' }
         };
@@ -50,9 +50,9 @@ $(function () {
             },
             columns: [
                 // columns according to JSON
-                { data: 'id' },
-                { data: 'id' },
-                { data: 'nombre' },
+                { data: 'uuid' },
+                { data: 'uuid' },
+                { data: 'name' },
                 { data: 'email' },
                 { data: 'status' },
                 { data: '' },
@@ -73,8 +73,8 @@ $(function () {
                     targets: 1,
                     responsivePriority: 4,
                     render: function (data, type, full, meta) {
-                        //console.log(full);
-                        var id = full['id'];
+                        console.log(full);
+                        var id = full['order_id'];
 
                         // Creates full output for row
                         var $row_output =
@@ -91,7 +91,7 @@ $(function () {
                 {
                     targets: 2,
                     render: function (data, type, full, meta) {
-                        var name = full['nombre'] + ' ' + full['apellidos'];
+                        var name = full['name'] + ' ' + full['lastname'];
 
                         return '<span class="text-nowrap">' + name + '</span>';
                     }
@@ -130,7 +130,7 @@ $(function () {
                     // User Status
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        var $status = full['status'];
+                        var $status = full['order_status'];
                         //console.log($status)
                         return (
                             '<span class="badge rounded-pill ' +
@@ -147,14 +147,14 @@ $(function () {
                     title: 'Actions',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        var id = full['id'];
+                        var id = full['order_id'];
                         return (
                             '<div class="btn-group">' +
                             '<a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
                             feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="#" onclick="fireModal(' + id + ');" class="dropdown-item">' +
+                            '<a href="#" onclick="fireModal(&#34;' + id + '&#34;);" class="dropdown-item">' +
                             feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
                             'Edicion Rapida</a>' +
                             '<a href="'+
@@ -329,6 +329,7 @@ function fireModal(id)
         method: "GET",
         dataType: "json",
         success: function (data) {
+            console.log(data);
             var template = '';
             data.forEach(function (empleado, indice, array) {
                 console.log(empleado);

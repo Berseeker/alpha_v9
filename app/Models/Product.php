@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
@@ -10,9 +12,10 @@ use Illuminate\Support\Str;
 
 class Product extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory, Searchable, SoftDeletes;
 
     protected $table = 'products';
+    protected $appends = ['preview'];
 
     public function categoria()
     {
@@ -22,6 +25,27 @@ class Product extends Model
     public function subcategoria()
     {
         return $this->belongsTo(Subcategoria::class);
+    }
+
+    protected function preview(): Attribute 
+    {
+        $img = asset('imgs/v3/productos/no_disp.png');
+        if($this->images != null)
+        {
+            $img = json_decode($this->images)[0];
+            if ($img != '') {
+                if(!Str::contains($img,['https','http']))
+                {
+                    $img = Storage::disk('doblevela_img')->url($img);
+                }
+            } else {
+                $img = asset('imgs/v3/productos/no_disp.png');
+            }
+        }
+
+        return new Attribute(
+            get: fn () => $img,
+        );
     }
 
     public function toSearchableArray()
@@ -58,14 +82,23 @@ class Product extends Model
         $array['colores'] = $colors;
 
         $metodos_impresion = '';
-        $impresiones = json_decode($this->printing_methods);
-        if (count($impresiones) > 0) {
-            foreach ($impresiones as $impresion) {
-                $metodos_impresion = $metodos_impresion . ' ' . $impresion;
-            }
-        } else {
+        if ($this->printing_methods == null) {
             $metodos_impresion = "Sin especificar";
+        } else {
+            $impresiones = json_decode($this->printing_methods);
+            if ($impresiones == null || $impresiones == '') {
+                $metodos_impresion = "Sin especificar";
+            } else {
+                if (count($impresiones) > 0) {
+                    foreach ($impresiones as $impresion) {
+                        $metodos_impresion = $metodos_impresion . ' ' . $impresion;
+                    }
+                } else {
+                    $metodos_impresion = "Sin especificar";
+                }
+            }
         }
+        
 
         $array['metodos_impresion'] = $metodos_impresion;
 

@@ -17,7 +17,7 @@ class ProductoController extends Controller
         $productos = DB::table('products')
             ->join('categorias', 'products.categoria_id', '=', 'categorias.id')
             ->join('subcategorias', 'products.subcategoria_id', '=', 'subcategorias.id')
-            ->select('products.id','products.name','products.code', 'products.categoria_id', 'products.images', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria')
+            ->select('products.id','products.name','products.code', 'products.categoria_id', 'products.images', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria', 'products.proveedor as proveedor')
             ->get()->toJson();
         
         return $productos;

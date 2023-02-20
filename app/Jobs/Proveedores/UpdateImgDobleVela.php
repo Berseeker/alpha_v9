@@ -84,7 +84,7 @@ class UpdateImgDobleVela implements ShouldQueue
             
             /* FIN DE PROCESO DE OBTENCION DE IMAGENES */
             $producto->images = $imgs;
-            $producto->save();
+            $producto->update();
         }
         
         $log = new Logs();

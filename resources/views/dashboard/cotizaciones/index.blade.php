@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Lista Cotizaciones')
+@section('title', 'Orders')
 
 @section('vendor-style')
   {{-- Page Css files --}}
@@ -94,19 +94,14 @@
   <!-- list and filter start -->
   <div class="card">
     <div class="card-body border-bottom">
-      <h4 class="card-title">Lista de Productos & Filtros</h4>
-      <!--div class="row">
-        <div class="col-md-4 user_role"></div>
-        <div class="col-md-4 user_plan"></div>
-        <div class="col-md-4 user_status"></div>
-      </div-->
+      <h4 class="card-title">Lista de Cotizaciones</h4>
     </div>
     <div class="card-datatable table-responsive pt-0" style="overflow-x: inherit;">
       <table class="cotizacion-list-table table">
         <thead class="table-light">
           <tr>
             <th></th>
-            <th>Id</th>
+            <th>UUID</th>
             <th>Nombre</th>
             <th>Email</th> 
             <th>Estatus</th>
@@ -172,7 +167,7 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-cotization.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-order.js') }}"></script>
 
   <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
   <script>
