@@ -60,6 +60,11 @@
                             </div>
 
                             <div class="form-group" style="margin-top:10px;">
+                                <label for="exampleInputEmail1">Teléfono</label>
+                                <input type="text" class="form-control" name ="phone" value="{{$user->phone}}">
+                            </div>
+
+                            <div class="form-group" style="margin-top:10px;">
                                 <label for="exampleInputEmail1">Roles</label>
                                 <select name="roles" class="form-control">
                                     @foreach ($roles as $role)

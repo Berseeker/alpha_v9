@@ -17,7 +17,7 @@ class ProductoController extends Controller
     {
         $innova = DB::table('products')->where('proveedor','Innova')->where('deleted_at',null)->count();
         $promoOpcion = DB::table('products')->where('proveedor','PromoOpcion')->where('deleted_at',null)->count();
-        $vela = DB::table('products')->where('proveedor','Doble Vela')->where('deleted_at',null)->count();
+        $vela = DB::table('products')->where('proveedor','DobleVela')->where('deleted_at',null)->count();
         $forpromo = DB::table('products')->where('proveedor','Forpromotional')->where('deleted_at',null)->count();
 
         $pageConfigs = ['pageHeader' => false];

@@ -49,16 +49,21 @@
                     <label for="name">Nombre</label>
                     <input type="text" class="form-control" name ="name">
                     
-                  </div>
+                </div>
                 <div class="form-group" style="margin-top: 10px;">
                     <label for="email">Correo electrónico</label>
                     <input type="email" class="form-control" name ="email">
-                  </div>
+                </div>
 
-                  <div class="form-group" style="margin-top: 10px;">
-                    <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" name ="password">
-                  </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label for="email">Teléfono</label>
+                    <input type="text" class="form-control" name ="phone">
+                </div>
+
+                <div class="form-group" style="margin-top: 10px;">
+                  <label for="password">Contraseña</label>
+                  <input type="password" class="form-control" name ="password">
+                </div>
 
                   <button type="submit" class="btn btn-primary" style="margin-top:25px;">Crear</button><!-- End form-body-->
               </form>

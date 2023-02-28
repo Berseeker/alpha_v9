@@ -140,8 +140,8 @@ return [
 
         'cotizacion' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/cotizaciones_logo'),
-            'url' => env('APP_URL').'/storage/cotizaciones_logo',
+            'root' => storage_path('app/public/cotizaciones_imgs'),
+            'url' => env('APP_URL').'/storage/cotizaciones_imgs',
             'visibility' => 'public',
             'permissions' => [
                 'file' => [
@@ -187,7 +187,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('cotizacion') => storage_path('app/public/cotizaciones_logo'),
+        public_path('cotizacion') => storage_path('app/public/cotizaciones_img'),
         public_path('custom_product') => storage_path('app/public/custom_product'),
         public_path('innova') => storage_path('app/public/innova'),
         public_path('doblevela') => storage_path('app/public/doblevela'),

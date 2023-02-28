@@ -22,7 +22,7 @@ class UpdateBatchImgDobleVela implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $timeout = 6000;
+    public $timeout = 12000;
 
     protected $limit;
     protected $offset;

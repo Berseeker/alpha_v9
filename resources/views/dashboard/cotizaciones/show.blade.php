@@ -17,6 +17,11 @@
 
 @section('content')
 <section class="app-user-view-billing">
+    @if (session('warning'))
+        <div class="bg-warning" style="padding:10px;margin-bottom:30px;border-radius: 5px;color:white;text-align:center;">
+            <p style="margin-bottom: 0px;"><i class="fas fa-exclamation" style="margin-right: 10px;"></i> {{ session('warning') }}</p>
+        </div>
+    @endif
     <div class="row">
         <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
             <div class="card">
@@ -94,6 +99,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.edit.cotizacion.invoice',['order_id' => $order->order_id]) }}">
+                        <i data-feather="edit" class="font-medium-3 me-50"></i>
+                        <span class="fw-bold">Editar Invoice</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.order.invoice',['id' => $order->order_id]) }}" target="_blank">
                         <i data-feather="edit" class="font-medium-3 me-50"></i>
                         <span class="fw-bold">Generar Invoice</span>
@@ -159,7 +170,7 @@
             <!-- current plan -->
             <div class="card">
                 <div class="card-header">
-                <h4 class="card-title">Precios de la Cotizacion</h4>
+                <h4 class="card-title">Información del Invoice</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -183,6 +194,30 @@
                             <div class="alert alert-warning mb-2" role="alert">
                                 <h6 class="alert-heading">Se necesita poner precios para generar un invoice</h6>
                                 <div class="alert-body fw-normal">De lo contrario no se podrá generar</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="">
+                                <div style="margin-right:10px;">
+                                    <h5><span class="badge badge-light-primary ms-50">Folio</span></h5>
+                                    <p>{{ ($invoice->folio == null) ? 'Sin especificar' : $invoice->folio }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="">
+                                <div style="margin-right:10px;">
+                                    <h5><span class="badge badge-light-primary ms-50">Plazo para pagar el invoice</span></h5>
+                                    <p>{{ $invoice->payment_days }} días</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="">
+                                <div style="margin-right:10px;">
+                                    <h5><span class="badge badge-light-primary ms-50">Plazo para la entrega de producto</span></h5>
+                                    <p>{{ $invoice->deliver_days }} días hábiles</p>
+                                </div>
                             </div>
                         </div>
                     </div>

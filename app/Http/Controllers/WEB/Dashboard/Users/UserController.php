@@ -25,6 +25,7 @@ class UserController extends Controller
         $rules = [
             'name' =>    'required|string',
             'email'=>    'required|email',
+            'phone' => 'required',
             'password'=> 'required'
         ];
 
@@ -33,7 +34,8 @@ class UserController extends Controller
             'name.string' => 'Nombre no valido',
             'email.required' => 'Es necesario llenar este campo',
             'email.email' => 'Email no valido',
-            'password.required' => 'Es necesario llenar este campo'
+            'password.required' => 'Es necesario llenar este campo',
+            'phone.required' => 'Es necesario indicar un telefono'
         ];
         
         $this->validate($request, $rules, $messages);
@@ -41,6 +43,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->phone = $request->phone;
 
         $user->save();
         $user->assignRole('Usuario');
@@ -64,6 +67,7 @@ class UserController extends Controller
         $rules = [
             'name' =>    'required|string',
             'email'=>    'required|email',
+            'phone' => 'required'
         ];
 
         $messages = [
@@ -71,14 +75,16 @@ class UserController extends Controller
             'name.string' => 'Nombre no valido',
             'email.required' => 'Es necesario llenar este campo',
             'email.email' => 'Email no valido',
+            'phone.required' => 'Se necesita un telefono'
         ];
         
         $this->validate($request, $rules, $messages);
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $user->phone;
 
-        $user->save();
+        $user->update();
         return back()->with('success',"Usuario modificado correctamente");
         
     }

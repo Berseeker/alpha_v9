@@ -86,7 +86,7 @@ class InsertDobleVela implements ShouldQueue
         $item->name = trim($producto['NOMBRE']);
         $item->details = trim($producto['Descripcion']);
         
-        $item->images = null; //JSON
+        $item->images = NULL; //JSON
         $color = explode("-", $producto['COLOR']);
         $item->colors = json_encode(array(trim(Str::upper($color[1]))));
         $item->proveedor = 'DobleVela';

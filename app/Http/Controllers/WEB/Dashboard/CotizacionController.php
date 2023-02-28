@@ -15,9 +15,11 @@ use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 use App\Models\OrderProduct;
+use App\Models\InvoiceOrder;
+use App\Models\Shippment;
 use App\Models\Product;
 use App\Models\Order;
-use App\Models\Venta;
+use App\Models\Sale;
 
 use DateTime;
 //para el manejo de archivos
@@ -26,6 +28,11 @@ use File;
 
 class CotizacionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $cotizaciones = Order::all();
@@ -48,11 +55,13 @@ class CotizacionController extends Controller
 
         $order = Order::find($id);
         $order_x_products = OrderProduct::where('order_id', $order->order_id)->get();
+        $invoice = InvoiceOrder::where('order_id', $order->order_id)->first();
 
         return view('dashboard.cotizaciones.show',[
             'order' => $order,
             'order_x_products' => $order_x_products,
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'invoice' => $invoice
         ]);
     }
 
@@ -61,7 +70,7 @@ class CotizacionController extends Controller
         $order = Order::find($id);
 
         $breadcrumbs = [
-            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/", 'name' => "Cotizacion"], ['name' => "Order - " . $order->name . ' ' . $order->lastname ]
+            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/" . $order->order_id, 'name' => "Cotizacion"], ['name' => "Order - " . $order->name . ' ' . $order->lastname ]
         ];
 
         $products = Product::all();
@@ -76,113 +85,130 @@ class CotizacionController extends Controller
         
     }
 
-    public function update(Request $request,$id)
+    public function editInvoice($order_id)
     {
-        $rules = [
-            'nombre' => 'required',
-            'apellidos' => 'required',
-            'email' => 'required|email',
-            'fecha_deseable' => 'required',
-            'pantones' => 'required',
-            'tipografia' => 'required',
-            'numero_tintas' => 'required',
-            'producto_id' => 'required'
+        $order = Order::find($order_id);
+        $invoice = InvoiceOrder::where('order_id', $order->order_id)->first();
+
+        $breadcrumbs = [
+            ['link' => "/home", 'name' => "Dashboard"], ['link' => "/dashboard/show-cotizacion/". $order->order_id, 'name' => "Cotizacion"], ['name' => "Order - " . $order->name . ' ' . $order->lastname ]
         ];
 
-        $messages = [
-            'nombre.required' => 'Es necesario asignar un nombre',
-            'apellidos.required' => 'Es necesario asignar un apellido',
-            'email.required' => 'Es necesario proporcionar un email para contactarnos',
-            'fecha_deseable.required' => 'Es necesario indicar que dia quiere que se le entreguen los productos',
-            'pantones.required' => 'Es necesario determinar los pantones de los productos',
-            'tipografia.required' => 'Es necesario indicar la tipografia',
-            'numero_tintas' => 'Es necesario indicar el numero de tintas',
-            'producto_id' => 'Es necesario indicar el id de los productos'
-        ];
+        return view('dashboard.cotizaciones.edit_invoice',[
+            'breadcrumbs' => $breadcrumbs,
+            'order' => $order,
+            'invoice' => $invoice
+        ]);
+
+    }
+
+    public function update(Request $request,$order_id)
+    {
+        $rules = [];
+        $messages = [];
+
+        if ($request->filled('product_id')) {
+            $rules = [
+                'pantone' => 'required',
+                'printing_method' => 'required',
+                'num_pzas' => 'required',
+                'num_ink' => 'required',
+                'price_x_unid' => 'required',
+            ];
+
+            $messages = [
+                'pantone.required' => 'Es necesario poner un pantone',
+                'printing_method.required' => 'Indica un tipo de impresion',
+                'num_pzas.required' => 'Indica el numero de pzas de este producto',
+                'num_ink.required' => 'Indica el numero de tintas',
+                'price_x_unid.required' => 'Indica el precio por pza',
+            ];
+        } else {
+ 
+            $rules = [
+                'order_status' => 'required',
+                'name' => 'required',
+                'lastname' => 'required',
+                'email' => 'required|email',
+                'deadline' => 'required',
+                'phone' => 'required',
+                'country' => 'required',
+                'state' => 'required',
+                'cp' => 'required',
+                'no_ext' => 'required',
+                'address' => 'required',
+            ];
+
+            $messages = [
+                'order_status.required' => 'Es necesario indicar el status de la cotizacion',
+                'name.required' => 'Es necesario indicar el nombre del cliente',
+                'lastname.required' => 'Es necesario asignar el apellido del cliente',
+                'email.required' => 'Es necesario proporcionar un email para contactarnos',
+                'deadline.required' => 'Es necesario indicar que dia quiere que se le entreguen los productos',
+                'phone.required' => 'Indica un numero de contacto con el cliente',
+                'country.required' => 'Indica el Pais donde se hara el delivery',
+                'state.required' => 'Es necesario indicar el estado del Pais',
+                'cp.required' => 'Es necesario indicar el CP del domicilio',
+                'no_ext.required' => 'Es necesario indicar el numero exterior del domicilio',
+                'address.required' => 'Es necesario indicar la direccion del domicilio',
+            ];
+
+        }
 
         $this->validate($request,$rules,$messages);
 
+        $order = Order::find($order_id);
 
-        $cotizacion = Order::find($id);
-        /* Cliente */
-        $cotizacion->nombre = $request->nombre;
-        $cotizacion->apellidos = $request->apellidos;
-        $cotizacion->email = $request->email;
-        $cotizacion->celular = $request->celular;
-        $cotizacion->comentarios = $request->comentarios;
-        /* Productos */  
-        $cotizacion->medidas_deseables = json_encode($request->medidas_deseables);
-        $cotizacion->fecha_deseable = json_encode($request->fecha_deseable);
-        $cotizacion->pantones = json_encode($request->pantones);
-        $cotizacion->tipografia = json_encode($request->tipografia);
-        $cotizacion->numero_tintas = json_encode($request->numero_tintas);
-        $cotizacion->numero_pzas = json_encode($request->cantidad_pzas);
-        $cotizacion->productos_id = json_encode($request->producto_id);
-        $cotizacion->metodos_impresion = json_encode($request->servicio_id);
-        $cotizacion->tax = $request->tax;
-        
-        $precios_productos = array();
-        $total_pzas = 0;
-        for($i=0;$i < $request->total_productos; $i++)
-        {
-            $precio_pzas = $request->precio_pza[$i];
-            $num_pzas = $request->cantidad_pzas[$i];
-            $total_pzas = $total_pzas + $request->cantidad_pzas[$i];
-            $precio_producto = (double)$precio_pzas * (double)$num_pzas;
-            array_push($precios_productos,$precio_producto);
+        if ($request->filled('product_id')) {
+            $order_x_product = OrderProduct::where('order_id', $order->order_id)->where('product_id', $request->product_id)->first();
+            if ($order_x_product != null) {
+                $order_x_product->pantone = $request->pantone;
+                $order_x_product->typography = $request->typography;
+                $order_x_product->num_ink = (int) $request->num_ink;
+                $order_x_product->num_pzas = (int) $request->num_pzas;
+                $order_x_product->price_x_unid = (double) $request->price_x_unid;
+                $order_x_product->printing_method = $request->printing_method;
+                if ($order_x_product->isDirty()) {
+                    $order_x_product->update();
+                }   
+            }
+        } else {
+            $order->name = $request->name;
+            $order->lastname = $request->lastname;
+            $order->email = $request->email;
+            $order->phone = $request->phone;
+            $order->country = $request->country;
+            $order->city = $request->city;
+            $order->state = $request->state;
+            $order->address = $request->address;
+            $order->cp = $request->cp;
+            $order->ext_num = $request->no_ext;
+            $order->deadline = $request->deadline;
+            if ($request->filled('comments')) {
+                $order->comments = $request->comments;
+            }
+            $order->user_id = Auth::user()->id;
+            $order->order_status = $request->order_status;
+            $order->update();
         }
-        /* Precios */
-        
-        $cotizacion->precio_pza = json_encode($request->precio_pza);
-        $cotizacion->precio_x_producto = json_encode($precios_productos);
-        $cotizacion->precio_total = $request->precio_total;
-        $cotizacion->precio_subtotal = $request->precio_subtotal;
-        $cotizacion->mano_x_obra = $request->mano_x_obra;
-        /* Billing */
-        $cotizacion->forma_pago = $request->forma_pago;
-        $cotizacion->total_productos = $request->total_productos;
-        $cotizacion->calle = $request->calle;
-        $cotizacion->cp = $request->cp;
-        $cotizacion->no_ext = $request->no_ext;
-        $cotizacion->estado = $request->estado;
-        $cotizacion->colonia = $request->colonia;
-        $cotizacion->ciudad = $request->ciudad;
-        $cotizacion->status = $request->status;
-        $cotizacion->user_id = Auth::user()->id;
-        $cotizacion->save();
 
-        if($request->status == 'Aprobada')
+        if($request->order_status == 'APPROVED')
         {
-            $prevVenta = Venta::where('cotizacion_id',$cotizacion->id)->first();
+            $prevVenta = Sale::where('order_id',$order->order_id)->first();
             if($prevVenta == null)
             {
-                $venta = new Venta();
-                $venta->cantidad_piezas = $total_pzas;
-                $venta->venta_realizada = now();
-                $venta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
-                $venta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
-                $venta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
-                $venta->status = 'Aprobada';
-                $venta->cotizacion_id = $cotizacion->id;
-                $venta->user_id = Auth::user()->id;
-                $venta->save();
-            }
-            else {
-                $prevVenta->cantidad_piezas = $total_pzas;
-                $prevVenta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
-                $prevVenta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
-                $prevVenta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
-                $prevVenta->user_id = Auth::user()->id;
-                if($prevVenta->isDirty())
-                {
-                    $prevVenta->venta_realizada = now();
-                    $prevVenta->save();
-                }
-            }          
+                $payment = Payment::where('order_id', $order->order_id)->first();
+                $shippment = Shippment::where('order_id', $order->order_id)->first();
+                $sale = new Sale();
+                $sale->order_id = $order->order_id;
+                $sale->payment_id = $payment->id;
+                $sale->shippment_id = $shippment->id;
+                $sale->user_id = Auth::user()->id;
+                $sale->save();
+            }         
         }
-        //$cotizacion->id
-        //venta $cotizaion_id
-        if($request->status == 'Pendiente' || $request->status == 'Cancelada' ){
+
+        if($request->order_status == 'CANCEL' || $request->status == 'PENDANT' ){
             $preVenta = Venta::where('cotizacion_id', '=' , $cotizacion->id)->get();
             if(!$preVenta->isEmpty()){
                 foreach($preVenta as $Venta){
@@ -194,6 +220,35 @@ class CotizacionController extends Controller
 
         return back()->with('success','La cotizacion se actualizo de manera correcta');
         
+    }
+
+    public function updateInvoice(Request $request, $order_id)
+    {
+        $rules = [
+            'payment_days' => 'required',
+            'deliver_days' => 'required',
+            'place' => 'required'
+        ];
+
+        $messages = [
+            'payment_days.required' => 'Es necesario indicar el plazo de dias para pagar el invoice',
+            'deliver_days.required' => 'Es necesario indicar el plazo de dias hábiles para la entrega de productos',
+            'place.required' => 'Es necesario indicar el lugar donde se hara la entrega de productos'
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $order = Order::find($order_id);
+
+        $invoice = InvoiceOrder::where('order_id', $order->order_id)->first();
+        $invoice->payment_days = $request->payment_days;
+        $invoice->deliver_days = $request->deliver_days;
+        $invoice->place = $request->place;
+        $invoice->user_id = Auth::user()->id;
+        $invoice->folio = $request->folio;
+        $invoice->update();
+
+        return back()->with('success', 'El invoice se actualizó correctamente.');
     }
 
     public function updateQuick(Request $request)
@@ -248,8 +303,8 @@ class CotizacionController extends Controller
         
     }
 
-    public function download($id){
-        
+    public function download($id)
+    {    
         $cotizacion = Order::find($id);
         $path = public_path('storage');
         $public = public_path();
@@ -351,13 +406,13 @@ class CotizacionController extends Controller
     {
         $order = Order::find($order_id);
         $order_x_products = OrderProduct::where('order_id', $order->order_id)->get();
+        $invoice = InvoiceOrder::where('order_id', $order->order_id)->first();
 
         $client = new Party([
-            'name'          => 'Blanca Morales',
-            'phone'         => $order->code_area.' '.$order->phone,
+            'name'          => Auth::user()->name,
+            'phone'         => (Auth::user()->phone == null) ? '5529519407' : Auth::user()->phone,
             'custom_fields' => [
-                'email'        => 'ventas@alphapromos.mx',
-                'business id' => '365#GG',
+                'email'        => Auth::user()->email
             ],
         ]);
 
@@ -374,32 +429,57 @@ class CotizacionController extends Controller
 
         $items = array();
         foreach ($order_x_products as $key => $order_x_product) {
+
+            if ($order_x_product->price_x_unid < 1) {
+                return back()->with('warning', 'Es necesario indicar un precio x pieza de cada producto');
+            }
+
+            $url = $order_x_product->product->preview;
+            if (str_contains($url, ' ')) {
+                $url = str_replace(" ",'%20', $url);
+            }
+            $preview = public_path('imgs/v3/logos/logo_alpha.png');
+            if ($order_x_product->product->proveedor == 'DobleVela') {
+                if($order_x_product->product->images != null)
+                {
+                    $img = json_decode($order_x_product->product->images)[0];
+                    $preview = public_path('storage').'/doblevela/images/'.$img;
+                }
+            } else {
+                $contents = file_get_contents($url);
+                $name = substr($url, strrpos($url, '/') + 1);
+                if (Storage::disk('cotizacion')->put($name, $contents)) {
+                    $preview = public_path('storage').'/cotizaciones_imgs/'.$name;
+                }
+            }
+            
+
             array_push($items, (new InvoiceItem())
-                ->img($order_x_product->product->preview)
                 ->title($order_x_product->name)
                 ->description($order_x_product->product->details)
-                ->pricePerUnit(20)
+                ->pricePerUnit($order_x_product->price_x_unid)
                 ->quantity($order->total_products)
-                ->tax(6.4)
+                ->tax(0)
                 ->discount(0)
+                ->img($preview)
             );
         }
 
         $notes = [
-            'Forma de pago: 30 días',
-            'Tiempo de Entrega: 14 días hábiles',
+            'Forma de pago: '. $invoice->payment_days.' día(s)',
+            'Tiempo de Entrega: '.$invoice->deliver_days.' días hábiles',
             'LOGOTIPOS CONVERTIDOS EN CURVAS, TIPOGRAFÍA, PANTONES A TRABAJAR',
         ];
         
         $notes = implode("<br>", $notes);
 
         $invoice = Invoice::make('Cotización - '. $order->identifier)
-            ->series('BIG')
+            ->series($invoice->folio)
             // ability to include translated invoice status
             // in case it was paid
             ->status('PENDIENTE')
-            ->sequence(667)
-            ->serialNumberFormat('{SEQUENCE}/{SERIES}')
+            ->sequence(0)
+            ->serialNumberFormat('{SERIES}')
             ->seller($client)
             ->buyer($customer)
             ->date(now())
@@ -412,7 +492,7 @@ class CotizacionController extends Controller
             ->currencyDecimalPoint(',')
             ->filename('invoice_' . $order->identifier . Str::slug($order->name .' '. $order->lastname, '_'))
             ->addItems($items)
-            ->vatTax('Precios más 16% de I.V.A. incluye flete Guadalajara.')
+            ->vatTax('Precios más 16% de I.V.A. incluye flete '. $invoice->place)
             ->notes($notes)
             ->logo(public_path('imgs/v3/logos/logo_alpha.png'))
             // You can additionally save generated invoice to configured disk

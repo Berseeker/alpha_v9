@@ -196,7 +196,7 @@
 
                         @if($invoice->seller->phone)
                             <p class="seller-phone" style="font-size: 12px;">
-                                {{ __('invoices::invoice.phone') }}: {{ $invoice->seller->phone }}
+                                Teléfono: {{ $invoice->seller->phone }}
                             </p>
                         @endif
 
@@ -272,8 +272,10 @@
                 @foreach($invoice->items as $item)
                 <tr>
                     <td class="pl-0" style="font-size: 11px;">
-                        {{ $item->title }}
-
+                        
+                        <img src="{{ $item->img }}" alt="" style="width: 120px;">
+                        <p>{{ $item->title }}</p>
+                        
                         @if($item->description)
                             <p class="cool-gray" style="margin-top: 5px;">{{ $item->description }}</p>
                         @endif
@@ -365,7 +367,7 @@
 
         @if($invoice->notes)
             <p style="margin-bottom: 20px;font-size:12px;">
-                {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
+                {!! $invoice->notes !!}
             </p>
         @endif
 

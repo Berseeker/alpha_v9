@@ -44,6 +44,7 @@ class RoleController extends Controller
        $user = User::find($id);
        $user->name = $request->name;
        $user->email = $request->email;
+       $user->phone = $request->phone;
 
         //Se verifica que el usuario cuente con un rol, de lo contrario no se hace nada
         if ($user->hasRole(['Admin', 'Supervisor', 'Empleado', 'Usuario'])) {
@@ -83,7 +84,7 @@ class RoleController extends Controller
        //guardas el nuevo rol en la base de datos
        $user->save();
 
-       return back()->with('success',"Nuevo rol asignado exitosamente");
+       return back()->with('success',"Usuario actualizado correctamente");
        
 
     }

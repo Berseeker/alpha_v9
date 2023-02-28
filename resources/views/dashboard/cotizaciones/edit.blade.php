@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         <label for="password-icon">Estatus de la Cotización <span class="obligated">*</span> </label>
                                         <fieldset class="form-group">
-                                            <select class="form-control" id="status" name="status">
+                                            <select class="form-control" id="status" name="order_status">
                                                 @if ($order->order_status == "PENDANT")
                                                     <option value="{{ $order->order_status }}" selected> PENDIENTE </option>
                                                     <option class="text-danger" value="CANCEL">CANCELADA</option>
@@ -133,19 +133,7 @@
                                 </div>
                                 <div class="col-12 col-sm-12">
                                     <h4 style="text-align: center;">Dirección</h4>
-                                </div>
-                            
-                                <div class="col-12 col-sm-4">
-                                    <div class="form-group">
-                                        <label for="email-id-icon">Nombre del archivo: (descargalo)</label>
-                                        <div class="position-relative has-icon-left">     
-                                            <a href="{{ url('/dashboard/download-file/'.$order->order_id) }}" class="form-control">Assets.zip</a>
-                                            <div class="form-control-position">
-                                                <i class="icon-form feather icon-download"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  
+                                </div> 
 
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group">
@@ -158,12 +146,22 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-12 col-sm-4">
+                                    <div class="form-group">
+                                        <label for="first-name-icon">Ciudad <span class="obligated">*</span></label>
+                                        <div class="position-relative has-icon-left">
+                                            <input type="text" class="form-control" name="city" id="city" value="{{ $order->city ?? old('$request->city') }}">
+                                            <div class="form-control-position">
+                                                <i class="icon-form feather icon-dollar-sign"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group">
                                         <label for="first-name-icon">Estado <span class="obligated">*</span></label>
                                         <div class="position-relative has-icon-left">
-                                            <input type="text" class="form-control" name="estado" id="estado" value="{{ $order->state ?? old('$request->estado') }}">
+                                            <input type="text" class="form-control" name="state" id="estado" value="{{ $order->state ?? old('$request->estado') }}">
                                             <div class="form-control-position">
                                                 <i class="icon-form feather icon-dollar-sign"></i>
                                             </div>
@@ -203,6 +201,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12 col-sm-4">
+                                    <div class="form-group">
+                                        <label for="email-id-icon">Nombre del archivo: (descargalo)</label>
+                                        <div class="position-relative has-icon-left">     
+                                            <a href="{{ url('/dashboard/download-file/'.$order->order_id) }}" class="form-control">Assets.zip</a>
+                                            <div class="form-control-position">
+                                                <i class="icon-form feather icon-download"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
                                 <div class="col-12 mt-2">
                                     <div class="form-group">
                                         <label for="contact-info-icon">Comentarios</label>
@@ -295,15 +304,14 @@
                                                     <label for="first-name-icon">Precio x pza. <span class="obligated">*</span></label>
                                                     <div class="position-relative has-icon-left">
                                                         <input type="text" class="form-control" name="price_x_unid" value="{{ old('$request->price_x_unid') ?? $order_x_product->price_x_unid }}">
-                                                        <input type="hidden" class="form-control" name="producto_id" value="{{ $order_x_product->product_id }}">
-                                                        <input type="hidden" class="form-control" name="order_id" value="{{ $order->order_id }}">
+                                                        <input type="hidden" class="form-control" name="product_id" value="{{ $order_x_product->product_id }}">
                                                         <div class="form-control-position">
                                                             <i class="icon-form feather icon-dollar-sign"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-4 mb-2">
+                                            <!--div class="col-12 col-sm-4 mb-2">
                                                 <div class="form-group">
                                                     <label for="first-name-icon">IVA %</label>
                                                     <div class="position-relative has-icon-left">
@@ -313,7 +321,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div-->
                                             <div class="col-12 mt-2">
                                                 <button type="submit" class="btn btn-primary mr-1 mb-1">Editar</button>
                                                 <a href="{{ url('/dashboard/delete-order-product/'. $order->order_id .'/' . $order_x_product->product_id) }}" class="btn btn-danger mr-1 mb-1">Eliminar</a>

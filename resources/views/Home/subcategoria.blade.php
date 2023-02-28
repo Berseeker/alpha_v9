@@ -81,7 +81,7 @@
                                 </a>
                                 <div class="product-footer row mr-0 ml-0">
                                     <div class="col-xs-12 col-sm-12 col-md-4 pd-0">
-                                        <a href="" class="btn pd-0 d-flex align-items-center justify-content-center bg-w br-r0"><i class="fa-solid fa-info"></i>Detalles</a>
+                                        <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="btn pd-0 d-flex align-items-center justify-content-center bg-w br-r0"><i class="fa-solid fa-info"></i>Detalles</a>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-8 pd-0">
                                         <button class="btn pd-0 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto->code }}"><i class="fa-solid fa-cart-plus"></i>Agregar al carrito</button>

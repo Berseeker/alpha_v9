@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\WEB\Home;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 use App\Events\OrderCreated;
+use App\Models\InvoiceOrder;
 use App\Models\OrderProduct;
 use App\Models\Shippment;
 use App\Models\Categoria;
@@ -143,7 +145,7 @@ class CotizacionController extends Controller
                 $order_x_product->order_id = $uuid;
                 $order_x_product->product_id = $product->id;
                 $order_x_product->name = $product->name;
-                $order_x_product->printing_area = $product->printing_area;
+                $order_x_product->printing_area = ($product->printing_area == null) ? 'Sin especificar' : $product->printing_area;
                 $order_x_product->pantone = $request->pantone[$key];
                 $order_x_product->num_ink = (int) $request->no_ink[$key];
                 $order_x_product->num_pzas = $request->noPzas[$key];
@@ -186,6 +188,14 @@ class CotizacionController extends Controller
         $shippment->details = NULL;
         $shippment->user_id = 1;
         $shippment->save();
+
+        $invoice = new InvoiceOrder();
+        $invoice->order_id = $order->order_id;
+        $invoice->payment_days = 1;
+        $invoice->deliver_days = 1;
+        $invoice->place = $order->state;
+        $invoice->user_id = 1;
+        $invoice->save();
 
         setcookie('carrito_cotizaciones', NULL);
 

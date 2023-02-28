@@ -49,6 +49,8 @@ Route::get('/dashboard/cotizaciones',[App\Http\Controllers\WEB\Dashboard\Cotizac
 Route::get('/dashboard/show-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'show'])->name('dashboard.cotizacion');
 Route::get('/dashboard/edit-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'edit'])->name('dashboard.edit.cotizacion');
 Route::post('/dashboard/edit-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'update'])->name('dashboard.update.cotizacion');
+Route::get('/dashboard/edit-cotizacion-invoice/{order_id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'editInvoice'])->name('dashboard.edit.cotizacion.invoice');
+Route::post('/dashboard/edit-cotizacion-invoice/{order_id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'updateInvoice'])->name('dashboard.update.cotizacion.invoice');
 Route::post('/dashboard/cotizacion/update-quick',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'updateQuick'])->name('dashboard.update_quick.cotizacion');
 Route::get('/dashboard/download-file/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'download'])->name('dashboard.download.file');
 Route::get('/dashboard/download-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'preview'])->name('dashboard.download.cotizacion');

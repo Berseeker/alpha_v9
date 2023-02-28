@@ -156,15 +156,19 @@ class IndexController extends Controller
         $productos_relacionados = Product::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
 
         $metodos_impresion = '';
+        $methods = json_decode($producto->printing_methods);
         $cont = 0;
-        foreach (json_decode($producto->printing_methods) as $item) {
-            if ($cont == 0) {
-                $metodos_impresion = $metodos_impresion . $item;
-            } else {
-                $metodos_impresion = $metodos_impresion . ',' . $item;
+        if ($methods != null) {
+            foreach ($methods as $item) {
+                if ($cont == 0) {
+                    $metodos_impresion = $metodos_impresion . $item;
+                } else {
+                    $metodos_impresion = $metodos_impresion . ',' . $item;
+                }
+                $cont++;
             }
-            $cont++;
         }
+        
 
         $colors = NULL;
         $cont_colors = count(json_decode($producto->colors));

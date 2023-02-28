@@ -24,18 +24,23 @@
                     @php
                         $cont = 0;
                     @endphp
-                    @foreach (json_decode($producto->images) as $img)
-                        @php
-                            if(!Str::contains($img,['https','http']))
-                            {
-                                $img = Storage::disk('doblevela_img')->url($img);
-                            }
-                        @endphp
-                        <div class="item" style="position: relative;"><img src="{{ $img }}" id="product{{ $cont }}" class="imgP" alt="{{ $producto->name }}"></div>
-                        @php
-                            $cont++;
-                        @endphp
-                    @endforeach
+                    @if ($producto->images != null)
+                        @foreach (json_decode($producto->images) as $img)
+                            @php
+                                if(!Str::contains($img,['https','http']))
+                                {
+                                    $img = Storage::disk('doblevela_img')->url($img);
+                                }
+                            @endphp
+                            <div class="item" style="position: relative;"><img src="{{ $img }}" id="product{{ $cont }}" class="imgP" alt="{{ $producto->name }}"></div>
+                            @php
+                                $cont++;
+                            @endphp
+                        @endforeach
+                    @else
+                        <div class="item" style="position: relative;"><img src="{{ asset('imgs/v3/productos/no_disp.png') }}" id="product{{ $cont }}" class="imgP" alt="{{ $producto->name }}"></div>
+                    @endif
+                    
                 </div>
             </div>
             <div class="d-md col-md-12 col-lg-3">
@@ -70,31 +75,43 @@
                         </ul>
                     @endif
                 </div> 
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 pd-0">
+                        <button class="btn pd-8 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto->code }}"><i class="fa-solid fa-cart-plus mr-10"></i>Agregar al carrito</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    <section class="row" id="features-row">
-        <div class="col-xs-12 col-sm-2 col-md-3 features">
-            <i class="fa-solid fa-handshake" style="color: #255992"></i>
-            <h4>Atencion Eficáz</h4>
-            <p>Atención personalizada, con asesorías para una inteligente selección, acorde a sus necesidades y presupuesto.</p>
-        </div>
-        <div class="col-xs-12 col-sm-2 col-md-3 features">
-            <i class="fa-solid fa-shield" style="color: green;"></i>
-            <h4>Experiencia</h4>
-            <p>Con más de 25 años en el mercado. Hemos amalgamado la experiencia con las innovaciones del mundo actual.</p>
-        </div>
-        <div class="col-xs-12 col-sm-2 col-md-3 features">
-            <i class="fa-solid fa-truck-ramp-box" style="color: brown"></i>
-            <h4>Flete Grátis</h4>
-            <p>A todo México en pedidos grandes.</p>
-        </div>
-        <div class="col-xs-12 col-sm-2 col-md-3 features">
-            <i class="fa-solid fa-trophy" style="color:#ffd700;"></i>
-            <h4>Confianza</h4>
-            <p>Más de 200 compañías ya han confiado en nuestra experiencia.</p>
-        </div>
-    </section>
+    
+    <div class="container">
+        <section class="row" id="features-row">
+            <div class="col-xs-12 col-sm-2 col-md-3 features">
+                <i class="fa-solid fa-handshake-simple alpha-color"></i>
+                <div id="counter">1</div>
+                <h4>Atencion Eficáz</h4>
+                <p>Atención personalizada, acorde a tus necesidades.</p>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-3 features">
+                <i class="fa-solid fa-money-bill-trend-up" style="color: green;"></i>
+                <div id="counter-years">1</div>
+                <h4>Experiencia</h4>
+                <p>Con más de 25 años en el mercado.</p>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-3 features">
+                <i class="fa-solid fa-truck alpha-color"></i>
+                <div id="counter-flete">1</div>
+                <h4>Flete Incluido</h4>
+                <p>Envíos a todo México sin pago extra.</p>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-3 features">
+                <i class="fa-solid fa-building" style="color: green;"></i>
+                <div id="counter-confianza">1</div>
+                <h4>Confianza</h4>
+                <p>Más de 500 compañías ya han confiado en nuestra experiencia.</p>
+            </div>
+        </section>
+    </div>
 
     <section style="margin-bottom: 30px;">
         <h4 style="text-align: center;margin-bottom:30px;margin-top:40px;">Productos relacionados</h4>
