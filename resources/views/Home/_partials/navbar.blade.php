@@ -35,7 +35,7 @@
             <ul class="navbar-nav" id="redes-sociales">
                 <li><a href="https://www.facebook.com/alphapromos.mx" target="_blank"><i class="fa-brands fa-facebook fb-color fs-30"></i></a></li>
                 <li><a href="https://www.instagram.com/alpha.promos.mx" target="_blank"><i class="fa-brands fa-instagram insta-color fs-30"></i></a></li>
-                <li><a href="" target="_blank"><i class="fa-brands fa-whatsapp whats-color fs-30"></i></a></li>
+                <li><a href="https://api.whatsapp.com/send?phone=529981098156" target="_blank"><i class="fa-brands fa-whatsapp whats-color fs-30"></i></a></li>
                 <li class="nav-item mr-40">
                     <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
