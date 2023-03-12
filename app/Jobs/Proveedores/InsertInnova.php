@@ -61,9 +61,18 @@ class InsertInnova implements ShouldQueue
         ];
 
         $response = $this->client->call('Pages', $params);
-        //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
         $response = json_decode($response, true);
-        dd($response);
+        if (isset($response['code']) && $response['code'] == '#10004') {
+            $log = new Logs();
+            $log->status = 'Error';
+            $log->message = $this->error['message'] . 'en Innova.';
+            $log->save();
+
+            Log::error($this->error['message'] . 'en Innova.');
+            exit();
+        }
+        //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
+        
         $api_ids = array();
 
         for ($i = 1; $i <= (int) $response['pages']; $i++ ) 

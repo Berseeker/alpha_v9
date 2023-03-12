@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 use App\Models\Subcategoria;
+use App\Models\Newsletter;
 use App\Models\Categoria;
 use App\Models\Producto;
 use App\Models\Product;
@@ -288,4 +289,23 @@ class IndexController extends Controller
         ]);
     }
 
+    public function newsletter(Request $request) {
+
+        $prev = Newsletter::where('email', $request->news_email)->first();
+        if ($prev != null) {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'El email ya se encuentra registrado.'
+            ]);
+        }
+
+        $newsletter = new Newsletter();
+        $newsletter->email = $request->news_email;
+        $newsletter->save();
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'El email se agrego correctamente.'
+        ]);
+    }
 }

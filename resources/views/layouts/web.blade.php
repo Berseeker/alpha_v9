@@ -112,8 +112,6 @@
     });
 
     $( "#newsletter" ).submit(function( event ) {
-      console.log('acepto');
-      console.log($("#news-email").val().length);
       event.preventDefault();
       if( $("#news-email").val().length == 0 )
       {
@@ -122,7 +120,6 @@
           $("#email-news-error").addClass('warning-visible');
           $("#errorMessageEmail").text('');
           $("#errorMessageEmail").text('Es necesario ingresar un email');
-          console.log('here');
         }
         
       } else {
@@ -131,8 +128,29 @@
           $("#email-news-error").addClass('warning-not');
         }
         // AJAX
+        $.ajax({
+            type: $( "#newsletter" ).attr('method'),
+            url: $( "#newsletter" ).attr('action'),
+            data: $( "#newsletter" ).serialize(),
+            success: function (data) {
+              if (data.status == 'error') {
+                $("#email-news-error").removeClass('warning-not');
+                $("#email-news-error").addClass('warning-visible');
+                $("#errorMessageEmail").text('');
+                $("#errorMessageEmail").text(data.msg);
+              } else {
+                $("#email-news-success").removeClass('success-not');
+                $("#email-news-success").addClass('success-visible');
+                $("#successMessageEmail").text('');
+                $("#successMessageEmail").text(data.msg);
+              }
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
       }
-
     });
  
   });

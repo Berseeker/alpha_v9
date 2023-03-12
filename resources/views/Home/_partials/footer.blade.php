@@ -3,13 +3,18 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-3">
                 <h4>Newsletter</h4>
-                <form action="" id="newsletter">
+                <form action="{{ route('home.newsletter') }}" method="POST" id="newsletter">
+                    @csrf
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
-                        <input type="email" id="news-email" name="news-email" class="form-control" placeholder="Correo electrónico">
+                        <input type="email" id="news-email" name="news_email" class="form-control" placeholder="Correo electrónico">
                         <p id="email-news-error" class="warning-not">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                             <span id="errorMessageEmail"></span>
+                        </p>
+                        <p id="email-news-success" class="success-not">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span id="successMessageEmail"></span>
                         </p>
                     </div>
                     <button type="submit" class="btn btn-alpha">Suscríbete</button>

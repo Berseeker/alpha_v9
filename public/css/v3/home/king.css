@@ -99,7 +99,12 @@
     color: red;
 }
 
-.warning-not {
+.success-visible {
+    display: block;
+    color: green;
+}
+
+.warning-not, .success-not {
     display: none;
 }
 
@@ -348,7 +353,7 @@
 
 /* FOOTER STYLES */
 
-#email-news-error {
+#email-news-error, #email-news-success {
     margin-bottom: 0px;
     margin-top: 10px;
     width: 100%;
