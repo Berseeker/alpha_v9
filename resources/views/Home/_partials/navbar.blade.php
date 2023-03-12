@@ -14,10 +14,10 @@
                     <a class="nav-link" id="categoria-nav" href="#">CATEGORIAS <i class="fa-solid fa-caret-down"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">SERVICIOS</a>
+                    <a class="nav-link" href="{{ route('home.servicios') }}">SERVICIOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">DISPLAYS</a>
+                    <a class="nav-link" href="{{ route('home.displays') }}">DISPLAYS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link">LINEA ALPHA</a>
@@ -84,7 +84,7 @@
                             </button>
                             <ul class="dropdown-menu" style="padding: 8px;">
                                 @foreach ($categoria->customSubcategory as $subcategory)
-                                    <a href="{{ url('/subcategoria/' . Str::slug($subcategory->nombre, '-')) }}" class="link-catalogo" data="{{ Str::slug($subcategory->nombre, '_') }}" > {{ $subcategory->nombre }} </a>
+                                    <a href="{{ url('/subcategoria/' . Str::slug($subcategory->nombre, '-')) }}" class="link-catalogo" data="/imgs/v3/menu_navbar/{{ $subcategory->imgs }}" > {{ $subcategory->nombre }} </a>
                                 @endforeach
                                 <a href="{{ url('/categoria/' . Str::slug($categoria->nombre, '-')) }}" class='link-catalogo' data="textil"> Ver más</a>
                             </ul>

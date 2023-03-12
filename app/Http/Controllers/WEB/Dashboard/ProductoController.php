@@ -5,10 +5,12 @@ namespace App\Http\Controllers\WEB\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Categoria;
+use App\Models\Subcategoria;
 use App\Models\OrderProduct;
 
 class ProductoController extends Controller
@@ -103,26 +105,102 @@ class ProductoController extends Controller
 
     public function store( Request $request)
     {
-        $product = Product::find($request->addProductId); 
-        $order = Order::find($request->addOrderId);
+        $rules = [
+            'name' => 'required',
+            'code' => 'required',
+            'colors' => 'required',
+            'details' => 'required',
+            'printing_area' => 'required',
+            'printing_methods' => 'required',
+            'categoria' => 'required',
+            'subcategoria' => 'required',
+            'box_pieces' => 'required',
+            'material' => 'required',
+            'provider' => 'required'
+        ];
 
-        $order_x_product = new OrderProduct();
-        $order_x_product->order_id = $order->order_id;
-        $order_x_product->product_id = $product->id;
-        $order_x_product->name = $product->name;
-        $order_x_product->name = $product->name;
-        $order_x_product->printing_area = 'Sin definir';
-        $order_x_product->pantone = $request->addPantone;
-        $order_x_product->typography = $request->addTypography;
-        $order_x_product->num_ink = (int) $request->addNoInk;
-        $order_x_product->num_pzas = (int) $request->addNoPzas;
-        $order_x_product->price_x_unid = (double) $request->addCostUnit;
-        $order_x_product->printing_method = $request->addPrintingMethod;
-        $order_x_product->provider = $product->proveedor;
-        $order_x_product->save();
+        $messages = [
+            'name.required' => 'Es necesario indicar el nombre de tu producto',
+            'code.required' => 'Es necesario agregar un identificador unico',
+            'colors.required' => 'Es necesario indicar los colores disponibles del producto',
+            'details.required' => 'Es necesario indicar una descripcion para el producto',
+            'printing_area' => 'Es necesario indicar el area de impresion que se tiene del producto',
+            'categoria.required' => 'Es necesario indicar la categoria a la que pertenece el producto',
+            'subcategoria.required' => 'Es necesario indicar la subcategoria a la que pertenece el producto',
+            'box_pieces.required' => 'Es necesario indicar el numero de piezas que puede llevar una caja para shipping',
+            'material.required' => 'Es necesario indicar el material del cual esta hecho el producto',
+            'provider.required' => 'Es necesario indicar el proveedor al cual pertence el producto' 
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->code = $request->code;
+        $product->parent_code = $request->code . '_parent';
+        $product->proveedor = trim($request->proveedor);
+        $product->discount = 0;
+        // Colors process
+        $request_colors = explode(',',$request->colors);
+        $colors = [];
+        //We clean the array: whitespaces/empty values
+        foreach ($request_colors as $color) {
+            if ($color != '')
+                array_push($colors, trim($color));
+        }
+        $product->colors = json_encode($colors);
+        $product->details = trim($request->details);
+        $product->printing_area = trim($request->printing_area);
+        // Printing methods process
+        $request_printing_methods = explode(',', $request->printing_methods);
+        $printing_methods = [];
+        // We clean the array: whitespaces/empty values
+        foreach ($request_printing_methods as $method) {
+            if ($method != '')
+                array_push($printing_methods, trim($method));
+        }
+        $product->printing_methods = json_encode($printing_methods);
+        // Category and Subcategory process
+        $subcategoria = Subcategoria::find((int) $request->subcategoria);
+        if ($subcategoria != null) {
+            $product->subcategory = $subcategoria->nombre;
+            $product->subcategoria_id = $subcategoria->id;
+            $product->category = $subcategoria->categoria->nombre;
+            $product->categoria_id = $subcategoria->categoria->id;
+        } else {
+            $product->subcategory = 'VARIOS';
+            $product->subcategoria_id = 93;
+            $product->category = 'ARTICULOS DE HOTELERÍA';
+            $product->categoria_id = 20;
+        }
+
+        $product->box_pieces = $request->box_pieces;
+        //Images process
+        //Check if the request has files on it
+        $imgs = [];
+        if ($request->hasFile('images')) {
+            foreach($request->images as $img)
+            {
+                $path = $img->path();
+                $extension = $img->extension();
+                $slug = Str::slug($product->name . ' ' . $product->proveedor, '_');
+                $nameImg = $slug . '.' . $extension;
+
+                if (!Storage::disk('doblevela_img')->exists($nameImg)) 
+                {
+                    Storage::disk('doblevela_img')->put($nameImg,$img);
+                    array_push($imgs,$imageName);
+                }
+            }
+        }
+        $product->images = json_encode((empty($imgs)) ? null : $imgs);
+        $product->material = trim($request->material);
+        $product->custom = true;
+        $product->search = $product->category . ', ' .$product->subcategory . ', ' . Str::upper(trim($product->name));
+        $product->meta_keywords = $product->search;
+        $product->save();
+
 
         return back()->with('success',"Producto agregado a la Cotización");
-        
-
     }
 }

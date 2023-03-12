@@ -41,7 +41,8 @@ Route::get('/dashboard/productos', [App\Http\Controllers\WEB\Dashboard\ProductoC
 Route::get('/dashboard/delete-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'delete'])->name('dashboard.delete.producto');
 Route::get('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'edit'])->name('dashboard.edit.producto');
 Route::post('/dashboard/edit-product/{id}', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'update'])->name('dashboard.update.producto');
-Route::post('/dashboard/add-product', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'store'])->name('dashboard.store.producto');
+Route::get('/dashboard/store-product', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'create'])->name('dashboard.add.producto');
+Route::post('/dashboard/store-product', [App\Http\Controllers\WEB\Dashboard\ProductoController::class, 'store'])->name('dashboard.store.producto');
 
 
 
@@ -57,6 +58,7 @@ Route::get('/dashboard/download-cotizacion/{id}',[App\Http\Controllers\WEB\Dashb
 Route::get('/dashboard/print-cotizacion/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'invoice_print'])->name('dashboard.print.cotizacion');
 Route::get('/dashboard/order-invoice/{id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'invoice'])->name('dashboard.order.invoice');
 Route::get('/dashboard/delete-order-product/{order_id}/{product_id}',[App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'deleteOrderProduct']);
+Route::post('/dashboard/update-cotizacion-add-product', [App\Http\Controllers\WEB\Dashboard\CotizacionController::class, 'addProduct'])->name('dashboard.add.producto');
 
 
 Route::get('/dashboard/ventas',[App\Http\Controllers\WEB\Dashboard\VentaController::class, 'index'])->name('dashboard.ventas');

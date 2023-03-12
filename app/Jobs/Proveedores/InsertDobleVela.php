@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
+use App\Events\ProviderUpdated;
 use App\Models\Product;
 use App\Models\Logs;
 use SoapClient;
@@ -76,6 +77,7 @@ class InsertDobleVela implements ShouldQueue
         Log::info('Se agregaron '.$msg.' de DobleVela');
 
         Product::where('proveedor','DobleVela')->whereNotIn('code', $api_ids)->delete();
+        ProviderUpdated::dispatch('DobleVela');
     }
 
     private function insertProduct($producto, &$cont_new_products){

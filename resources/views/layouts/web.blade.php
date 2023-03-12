@@ -99,7 +99,7 @@
     $( ".link-catalogo" ).hover(
       function() {
         console.log($(this).attr('data'));
-        $("#img-menu").append( $( "<img src='/imgs/v3/menu_navbar/" + $(this).attr('data') + ".jpeg' />" ) );
+        $("#img-menu").append( $( "<img src='" + $(this).attr('data') + "' />" ) );
       }, function() {
         $("#img-menu").find( "img" ).last().remove();
       }

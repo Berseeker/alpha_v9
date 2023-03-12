@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Client\RequestException;
 
+use App\Events\ProviderUpdated;
 use App\Models\Product;
 use App\Models\Logs;
 
@@ -89,6 +90,7 @@ class InsertForPromotional implements ShouldQueue
         Log::info('Se agregaron '.$msg.' de ForPromotional');
 
         Product::where('proveedor','ForPromotional')->whereNotIn('parent_code', $api_ids)->delete();
+        ProviderUpdated::dispatch('ForPromotional');
     }
 
     private function insertProduct($item, &$cont_new_products) {

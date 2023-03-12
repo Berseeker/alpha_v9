@@ -1,19 +1,12 @@
-{{-- {!! Helper::applClasses() !!} --}}
-@php
-$configData = Helper::applClasses();
-@endphp
-
-@extends('layouts/home' )
+@extends('layouts/web' )
 
 @section('title', 'Alpha Displays')
 
-@section('vendor-style')
+@section('page-styles')
 
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home/fancy_box.css') }}" />
     <!-- 1. Add latest jQuery and fancybox files -->
-
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 	<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
@@ -51,9 +44,10 @@ $configData = Helper::applClasses();
 @endsection
 
 @section('content')
+<div class="container">
 
-	<div class="display-header" style="margin-top: 100px;">
-		<h2 style="text-align: center;margin-top:30px;margin-bottom:30px;">Alpha Displays</h2>
+	<div class="display-header" style="margin-top: 50px;">
+		<h2 style="text-align: center;margin-top:30px;margin-bottom:30px;">Displays</h2>
 		<p>Ponemos a tus órdenes nuestro servicio de diseño y armado de stands para tus expos, convenciones o eventos sociales con personal calificado y precios 
 			accesibles, solicita cotización.</p>
 	</div>
@@ -117,7 +111,7 @@ $configData = Helper::applClasses();
 
 	</div>
 
-                   
+</div>               
 
 @endsection
 

@@ -289,26 +289,9 @@ class IndexController extends Controller
           'bodyClass' => 'ecommerce-application',
         ];
 
-        SEOMeta::setTitle('Servicios');
-        SEOMeta::setDescription('Tipos de servicios disponibles para los clientes');
-        SEOMeta::setCanonical('https://alphapromos.mx/');
-
-        OpenGraph::setDescription('Tipos de servicios disponibles para los clientes');
-        OpenGraph::setTitle('Servicios');
-        OpenGraph::setUrl('https://alphapromos.mx/');
-        OpenGraph::addProperty('type', 'servicios');
-
-        Twitter::setTitle('Servicios');
-        Twitter::setSite('@alphapromos');
-
-        JsonLd::setTitle('Servicios');
-        JsonLd::setDescription('Tipos de servicios disponibles para los clientes');
-        //JsonLd::addImage('https://laravelcode.com/frontTheme/img/logo.png');
-
         return view('Home.servicios',[
             'pageConfigs' => $pageConfigs,
             'categorias' => $categorias,
-            'cont' => 1
         ]);
     }
 

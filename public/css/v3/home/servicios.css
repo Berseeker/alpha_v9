@@ -1,0 +1,20 @@
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.metodo_impresion {
+    width: 400px;
+    display: block;
+    margin: 0 auto;
+    height: 250px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.metodo_impresion_text {
+    text-align: center;
+    margin-top: 10px;
+}

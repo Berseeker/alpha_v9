@@ -1,7 +1,7 @@
 @extends('layouts.web')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/v3/home/welcome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/v3/home/home_page.css') }}">
     <script src="{{ asset('js/v3/easing/jquery_easing.js') }}"></script>
     <script src="{{ asset('js/v3/counter/counter.js') }}"></script>
 @endsection
@@ -12,18 +12,34 @@
 
 
     <div class="container">
-        <section class="row" id="catalogos">
+        <section class="row catalogos-home">
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
-                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/botellas.jpeg') }}')">
-                    <h2>Botellas y Bidones</h2>
+                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/termos.png') }}')">
+                    <h2>Termos Metálicos</h2>
                     <p>La mejor selección de botellas y bidones.</p>
                     <p class="mb-30">Personalizados con el logotipo de tu empresa</p>
                     <button class="btn-catalogo">Ver más</button>
                 </div>  
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
-                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/novedades.jpeg') }}')">
+                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/novedades.png') }}')">
                     <h2>Novedades</h2>
+                    <p>Consulta todas las novedades en Merchandising y</p>
+                    <p class="mb-30">Artículos Promocionales para este 2023.</p>
+                    <button class="btn-catalogo">Ver más</button>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
+                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/sublimacion.png') }}')">
+                    <h2>Sublimación</h2>
+                    <p>La mejor selección de botellas y bidones.</p>
+                    <p class="mb-30">Personalizados con el logotipo de tu empresa</p>
+                    <button class="btn-catalogo">Ver más</button>
+                </div>  
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
+                <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/tecnology.png') }}')">
+                    <h2>Tecnología</h2>
                     <p>Consulta todas las novedades en Merchandising y</p>
                     <p class="mb-30">Artículos Promocionales para este 2023.</p>
                     <button class="btn-catalogo">Ver más</button>

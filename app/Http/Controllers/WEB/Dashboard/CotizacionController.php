@@ -503,6 +503,31 @@ class CotizacionController extends Controller
         // And return invoice itself to browser or have a different view
         return $invoice->stream();
     }
+
+    public function addProduct( Request $request)
+    {
+        $product = Product::find($request->addProductId); 
+        $order = Order::find($request->addOrderId);
+
+        $order_x_product = new OrderProduct();
+        $order_x_product->order_id = $order->order_id;
+        $order_x_product->product_id = $product->id;
+        $order_x_product->name = $product->name;
+        $order_x_product->name = $product->name;
+        $order_x_product->printing_area = 'Sin definir';
+        $order_x_product->pantone = $request->addPantone;
+        $order_x_product->typography = $request->addTypography;
+        $order_x_product->num_ink = (int) $request->addNoInk;
+        $order_x_product->num_pzas = (int) $request->addNoPzas;
+        $order_x_product->price_x_unid = (double) $request->addCostUnit;
+        $order_x_product->printing_method = $request->addPrintingMethod;
+        $order_x_product->provider = $product->proveedor;
+        $order_x_product->save();
+
+        return back()->with('success',"Producto agregado a la Cotización");
+        
+
+    }
 }
 
 function invertDate($date_db){

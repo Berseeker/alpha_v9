@@ -95,11 +95,11 @@
   <div class="card">
     <div class="card-body border-bottom">
       <h4 class="card-title">Lista de Productos & Filtros</h4>
-      <!--div class="row">
-        <div class="col-md-4 user_role"></div>
-        <div class="col-md-4 user_plan"></div>
-        <div class="col-md-4 user_status"></div>
-      </div-->
+      <div class="row">
+        <div class="col-md-4">
+          <a href="{{ route('dashboard.add.producto') }}">+ Agregar Producto</a>
+        </div>
+      </div>
     </div>
     <div class="card-datatable table-responsive pt-0">
       <table class="user-list-table table">
