@@ -24,11 +24,11 @@
             <div class="col-xs-12 col-sm-12 col-md-3">
                 <h4>Destacados</h4>
                 <ul id="destacados">
-                    <li><a href="">Ecológicos</a></li>
-                    <li><a href="">Textil</a></li>
-                    <li><a href="">Tecnología</a></li>
-                    <li><a href="">Sublimación</a></li>
-                    <li><a href="">Oficina</a></li>
+                    <li><a href="{{ url('/categoria/ecologicos') }}">Ecológicos</a></li>
+                    <li><a href="{{ url('/categoria/textil') }}">Textil</a></li>
+                    <li><a href="{{ url('/categoria/tecnologia') }}">Tecnología</a></li>
+                    <li><a href="{{ url('/categoria/sublimacion') }}">Sublimación</a></li>
+                    <li><a href="{{ url('/categoria/oficina') }}">Oficina</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-3">
