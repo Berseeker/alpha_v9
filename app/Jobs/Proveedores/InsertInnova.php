@@ -63,6 +63,7 @@ class InsertInnova implements ShouldQueue
         $response = $this->client->call('Pages', $params);
         //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
         $response = json_decode($response, true);
+        dd($response);
         $api_ids = array();
 
         for ($i = 1; $i <= (int) $response['pages']; $i++ ) 
