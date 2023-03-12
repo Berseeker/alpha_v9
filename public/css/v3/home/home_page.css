@@ -144,22 +144,34 @@
 }
 
 .bg-one {
-  background-image: url(https://media.timeout.com/images/101602611/image.jpg);
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/boligrafos.png);
 }
 .bg-two {
-  background-image: url(http://s1.it.atcdn.net/wp-content/uploads/2015/08/2-London.jpg);
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/ecologicos.png);
 }
 .bg-three {
-  background-image: url(https://media.timeout.com/images/101484105/image.jpg);
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/herramientas.png);
 }
 .bg-four {
-  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Hollywood_Sign.jpg/1280px-Hollywood_Sign.jpg);
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/hogar.png);
 }
 .bg-five {
-  background-image: url(http://www.travelandleisure.com/sites/default/files/styles/tnl_redesign_article_landing_page/public/1453920892/DUBAI-554088081-ABOVE0116.jpg?itok=dcoZnCrc);
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/oficina.png);
 }
 .bg-six {
-  background-image: url(http://blog.whitepages.com/wp-content/uploads/2015/04/san-franc.jpg);
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/paraguas.png);
+}
+.bg-seven {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/salud.png);
+}
+.bg-eight {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/tecnologia.png);
+}
+.bg-nine {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/textil.png);
+}
+.bg-ten {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/viaje.png);
 }
 
 #categorias-destacadas h3,

@@ -1,7 +1,5 @@
 @extends('layouts/web')
 
-@section('title', 'Cotizacion')
-
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/v3/home/cart_.css') }}">
     <link rel="stylesheet" href="{{ asset('css/v3/intel-input/intlTelInput.css') }}">

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,10 @@ Route::post('/dashboard/update-cotizacion-add-product', [App\Http\Controllers\WE
 
 
 Route::get('/dashboard/ventas',[App\Http\Controllers\WEB\Dashboard\VentaController::class, 'index'])->name('dashboard.ventas');
+
+Route::get('/test-command', function () {
+    $exitCode = Artisan::call('provider:forpromotional');
+});
 
 
 

@@ -70,6 +70,12 @@ class IndexController extends Controller
             if(count($productos) == 0)
                 $flag=0;
         }
+
+        
+        $categoria->seo->update([
+            'title' => 'AlphaPromos - ' . $categoria->nombre,
+            'description' => 'Categoria ' . $categoria->nombre,
+        ]);
            
         return view('Home.categoria',[
             'categoria' => $categoria,
@@ -234,24 +240,11 @@ class IndexController extends Controller
 
     public function contacto(Request $request)
     {
-        $pageConfigs = [
-            'pageClass' => 'ecommerce-application',
-        ];
-
-        $breadcrumbs = [
-            ['link' => "/", 'name' => "Inicio"], ['name' => "Mandanos un mensaje"]
-        ];
-
         $categorias = Categoria::all();
 
-        
         return view('Home.contacto', [
-            'pageConfigs' => $pageConfigs,
-            'breadcrumbs' => $breadcrumbs,
             'categorias' => $categorias
-        ]);
-       
-        
+        ]);  
     }
 
     public function sendMessage(Request $request)

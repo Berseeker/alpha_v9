@@ -23,6 +23,7 @@ class ProductoController extends Controller
         $forpromo = DB::table('products')->where('proveedor','Forpromotional')->where('deleted_at',null)->count();
 
         $pageConfigs = ['pageHeader' => false];
+
         return view('dashboard.productos.index',[
             'pageConfigs' => $pageConfigs,
             'innova' => $innova,

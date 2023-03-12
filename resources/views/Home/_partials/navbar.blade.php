@@ -20,7 +20,7 @@
                     <a class="nav-link" href="{{ route('home.displays') }}">DISPLAYS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">LINEA ALPHA</a>
+                    <a class="nav-link" href="{{ route('home.contacto') }}">CONTACTO</a>
                 </li>
                 <li class="nav-item custom-li">
                     <div class="input-group">

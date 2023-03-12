@@ -101,32 +101,32 @@
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/oficina') }}" class="d-flex align-items-end child bg-three">
+                <a href="{{ url('/categoria/oficina') }}" class="d-flex align-items-end child bg-five">
                     <p>Oficína</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/tecnologia') }}" class="d-flex align-items-end child bg-one">
+                <a href="{{ url('/categoria/tecnologia') }}" class="d-flex align-items-end child bg-six">
                     <p>Tecnología</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/boligrafos') }}" class="d-flex align-items-end child bg-two">
+                <a href="{{ url('/categoria/boligrafos') }}" class="d-flex align-items-end child bg-seven">
                     <p>Bolígrafos</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/relojes') }}" class="d-flex align-items-end child bg-three">
+                <a href="{{ url('/categoria/relojes') }}" class="d-flex align-items-end child bg-eight">
                     <p>Relojes</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/hogar') }}" class="d-flex align-items-end child bg-four">
+                <a href="{{ url('/categoria/hogar') }}" class="d-flex align-items-end child bg-nine">
                     <p>Hogar</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/oficina') }}" class="d-flex align-items-end child bg-three">
+                <a href="{{ url('/categoria/oficina') }}" class="d-flex align-items-end child bg-ten">
                     <p>Oficína</p>
                 </a>
             </div>
@@ -158,6 +158,10 @@
 $(document).ready(function (){
 
     $('.home-slider').owlCarousel({
+        loop:true,
+        responsiveClass:true,
+        autoplay:true,
+        autoplayTimeout:4000,
         items:1,
     });
 
