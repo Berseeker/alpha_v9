@@ -18,7 +18,7 @@
                     <h2>Termos</h2>
                     <p>La mejor selección de termos.</p>
                     <p class="mb-30">Personalizados con el logotipo de tu empresa</p>
-                    <button class="btn-catalogo">Ver más</button>
+                    <a href="{{ url('/subcategoria/termo-metalico') }}" style="text-decoration: none;" class="btn-catalogo">Ver más</a>
                 </div>  
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
@@ -26,7 +26,7 @@
                     <h2>Novedades</h2>
                     <p>Consulta todas las novedades</p>
                     <p class="mb-30">Artículos Promocionales para este 2023.</p>
-                    <button class="btn-catalogo">Ver más</button>
+                    <a href="{{ url('/') }}" class="btn-catalogo">Ver más</a>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
@@ -34,7 +34,7 @@
                     <h2>Sublimación</h2>
                     <p>La mejor selección de articulos.</p>
                     <p class="mb-30">Personalizados con el logotipo de tu empresa</p>
-                    <button class="btn-catalogo">Ver más</button>
+                    <a href="{{ url('/categoria/sublimacion') }}" class="btn-catalogo">Ver más</a>
                 </div>  
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
@@ -42,7 +42,7 @@
                     <h2>Tecnología</h2>
                     <p>Descubre lo mejor para ti.</p>
                     <p class="mb-30">Artículos Promocionales para este 2023.</p>
-                    <button class="btn-catalogo">Ver más</button>
+                    <a href="{{ url('/categoria/tecnologia') }}" class="btn-catalogo">Ver más</a>
                 </div>
             </div>
         </section>
@@ -81,17 +81,17 @@
         <section id="categorias-destacadas">
             <h3>Categorias destacadas</h3>
             <div class="parent">
-                <a href="{{ url('/categoria/tecnologia') }}" class="d-flex align-items-end child bg-one">
+                <a href="{{ url('/categoria/boligrafos') }}" class="d-flex align-items-end child bg-one">
                     <p>Bolígrafos</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/boligrafos') }}" class="d-flex align-items-end child bg-two">
+                <a href="{{ url('/categoria/ecologicos') }}" class="d-flex align-items-end child bg-two">
                     <p>Ecológicos</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/relojes') }}" class="d-flex align-items-end child bg-three">
+                <a href="{{ url('/categoria/herramientas') }}" class="d-flex align-items-end child bg-three">
                     <p>Herramientas</p>
                 </a>
             </div>
@@ -106,27 +106,27 @@
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/tecnologia') }}" class="d-flex align-items-end child bg-six">
+                <a href="{{ url('/categoria/paraguas') }}" class="d-flex align-items-end child bg-six">
                     <p>Paraguas</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/boligrafos') }}" class="d-flex align-items-end child bg-seven">
+                <a href="{{ url('/categoria/salud-y-cuidado-personal') }}" class="d-flex align-items-end child bg-seven">
                     <p>Salud</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/relojes') }}" class="d-flex align-items-end child bg-eight">
+                <a href="{{ url('/categoria/tecnologia') }}" class="d-flex align-items-end child bg-eight">
                     <p>Tecnología</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/hogar') }}" class="d-flex align-items-end child bg-nine">
+                <a href="{{ url('/categoria/textil') }}" class="d-flex align-items-end child bg-nine">
                     <p>Textil</p>
                 </a>
             </div>
             <div class="parent">
-                <a href="{{ url('/categoria/oficina') }}" class="d-flex align-items-end child bg-ten">
+                <a href="{{ url('/categoria/viaje') }}" class="d-flex align-items-end child bg-ten">
                     <p>Viaje</p>
                 </a>
             </div>
