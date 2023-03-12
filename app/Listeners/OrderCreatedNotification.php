@@ -31,8 +31,8 @@ class OrderCreatedNotification implements ShouldQueue
      */
     public function handle(OrderCreated $event)
     {
-        //->cc(['alphapromos.rsociales@gmail.com','ventas@alphapromos.mx'])
         Mail::to('juan_alucard@hotmail.com')
+            ->cc(['alphapromos.rsociales@gmail.com','ventas@alphapromos.mx'])
             ->send(new OrderCreatedMail($event->order));
     }
 
