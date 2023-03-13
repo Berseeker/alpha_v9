@@ -40,6 +40,8 @@ class Product extends Model
                     if(!Str::contains($img[0],['https','http']))
                     {
                         $img = Storage::disk('doblevela_img')->url($img[0]);
+                    } else {
+                        $img = $img[0];
                     }
                 } else {
                     $img = asset('imgs/v3/productos/no_disp.png');
