@@ -56,13 +56,12 @@ class InsertInnova implements ShouldQueue
 
         $params = [
             'user_api' => 'Pu7P5Qy602ea9d959f19Byo7',
-            'api_key' => '76o602ea9d959f1f4awL8R',
+            'api_key' => '76o602ea9d959f1f4awL8R-AzIa',
             'format' => 'JSON'
         ];
 
         $response = $this->client->call('Pages', $params);
         $response = json_decode($response, true);
-        dd($response);
         if (isset($response['code']) && $response['code'] == '#10004') {
             $log = new Logs();
             $log->status = 'Error';
@@ -73,7 +72,7 @@ class InsertInnova implements ShouldQueue
             exit();
         }
         //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
-        
+        dd($response);
         $api_ids = array();
 
         for ($i = 1; $i <= (int) $response['pages']; $i++ ) 
