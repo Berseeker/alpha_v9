@@ -23,7 +23,7 @@ return [
      * to the root domain and not relative to the current URL. The `spatie/laravel-sitemap` package
      * is a great package to generate sitemaps for your application.
      */
-    'sitemap' => null,
+    'sitemap' => '/sitemap.xml',
 
     /**
      * Use this setting to specify whether you want self-referencing `<link rel="canonical" href="$url">` tags to
@@ -59,7 +59,7 @@ return [
      *
      * You can use the following filetypes: ico, png, gif, jpeg, svg.
      */
-    'favicon' => null,
+    'favicon' => '/imgs/v3/logos/logo_alpha.png',
 
     'title' => [
         /**
@@ -100,7 +100,7 @@ return [
          * don't have an image set via an associated ->seo model or via the ->getDynamicSEOData() method.
          * This should be a path to an image. The url to the path is generated using the `secure_url()` function (`secure_url($yourProvidedPath)`).
          */
-        'fallback' => null,
+        'fallback' => 'imgs/v3/logos/logo_alpha.png',
     ],
 
     'author' => [
@@ -108,7 +108,7 @@ return [
          * Use this setting to specify a fallback author, which will be used on places where you
          * don't have an author set via an associated ->seo model or via the ->getDynamicSEOData() method.
          */
-        'fallback' => null,
+        'fallback' => 'AlphaPromos',
     ],
 
     'twitter' => [
