@@ -135,16 +135,34 @@
 
     <div class="container" style="overflow: hidden;">
         <section id="clientes">
-            <h3>Clientes que confiaron en nosotros</h3>
+            <h3>Clientes que confían en nosotros</h3>
             <div class="owl-carousel owl-theme clientes-slider">
                 <!-- Slides -->
+                <!--div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/banyan_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/breathless_logo.jpeg') }}" class="clientes-img" style="width: 400px !important;" alt=""> </div-->
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/grand_vela_cabos.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/grand_vela_riviera.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/grupo_anderson.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/grupo_xcaret.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/hardrock_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/hilton_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/karisma_hotels.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/kavia_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/lagunamar_westin.webp') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/nickelodeon_logo.svg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/ocean_logo.svg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/palladium_hotel.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/krystal_cancun.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/marriot_logo.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/oasis_logo.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/palace_resort_logo.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/paradisus_logo.jpeg') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/park_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/park_royal_cancun.webp') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/park_royal_hotels.jpeg') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/presidente_logo.svg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/presidente_cozumel_hotel.svg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/rdc_hotel.webp') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/royalton_logo.png') }}" class="clientes-img" alt=""> </div>
             </div>
         </section>

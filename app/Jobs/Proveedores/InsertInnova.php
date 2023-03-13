@@ -146,7 +146,7 @@ class InsertInnova implements ShouldQueue
         $item->medida_producto_alto = $producto['medidas_producto'];
         $item->printing_area = $producto['area_impresion'];
         $printing_methods = array();
-        foreach ($product['tecnicas_impresion'] as $printing) {
+        foreach ($producto['tecnicas_impresion'] as $printing) {
             array_push($printing_methods, $printing['codigo']);
         }
         $item->printing_methods = json_encode($printing_methods);
@@ -949,7 +949,7 @@ class InsertInnova implements ShouldQueue
         $item->medida_producto_alto = $producto['medidas_producto'];
         $item->printing_area = $producto['area_impresion'];
         $printing_methods = array();
-        foreach ($product['tecnicas_impresion'] as $printing) {
+        foreach ($producto['tecnicas_impresion'] as $printing) {
             array_push($printing_methods, $printing['codigo']);
         }
         $item->printing_methods = json_encode($printing_methods);
