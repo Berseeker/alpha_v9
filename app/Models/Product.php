@@ -65,10 +65,15 @@ class Product extends Model
         $img = asset('imgs/v3/productos/no_disp.png');
         if($this->images != null)
         {
-            $img = json_decode($this->images)[0];
-            if(!Str::contains($img,['https','http']))
-            {
-                $img = Storage::disk('doblevela_img')->url($img);
+            $img = json_decode($this->images);
+            if (empty($img)) {
+                $img = asset('imgs/v3/productos/no_disp.png');
+            } else {
+
+                if(!Str::contains($img[0],['https','http']))
+                {
+                    $img = Storage::disk('doblevela_img')->url($img[0]);
+                }
             }
         }
         $array['img'] = $img;
