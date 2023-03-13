@@ -59,7 +59,7 @@ return [
      *
      * You can use the following filetypes: ico, png, gif, jpeg, svg.
      */
-    'favicon' => '/imgs/v3/logos/logo_alpha.png',
+    'favicon' => '/imgs/v3/logos/alpha_icon.png',
 
     'title' => [
         /**
@@ -100,7 +100,7 @@ return [
          * don't have an image set via an associated ->seo model or via the ->getDynamicSEOData() method.
          * This should be a path to an image. The url to the path is generated using the `secure_url()` function (`secure_url($yourProvidedPath)`).
          */
-        'fallback' => 'imgs/v3/logos/logo_alpha.png',
+        'fallback' => '/imgs/v3/logos/alpha_icon.png',
     ],
 
     'author' => [

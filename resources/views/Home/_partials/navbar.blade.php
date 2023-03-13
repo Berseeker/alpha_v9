@@ -13,14 +13,25 @@
                     <a class="nav-link" id="categoria-nav-mob" href="#">CATEGORIAS <i class="fa-solid fa-caret-down"></i></a>
                     <a class="nav-link" id="categoria-nav" href="#">CATEGORIAS <i class="fa-solid fa-caret-down"></i></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item customH">
                     <a class="nav-link" href="{{ route('home.servicios') }}">SERVICIOS</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item customH">
                     <a class="nav-link" href="{{ route('home.displays') }}">DISPLAYS</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home.contacto') }}">CONTACTO</a>
+                <li class="nav-item customH">
+                    <a class="nav-link" href="{{ route('home.contacto') }}">CONTÁCTO</a>
+                </li>
+                <li class="nav-item dropdown customV">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        SERVICIOS
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route('home.servicios') }}">IMPRESIÓN</a></li>
+                        <li><a class="dropdown-item" href="{{ route('home.displays') }}">DISPLAYS</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ route('home.contacto') }}">CONTÁCTO</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item custom-li">
                     <div class="input-group">

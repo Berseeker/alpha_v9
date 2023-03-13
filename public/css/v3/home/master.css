@@ -476,4 +476,20 @@ footer {
     color: red;
 }
 
+.customH {
+    display: none;
+}
 
+.customV {
+    display: block;
+}
+
+@media (min-width:1276px) {
+    .customV {
+        display: none;
+    }
+
+    .customH{
+        display: block;
+    }
+}
