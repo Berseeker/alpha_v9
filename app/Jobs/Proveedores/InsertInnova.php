@@ -91,9 +91,8 @@ class InsertInnova implements ShouldQueue
                     foreach ($response['data'] as $key => $value) 
                     {
                         array_push($api_ids, $value['codigo']);
-                        dd($value);
                         $product = Product::where('code',$value['codigo'])->where('proveedor','Innova')->first();
-                        if ($product != null) {
+                        if ($product == null) {
                             $this->insertProduct($value);
                         } else {
                             $this->updateProduct($value);
@@ -116,7 +115,6 @@ class InsertInnova implements ShouldQueue
 
     private function insertProduct($producto)
     {
-        dd($producto);
         $item = new Product();
         $item->name = $producto['nombre'];
         $item->code = $producto['codigo'];

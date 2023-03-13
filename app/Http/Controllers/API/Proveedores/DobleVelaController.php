@@ -77,11 +77,7 @@ class DobleVelaController extends Controller
     public function empty() {
 
         $productos = Product::where('proveedor','DobleVela')->where('images',null)->get();
-        if (empty($productos)) {
-            dd(count($productos), $productos);
-        } else {
             dd(count($productos), $productos[0]);
-        }
     }
 
     public function test() {
