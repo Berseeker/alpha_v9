@@ -58,6 +58,7 @@ class UpdateImgDobleVela implements ShouldQueue
             $cont = 0;
             $num = 0;
             $imgs = array();
+            $imgsPrev = array();
             foreach($result2['Resultado']['MODELOS'] as $item)
             {
                 foreach($item['encodedImage'] as $img_base64)
@@ -65,12 +66,14 @@ class UpdateImgDobleVela implements ShouldQueue
                     $image = str_replace('data:image/png;base64,', '', $img_base64);
                     $image = str_replace(' ', '+', $image);
                     $imageName = $producto->parent_code.$num.'.png';
-                    dd(Storage::disk('doblevela_img')->exists($imageName), $imageName, $producto);
+
                     if (!Storage::disk('doblevela_img')->exists($imageName)) 
                     {
                         Storage::disk('doblevela_img')->put($imageName, base64_decode($image));
                         array_push($imgs,$imageName);
                         $num++;
+                    } else {
+                        array_push($imgsPrev, $imageName);
                     }
                 }
                 $cont++;
@@ -80,6 +83,10 @@ class UpdateImgDobleVela implements ShouldQueue
                 $imgs = null;
             } else {
                 $imgs = json_encode($imgs);
+            }
+
+            if ($producto->images == null && $imgs == null) {
+                $imgs = json_encode($imgsPrev);
             }
             
             /* FIN DE PROCESO DE OBTENCION DE IMAGENES */
