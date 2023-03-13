@@ -83,7 +83,7 @@ $(function () {
               images = JSON.parse(full['images'])[0];
               if(!images.includes('https'))
               {
-                images = 'https://www.alphapromos.mx/storage/'+images;
+                images = 'https://www.alphapromos.mx/storage/doblevela/images/'+images;
               }
             }
               
