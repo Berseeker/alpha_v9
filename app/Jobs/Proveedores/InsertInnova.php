@@ -73,7 +73,7 @@ class InsertInnova implements ShouldQueue
         }
         //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
         $api_ids = array();
-        dd($response);
+        
         for ($i = 1; $i <= (int) $response['pages']; $i++ ) 
         {
             $params = [
