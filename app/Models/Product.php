@@ -32,15 +32,19 @@ class Product extends Model
         $img = asset('imgs/v3/productos/no_disp.png');
         if($this->images != null)
         {
-            $img = json_decode($this->images)[0];
-            if ($img != '') {
-                if(!Str::contains($img,['https','http']))
-                {
-                    $img = Storage::disk('doblevela_img')->url($img);
-                }
-            } else {
+            $img = json_decode($this->images);
+            if (empty($img)) {
                 $img = asset('imgs/v3/productos/no_disp.png');
-            }
+            } else {
+                if ($img[0] != '') {
+                    if(!Str::contains($img,['https','http']))
+                    {
+                        $img = Storage::disk('doblevela_img')->url($img[0]);
+                    }
+                } else {
+                    $img = asset('imgs/v3/productos/no_disp.png');
+                }
+            }  
         }
 
         return new Attribute(
