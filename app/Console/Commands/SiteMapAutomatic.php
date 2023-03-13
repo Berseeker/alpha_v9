@@ -39,7 +39,7 @@ class SiteMapAutomatic extends Command
     public function handle()
     {
         // modify this to your own needs
-        SitemapGenerator::create('https://www.alphapromos.mx')
+        SitemapGenerator::create(config('app.url'))
             ->writeToFile(public_path('sitemap.xml'));
 
     }
