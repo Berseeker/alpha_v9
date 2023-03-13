@@ -62,6 +62,7 @@ class InsertInnova implements ShouldQueue
 
         $response = $this->client->call('Pages', $params);
         $response = json_decode($response, true);
+        dd($response);
         if (isset($response['code']) && $response['code'] == '#10004') {
             $log = new Logs();
             $log->status = 'Error';
