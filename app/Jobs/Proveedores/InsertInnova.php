@@ -912,7 +912,6 @@ class InsertInnova implements ShouldQueue
             $item->search = 'OTROS, VARIOS, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
             $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
         }
-        dd($item);
         $item->save();
     }
 
