@@ -221,7 +221,7 @@ class InsertInnova implements ShouldQueue
                         $item_2->printing_area = $producto['area_impresion'];
                         $item_2->printing_methods = json_encode($printing_methods);
                         $item_2->category = $producto['categorias']['categorias'][0]['nombre'];
-                        $item_2->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+                        $item_2->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
                         $item_2->box_pieces = $producto['cantidad_por_paquete'];
                         $item_2->images = json_encode($images);
                         $item_2->material = Str::ucfirst($producto['material']);
@@ -287,7 +287,7 @@ class InsertInnova implements ShouldQueue
                     $item_2->printing_area = $producto['area_impresion'];
                     $item_2->printing_methods = json_encode($printing_methods);
                     $item_2->category = $producto['categorias']['categorias'][0]['nombre'];
-                    $item_2->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+                    $item_2->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
                     $item_2->box_pieces = $producto['cantidad_por_paquete'];
                     $item_2->images = json_encode($images);
                     $item_2->material = Str::ucfirst($producto['material']);
@@ -339,7 +339,7 @@ class InsertInnova implements ShouldQueue
                 $item_2->printing_area = $producto['area_impresion'];
                 $item_2->printing_methods = json_encode($printing_methods);
                 $item_2->category = $producto['categorias']['categorias'][0]['nombre'];
-                $item_2->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+                $item_2->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
                 $item_2->box_pieces = $producto['cantidad_por_paquete'];
                 $item_2->images = json_encode($images);
                 $item_2->material = Str::ucfirst($producto['material']);
@@ -382,7 +382,7 @@ class InsertInnova implements ShouldQueue
                 $item_2->printing_area = $producto['area_impresion'];
                 $item_2->printing_methods = json_encode($printing_methods);
                 $item_2->category = $producto['categorias']['categorias'][0]['nombre'];
-                $item_2->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+                $item_2->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
                 $item_2->box_pieces = $producto['cantidad_por_paquete'];
                 $item_2->images = json_encode($images);
                 $item_2->material = Str::ucfirst($producto['material']);
@@ -653,7 +653,7 @@ class InsertInnova implements ShouldQueue
                     $item_2->printing_area = $producto['area_impresion'];
                     $item_2->printing_methods = json_encode($printing_methods);
                     $item_2->category = $producto['categorias']['categorias'][0]['nombre'];
-                    $item_2->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+                    $item_2->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
                     $item_2->box_pieces = $producto['cantidad_por_paquete'];
                     $item_2->images = json_encode($images);
                     $item_2->material = Str::ucfirst($producto['material']);
@@ -839,7 +839,7 @@ class InsertInnova implements ShouldQueue
                         $item_2->printing_area = $producto['area_impresion'];
                         $item_2->printing_methods = json_encode($printing_methods);
                         $item_2->category = $producto['categorias']['categorias'][0]['nombre'];
-                        $item_2->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+                        $item_2->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
                         $item_2->box_pieces = $producto['cantidad_por_paquete'];
                         $item_2->images = json_encode($images);
                         $item_2->material = Str::ucfirst($producto['material']);
@@ -912,7 +912,7 @@ class InsertInnova implements ShouldQueue
             $item->search = 'OTROS, VARIOS, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
             $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
         }
-        
+
         $item->save();
     }
 
@@ -954,7 +954,7 @@ class InsertInnova implements ShouldQueue
         }
         $item->printing_methods = json_encode($printing_methods);
         $item->category = $producto['categorias']['categorias'][0]['nombre'];
-        $item->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
+        $item->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
         $item->box_pieces = $producto['cantidad_por_paquete'];
         $item->images = json_encode($images);
         $item->material = Str::ucfirst($producto['material']);
