@@ -151,7 +151,7 @@ class InsertInnova implements ShouldQueue
         }
         $item->printing_methods = json_encode($printing_methods);
         $item->category = $producto['categorias']['categorias'][0]['nombre'];
-        $item->subcategory = (array_keys_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
+        $item->subcategory = (array_key_exists(0,$producto['categorias']['subcategorias'])) ?  $producto['categorias']['subcategorias'][0]['nombre'] : null;
         $item->box_pieces = $producto['cantidad_por_paquete'];
         $item->images = $images;
         $item->material = Str::ucfirst($producto['material']);
