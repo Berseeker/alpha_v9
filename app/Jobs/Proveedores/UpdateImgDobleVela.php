@@ -65,7 +65,7 @@ class UpdateImgDobleVela implements ShouldQueue
                     $image = str_replace('data:image/png;base64,', '', $img_base64);
                     $image = str_replace(' ', '+', $image);
                     $imageName = $producto->parent_code.$num.'.png';
-
+                    dd(Storage::disk('doblevela_img')->exists($imageName), $imageName, $producto);
                     if (!Storage::disk('doblevela_img')->exists($imageName)) 
                     {
                         Storage::disk('doblevela_img')->put($imageName, base64_decode($image));
