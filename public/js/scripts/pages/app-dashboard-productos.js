@@ -101,7 +101,7 @@ $(function () {
               '</small>' +
               '</div>' +
               '<div class="img-holder">' +
-              '<img src="'+ images +'" style="width:60px;" />' +
+              '<img src="' + images + '" onerror="this.onerror=null;this.src="/imgs/no_disp.png";" style="width:60px;" />' +
               '</div>' +
               '</div>';
             return $row_output;
