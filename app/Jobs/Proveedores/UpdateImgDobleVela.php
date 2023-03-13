@@ -42,7 +42,7 @@ class UpdateImgDobleVela implements ShouldQueue
         ini_set('memory_limit', '-1');
 
         $productos = Product::where('proveedor','DobleVela')->where('images',null)->get();
-        //dd(count($productos), $productos[0]);
+        dd(count($productos), $productos[0]);
         foreach ($productos as $producto) 
         {
             /* PROCESO DE OBTENCION DE IMAGENES */
