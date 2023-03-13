@@ -129,7 +129,8 @@
 
 /* COLORES */
 
-.ROJO{
+
+.ROJO, .rojo{
     background-color: red;
 }
 
@@ -137,7 +138,7 @@
     background-color: yellow;
 }
 
-.VERDE {
+.VERDE, .verde-claro {
     background-color: green;
 }
 
@@ -145,11 +146,11 @@
     background-color: white;
 }
 
-.NEGRO {
+.NEGRO, .negro {
     background-color: black;
 }
 
-.ROSA {
+.ROSA, .rosa-claro {
     background-color: pink;
 }
 
@@ -157,15 +158,19 @@
     background-color: purple;
 }
 
-.AZUL {
+.AZUL, .azul-claro {
     background-color: blue;
+}
+
+.azul-oscuro {
+    background-color: #3b5998;
 }
 
 .PLATA {
     background-color: #c0c0c0;
 }
 
-.GRIS {
+.GRIS, .gris, .gris-claro {
     background-color: #808080;
 }
 
