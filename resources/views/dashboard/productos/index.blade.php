@@ -142,5 +142,5 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-dashboard-productos.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-dashboard-bored.js') }}"></script>
 @endsection
