@@ -73,36 +73,38 @@ class InsertInnova implements ShouldQueue
         }
         //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
         $api_ids = array();
-        
-        for ($i = 1; $i <= (int) $response['pages']; $i++ ) 
-        {
-            $params = [
-                'user_api' => 'Pu7P5Qy602ea9d959f19Byo7',
-                'api_key' => '76o602ea9d959f1f4awL8R',
-                'format' => 'JSON',
-                'page' => $i
-            ];
-            //Método para obtener información  de Productos
-            $response = $this->client->call('Products', $params);
-            $response = json_decode($response, true);
-            if(isset($response['response']) && $response['response'] == true) {
-                foreach ($response['data'] as $key => $value) 
-                {
-                    array_push($api_ids, $value['codigo']);
-                    $product = Product::where('code',$value['codigo'])->where('proveedor','Innova')->first();
-                    if ($product != null) {
-                        $this->insertProduct($value);
-                    } else {
-                        $this->updateProduct($value);
+        if (isset($response['pages'])) {
+             
+            for ($i = 1; $i <= (int) $response['pages']; $i++ ) 
+            {
+                $params = [
+                    'user_api' => 'Pu7P5Qy602ea9d959f19Byo7',
+                    'api_key' => '76o602ea9d959f1f4awL8R',
+                    'format' => 'JSON',
+                    'page' => $i
+                ];
+                //Método para obtener información  de Productos
+                $response = $this->client->call('Products', $params);
+                $response = json_decode($response, true);
+                if(isset($response['response']) && $response['response'] == true) {
+                    foreach ($response['data'] as $key => $value) 
+                    {
+                        array_push($api_ids, $value['codigo']);
+                        $product = Product::where('code',$value['codigo'])->where('proveedor','Innova')->first();
+                        if ($product != null) {
+                            $this->insertProduct($value);
+                        } else {
+                            $this->updateProduct($value);
+                        }
+                        
                     }
-                    
+                } else {
+                    $log = new Logs();
+                    $log->status = 'Error';
+                    $log->message = $response['message'] . 'en Innova.';
+                    $log->save();
+                    Log::error($response['message'] . 'en Innova.');
                 }
-            } else {
-                $log = new Logs();
-                $log->status = 'Error';
-                $log->message = $response['message'] . 'en Innova.';
-                $log->save();
-                Log::error($response['message'] . 'en Innova.');
             }
         }
 
