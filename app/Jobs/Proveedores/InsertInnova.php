@@ -72,7 +72,6 @@ class InsertInnova implements ShouldQueue
             exit();
         }
         //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
-        dd($response);
         $api_ids = array();
 
         for ($i = 1; $i <= (int) $response['pages']; $i++ ) 
@@ -113,6 +112,7 @@ class InsertInnova implements ShouldQueue
 
     private function insertProduct($producto)
     {
+        dd($producto);
         $item = new Product();
         $item->name = $producto['nombre'];
         $item->code = $producto['codigo'];
