@@ -81,7 +81,8 @@ $(function () {
             var images = '/imgs/no_disp.png';
             if(full['images'] != null){
               images = JSON.parse(full['images'])[0];
-              if(!images.includes('https'))
+              //if(!images.includes('https'))
+              if (!images.indexOf("https") >= 0 || !images.indexOf("http") >= 0)
               {
                 images = 'https://www.alphapromos.mx/storage/doblevela/images/'+images;
               }
