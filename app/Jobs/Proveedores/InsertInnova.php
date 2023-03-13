@@ -149,6 +149,7 @@ class InsertInnova implements ShouldQueue
         foreach ($producto['tecnicas_impresion'] as $printing) {
             array_push($printing_methods, $printing['codigo']);
         }
+        dd($producto);
         $item->printing_methods = json_encode($printing_methods);
         $item->category = $producto['categorias']['categorias'][0]['nombre'];
         $item->subcategory = $producto['subcategorias']['subcategorias'][0]['nombre'];
