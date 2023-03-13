@@ -960,6 +960,4 @@ class InsertInnova implements ShouldQueue
         $item->material = Str::ucfirst($producto['material']);
         $item->save();
     }
-
-
 }
