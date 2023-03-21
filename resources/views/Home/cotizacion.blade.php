@@ -1,7 +1,7 @@
 @extends('layouts/web')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/v3/home/cart_.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/v3/home/cart_styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/v3/intel-input/intlTelInput.css') }}">
     <script src="{{ asset('js/v3/intel-input/intlTelInput.js') }}"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -33,10 +33,10 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="product-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="true">
                         <div class="btn-tab">
-                            <i class="fa-solid fa-cart-shopping mr-10 mt-10"></i>
+                            <i class="fa-solid fa-cart-shopping mr-10-icon mt-10-icon"></i>
                             <div>
                                 <p>Carrito</p>
-                                <span>Productos de tu canasta</span>
+                                <span class="customH">Productos de tu canasta</span>
                             </div>
                             <i class="fa-solid fa-chevron-right ml-10" style="font-size: 15px;"></i>
                         </div>
@@ -45,10 +45,10 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">
                         <div class="btn-tab">
-                            <i class="fa-solid fa-location-dot mr-10 mt-10"></i>
+                            <i class="fa-solid fa-location-dot mr-10-icon mt-10-icon"></i>
                             <div>
                                 <p>Dirección</p>
-                                <span>Ingresa tu domicilio</span>
+                                <span class="customH">Ingresa tu domicilio</span>
                             </div>
                             <i class="fa-solid fa-chevron-right ml-10" style="font-size: 15px;"></i>
                         </div>
@@ -57,10 +57,10 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="submit-tab" data-bs-toggle="tab" data-bs-target="#submit" type="button" role="tab" aria-controls="submit" aria-selected="false">
                         <div class="btn-tab">
-                            <i class="fa-solid fa-basket-shopping mr-10 mt-10"></i>
+                            <i class="fa-solid fa-basket-shopping mr-10-icon mt-10-icon"></i>
                             <div>
                                 <p>Cotiza</p>
-                                <span>Cotiza tus productos</span>
+                                <span class="customH">Cotiza tus productos</span>
                             </div>
                         </div>
                     </button>

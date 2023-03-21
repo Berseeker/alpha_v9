@@ -22,7 +22,7 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
   <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="{{ asset('css/v3/home/alpha_style.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/v3/home/omega_styles.css') }}">
   <!-- CUSTOM CSS FOR EACH PAGE -->
   @yield('page-styles')
   <!-- Chat en vivo -->

@@ -63,6 +63,24 @@
     margin-top: 10px;
 }
 
+.mt-10-icon {
+    margin-top: 0px;
+}
+
+.mr-10-icon {
+    margin-right: 5px;
+}
+
+@media (min-width:700px) {
+    .mt-10-icon {
+        margin-top: 10px;
+    }
+
+    .mr-10-icon {
+        margin-right: 10px;
+    }
+}
+
 .br-16 {
     border-radius: 16px;
 }
@@ -430,7 +448,15 @@ footer {
 /* Carrito de Cotizaciones */
 
 #menu-carrito {
-    margin-left: -250px;
+    margin-left: -200px;
+    position: absolute;
+}
+
+@media (min-width:700px) {
+    #menu-carrito {
+        position: inherit;
+        margin-left: -250px;
+    }
 }
 
 .carrito {
