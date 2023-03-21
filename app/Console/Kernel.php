@@ -18,6 +18,10 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         //$schedule->command('sitemap:generate')->daily();
         $schedule->command('provider:forpromotional')->monthly();
+        $schedule->command('provider:promoopcion')->monthly();
+        $schedule->command('provider:innova')->monthly();
+        $schedule->command('provider:doblevela')->monthly();
+        $schedule->command('provider:doblevelaimgs')->monthly();
     }
 
     /**

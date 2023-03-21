@@ -2,24 +2,24 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\Proveedores\InsertForPromotional;
+use App\Jobs\Proveedores\InsertPromoOpcion;
 use Illuminate\Console\Command;
 
-class ForPromotionalProcess extends Command
+class PromoOpcionProcess extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'provider:forpromotional';
+    protected $signature = 'command:promoopcion';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Iniciar el proceso automatico para actualizar los productos de ForPromotional';
+    protected $description = 'Iniciar el proceso automatico de Promo Opcion de sus productos';
 
     /**
      * Create a new command instance.
@@ -38,11 +38,9 @@ class ForPromotionalProcess extends Command
      */
     public function handle()
     {
-        InsertForPromotional::dispatch();
-
-        $this->info('Job ForPromotional done at: ' . date('Y-m-d H:i:s'));
-
-        return 0;
+        InsertPromoOpcion::dispatch();
+        $this->info('Job Promo Opcion done at: ' . date('Y-m-d H:i:s'));
         
+        return 0;
     }
 }

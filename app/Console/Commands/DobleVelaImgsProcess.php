@@ -2,24 +2,24 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\Proveedores\InsertForPromotional;
+use App\Jobs\Proveedores\UpdateImgDobleVela;
 use Illuminate\Console\Command;
 
-class ForPromotionalProcess extends Command
+class DobleVelaImgsProcess extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'provider:forpromotional';
+    protected $signature = 'provider:doblevelaimgs';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Iniciar el proceso automatico para actualizar los productos de ForPromotional';
+    protected $description = 'Iniciar el proceso automatico Doble Vela para insertar imagenes de los productos';
 
     /**
      * Create a new command instance.
@@ -38,11 +38,9 @@ class ForPromotionalProcess extends Command
      */
     public function handle()
     {
-        InsertForPromotional::dispatch();
-
-        $this->info('Job ForPromotional done at: ' . date('Y-m-d H:i:s'));
+        UpdateImgDobleVela::dispatch();
+        $this->info('Job DobleVela Imgs done at: ' . date('Y-m-d H:i:s'));
 
         return 0;
-        
     }
 }
