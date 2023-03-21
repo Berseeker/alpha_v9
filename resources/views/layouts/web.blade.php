@@ -22,7 +22,7 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
   <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="{{ asset('css/v3/home/alpha_master.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/v3/home/alpha_style.css') }}">
   <!-- CUSTOM CSS FOR EACH PAGE -->
   @yield('page-styles')
   <!-- Chat en vivo -->
@@ -65,10 +65,12 @@
   window.onscroll = function() {scrollFunction()};
 
   function scrollFunction() {
-    if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
+    if (document.body.scrollTop >= 60 || document.documentElement.scrollTop >= 60) {
       document.getElementById("logo-img").style.width = "120px";
-    } else {
+    } else if(document.documentElement.scrollTop < 59) {
       document.getElementById("logo-img").style.width = "200px";
+    } else {
+      document.getElementById('logo-img').style.width = "200px";
     }
   }
 

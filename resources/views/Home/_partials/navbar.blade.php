@@ -10,7 +10,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('index') }}">INICIO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="categoria-nav-mob" href="#">CATEGORIAS <i class="fa-solid fa-caret-down"></i></a>
+                    <a class="nav-link" id="categoria-nav-mob" href="{{ route('home.categorias') }}">CATEGORIAS</a>
                     <a class="nav-link" id="categoria-nav" href="#">CATEGORIAS <i class="fa-solid fa-caret-down"></i></a>
                 </li>
                 <li class="nav-item customH">
@@ -26,10 +26,9 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         SERVICIOS
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu bg-body-tertiary" style="margin-bottom: 20px; border-width:0px;">
                         <li><a class="dropdown-item" href="{{ route('home.servicios') }}">IMPRESIÓN</a></li>
                         <li><a class="dropdown-item" href="{{ route('home.displays') }}">DISPLAYS</a></li>
-                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{ route('home.contacto') }}">CONTÁCTO</a></li>
                     </ul>
                 </li>
@@ -44,9 +43,9 @@
         </div>
         <div>
             <ul class="navbar-nav" id="redes-sociales">
-                <li><a href="https://www.facebook.com/alphapromos.mx" target="_blank"><i class="fa-brands fa-facebook fb-color fs-30"></i></a></li>
-                <li><a href="https://www.instagram.com/alpha.promos.mx" target="_blank"><i class="fa-brands fa-instagram insta-color fs-30"></i></a></li>
-                <li><a href="https://api.whatsapp.com/send?phone=529981098156" target="_blank"><i class="fa-brands fa-whatsapp whats-color fs-30"></i></a></li>
+                <li class="customH"><a href="https://www.facebook.com/alphapromos.mx" target="_blank"><i class="fa-brands fa-facebook fb-color fs-30"></i></a></li>
+                <li class="customH"><a href="https://www.instagram.com/alpha.promos.mx" target="_blank"><i class="fa-brands fa-instagram insta-color fs-30"></i></a></li>
+                <li class="customH"><a href="https://api.whatsapp.com/send?phone=529981098156" target="_blank"><i class="fa-brands fa-whatsapp whats-color fs-30"></i></a></li>
                 <li class="nav-item mr-40">
                     <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -86,6 +86,16 @@ class IndexController extends Controller
         ]);
     }
 
+    public function showCategorias()
+    {
+            
+        $categorias = Categoria::all();
+           
+        return view('Home.categorias',[
+            'categorias' => $categorias
+        ]);
+    }
+
 
     public function showSubcategoria(Request $request,$slug)
     {

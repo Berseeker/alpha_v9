@@ -217,6 +217,7 @@
 
 #navbar-menu {
     margin-left: 10px;
+    margin-bottom: 15px;
 }
 
 #categoria-nav {
@@ -225,6 +226,12 @@
 
 #categoria-nav-mob {
     display: block;
+}
+
+@media (min-width:700px) {
+    #navbar-menu {
+        margin-bottom: 0px;
+    }
 }
 
 @media (min-width:1000px) {
@@ -314,7 +321,13 @@
 }
 
 #search-global {
-    width: 200px;
+    width: 350px;
+}
+
+@media (min-width:700px) {
+    #search-global {
+        width: 200px;
+    }
 }
 
 @media (min-width:1000px) {
@@ -497,4 +510,96 @@ footer {
     .customH{
         display: block;
     }
+}
+
+
+#categorias-destacadas {
+  width: 100%;
+}
+
+.parent {
+  width: 49%;
+  height: 300px;
+  overflow: hidden;
+  display: inline-block;
+  padding: 4px;
+}
+
+@media (min-width:1000px) {
+  .swiper {
+    height: 500px;
+  }
+
+  .catalogos-home {
+    margin-top: 80px;
+  }
+
+  .item-catalogo {
+    padding-top: 50px;
+    padding-left: 45px;
+  }
+
+  .item-catalogo h2 {
+    text-align: justify !important;
+  }
+
+  .parent {
+    width: 19.5%;
+  }
+}
+
+.child {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -o-transition: all .5s;
+  transition: all .5s;
+  text-decoration: none;
+}
+
+.parent:hover .child,
+.parent:focus .child {
+  transform: scale(1.2);
+}
+
+.child p{
+  margin-left: 20px;
+  color: white;
+  margin-bottom: 25px;
+  font-size: 22px;
+  font-weight: bolder;
+}
+
+.bg-one {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/boligrafos.png);
+}
+.bg-two {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/ecologicos.png);
+}
+.bg-three {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/herramientas.png);
+}
+.bg-four {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/hogar.png);
+}
+.bg-five {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/oficina.png);
+}
+.bg-six {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/paraguas.png);
+}
+.bg-seven {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/salud.png);
+}
+.bg-eight {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/tecnologia.png);
+}
+.bg-nine {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/textil.png);
+}
+.bg-ten {
+  background-image: url(https://alphapromos.mx/imgs/v3/destacados/viaje.png);
 }

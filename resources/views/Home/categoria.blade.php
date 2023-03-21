@@ -2,7 +2,7 @@
 
 @section('page-styles')
 <!-- Page css files -->
-<link rel="stylesheet" href="{{ asset('css/v3/home/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/v3/home/categoria_home.css') }}">
 @endsection
 
     
@@ -90,6 +90,8 @@
 @section('page-scripts')
 <script src="{{ asset('js/v3/sticky/sticky.min.js') }}"></script>
 <script type="text/javascript">
-    var sticky = new Sticky('.selector');
+    if ($(document).width() > 700) {
+        var sticky = new Sticky('.selector');
+    } 
 </script>
 @endsection

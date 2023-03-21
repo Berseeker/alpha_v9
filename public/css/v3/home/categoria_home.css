@@ -126,8 +126,15 @@
     border-radius: 8px;
     border: 1px solid #255992;
     box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+    margin-bottom: 40px;
 }
 
 .selector h5 {
     margin-top: 10px;
+}
+
+@media (min-width:701px) {
+    .selector {
+        margin-bottom: 0px;
+    }
 }
