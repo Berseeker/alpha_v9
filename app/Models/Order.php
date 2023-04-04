@@ -21,19 +21,27 @@ class Order extends Model
 
     protected function paymentGross(): Attribute
     {
+        $gross_price = 0;
         $payment = Payment::where('order_id',$this->order_id)->first();
+        if ($payment != null) {
+            $gross_price = $payment->gross_price;
+        }
         
         return Attribute::make(
-            get: fn () => $payment->gross_price,
+            get: fn () => $gross_price,
         );
     }
 
     protected function paymentNet(): Attribute
     {
+        $net_price = 0;
         $payment = Payment::where('order_id',$this->order_id)->first();
+        if ($payment != null) {
+            $net_price = $payment->net_price;
+        }
         
         return Attribute::make(
-            get: fn () => $payment->net_price,
+            get: fn () => $net_price,
         );
     }
 

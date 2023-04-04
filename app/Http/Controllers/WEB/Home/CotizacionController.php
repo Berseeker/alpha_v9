@@ -172,6 +172,8 @@ class CotizacionController extends Controller
         $payment->order_id = $uuid;
         $payment->payment_status = 'IN_PROCESS';
         $payment->payment_format = 'OTHER';
+        $payment->gross_price = 0.0;
+        $payment->net_price = 0.0;
         $payment->entity = 'OTRO';
         $payment->save();
 
