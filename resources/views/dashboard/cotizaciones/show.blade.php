@@ -32,12 +32,12 @@
                         @endphp
                         @foreach ($order_x_products as $item)
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <h2 class="accordion-header" id="headingOne-{{$index}}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-{{$index}}" aria-expanded="true" aria-controls="collapseOne-{{$index}}">
                                         Producto - {{ $item->name }}
                                     </button>
                                 </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse {{ ($index == 0) ? 'show' : ''}}" aria-labelledby="headingOne" data-bs-parent="#accordionProducts">
+                                <div id="collapseOne-{{$index}}" class="accordion-collapse collapse {{ ($index == 0) ? 'show' : ''}}" aria-labelledby="headingOne-{{$index}}" data-bs-parent="#accordionProducts">
                                     <div class="accordion-body">
                                         <img src="{{ $item->product->preview }}" class="previewImg" alt="{{ $item->name }}">
                                         <p class="text-center mb-0">{{ $item->name }}</p>
