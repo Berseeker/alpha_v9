@@ -499,7 +499,7 @@ class CotizacionController extends Controller
             ->save('public');
 
         $link = $invoice->url();
-        dd($link);
+       
         // Then send email to party with link
         // And return invoice itself to browser or have a different view
         return $invoice->stream();
