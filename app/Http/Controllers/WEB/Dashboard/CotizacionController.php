@@ -464,7 +464,7 @@ class CotizacionController extends Controller
                 ->img($preview)
             );
         }
-
+        dd($items);
         $notes = [
             'Forma de pago: '. $invoice->payment_days.' día(s)',
             'Tiempo de Entrega: '.$invoice->deliver_days.' días hábiles',
