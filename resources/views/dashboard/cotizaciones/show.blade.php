@@ -208,7 +208,7 @@
                             <div class="mb-2" style="">
                                 <div style="margin-right:10px;">
                                     <h5><span class="badge badge-light-primary ms-50">Plazo para pagar el invoice</span></h5>
-                                    <p>{{ $invoice->payment_days }} días</p>
+                                    <p>{{ ($invoice == null) ? 15 : $invoice->payment_days }} días</p>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +216,7 @@
                             <div class="mb-2" style="">
                                 <div style="margin-right:10px;">
                                     <h5><span class="badge badge-light-primary ms-50">Plazo para la entrega de producto</span></h5>
-                                    <p>{{ $invoice->deliver_days }} días hábiles</p>
+                                    <p>{{ ($invoice == null) ? 20 : $invoice->deliver_days }} días hábiles</p>
                                 </div>
                             </div>
                         </div>
