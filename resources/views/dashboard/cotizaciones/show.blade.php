@@ -200,7 +200,7 @@
                             <div class="mb-2" style="">
                                 <div style="margin-right:10px;">
                                     <h5><span class="badge badge-light-primary ms-50">Folio</span></h5>
-                                    <p>{{ ($invoice->folio == null) ? 'Sin especificar' : $invoice->folio }}</p>
+                                    <p>{{ ($invoice == null) ? 'Sin especificar' : $invoice->folio }}</p>
                                 </div>
                             </div>
                         </div>
