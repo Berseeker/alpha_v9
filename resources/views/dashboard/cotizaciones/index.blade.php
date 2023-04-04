@@ -167,7 +167,7 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-order.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-order-list.js') }}"></script>
 
   <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
   <script>
