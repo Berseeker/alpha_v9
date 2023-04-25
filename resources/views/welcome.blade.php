@@ -144,7 +144,6 @@
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/grupo_xcaret.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/hardrock_logo.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/hilton_logo.png') }}" class="clientes-img" alt=""> </div>
-                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/karisma_hotels.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/lagunamar_westin.webp') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/nickelodeon_logo.svg') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/ocean_logo.svg') }}" class="clientes-img" alt=""> </div>
