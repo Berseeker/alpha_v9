@@ -156,6 +156,11 @@
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/presidente_cozumel_hotel.svg') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/rdc_hotel.webp') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/royalton_logo.png') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/breathless.jpeg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/sandos.webp') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/atelier.jpeg') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/excellence.webp') }}" class="clientes-img" alt=""> </div>
+                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/secrets.png') }}" class="clientes-img" alt=""> </div>
             </div>
         </section>
     </div>
