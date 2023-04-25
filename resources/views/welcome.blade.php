@@ -150,7 +150,6 @@
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/palladium_hotel.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/palace_resort_logo.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/paradisus_logo.jpeg') }}" class="clientes-img" alt=""> </div>
-                <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/park_logo.png') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/park_royal_cancun.webp') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/park_royal_hotels.jpeg') }}" class="clientes-img" alt=""> </div>
                 <div class="item cbox d-flex align-items-center justify-content-center"> <img src="{{ asset('imgs/v3/clientes/presidente_logo.svg') }}" class="clientes-img" alt=""> </div>
