@@ -255,10 +255,10 @@ class CotizacionController extends Controller
     public function updateQuick(Request $request)
     {
         $cotizacion = Order::find($request->cotizacion_id);
-        $cotizacion->status = $request->estatus;
+        $cotizacion->order_status = $request->estatus;
         $cotizacion->save();
 
-        if($request->estatus == 'Aprobada')
+        if($request->estatus == 'APPROVED')
         {
             $prevVenta = Venta::where('cotizacion_id',$cotizacion->id)->first();
             if($prevVenta == null)
