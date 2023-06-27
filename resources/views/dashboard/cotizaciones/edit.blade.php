@@ -253,12 +253,11 @@
                                 <div class="row mt-2">
                                     <div class="col-12 col-sm-3 mb-2">
                                         <div class="form-group">
-                                            @if ($order_x_product->product->preview == null)
-                                                <div id="img-hold"><img src="{{ asset('img/items/no-image.png') }}" alt="Producto Img" style="width: 130px; display:block;margin:0px auto;"></div>
-                                            @else
-                                                <div id="img-hold"><img src="{{ $order_x_product->product->preview }}" alt="Producto Img" style="width: 130px; display:block;margin:0px auto;"></div>
-                                            @endif
+                                            <div id="img-hold"><img src="{{ $order_x_product->product->preview }}" alt="Producto Img" style="width: 130px; display:block;margin:0px auto;"></div>
                                             <p style="text-align: center">{{ $order_x_product->name}}</p>
+                                            @if ($order_x_product->product->deleted_at != null)
+                                                <small>Descontinuado por el proveedor</small>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-9 mb-2">

@@ -76,14 +76,7 @@ class CotizacionController extends Controller
 
         $products = Product::all();
         $order_x_products = OrderProduct::where('order_id',$order->order_id)->get();
-        $count = 0;
-foreach ($order_x_products as $value) {
-    if ($value->product == null) {
-        dd($value, $count);
-    }
-    $value->product->preview;
-    $count++;
-}
+
         return view('dashboard.cotizaciones.edit',[
             'breadcrumbs' => $breadcrumbs,
             'order' => $order,

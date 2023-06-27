@@ -12,8 +12,8 @@ class OrderProduct extends Model
 
     protected $table = "order_x_product";
 
-    public function product() 
+    public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withTrashed();
     }
 }
