@@ -17,8 +17,9 @@ $(function () {
         dtContact = $('.dt-contact'),
         statusObj = {
             'PENDANT': { title: 'Pendiente', class: 'badge-light-warning' },
-            "Aprobada": { title: "Aprobada", class: 'badge-light-success' },
-            'Cancelada': { title: 'Cancelada', class: 'badge-light-danger' }
+            "APPROVED": { title: "Aprobada", class: 'badge-light-success' },
+            'CANCEL': { title: 'Cancelada', class: 'badge-light-danger' },
+            'REVIEWING': { title: 'En Revisión', class: 'badge-light-info' }
         };
 
     var assetPath = '../../../app-assets/',
