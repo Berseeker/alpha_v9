@@ -254,8 +254,7 @@ class CotizacionController extends Controller
 
     public function updateQuick(Request $request)
     {
-dd($request->all());
-        $cotizacion = Order::find((int) $request->cotizacion_id);
+        $cotizacion = Order::find($request->cotizacion_id);
         $cotizacion->status = $request->estatus;
         $cotizacion->save();
 
