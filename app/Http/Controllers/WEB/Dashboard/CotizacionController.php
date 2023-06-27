@@ -76,7 +76,7 @@ class CotizacionController extends Controller
 
         $products = Product::all();
         $order_x_products = OrderProduct::where('order_id',$order->order_id)->get();
-
+dd(count($order_x_products), $order_x_products);
         return view('dashboard.cotizaciones.edit',[
             'breadcrumbs' => $breadcrumbs,
             'order' => $order,
