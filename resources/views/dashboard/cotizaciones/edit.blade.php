@@ -44,7 +44,7 @@
                         <div class="bg-success" style="padding:10px;margin-bottom:30px;text-align:center;border-radius:5px;color:white;">
                             <p style="margin-bottom: 0px;"><i class="fas fa-thumbs-up" style="margin-right: 10px;"></i> {{ session('success') }}</p>
                         </div>
-                    @endif 
+                    @endif
                     @if (session('warning'))
                         <div class="bg-warning" style="padding:10px;margin-bottom:30px;border-radius: 5px;color:white;text-align:center;">
                             <p style="margin-bottom: 0px;"><i class="fas fa-exclamation" style="margin-right: 10px;"></i> {{ session('warning') }}</p>
@@ -63,20 +63,30 @@
                                                 @if ($order->order_status == "PENDANT")
                                                     <option value="{{ $order->order_status }}" selected> PENDIENTE </option>
                                                     <option class="text-danger" value="CANCEL">CANCELADA</option>
-                                                    <option class='text-success' value="APPROVED">APROVADA</option>
-                                                    
+                                                    <option class='text-success' value="APPROVED">APROBADA</option>
+                                                    <option class='text-success' value="REVIEWING">EN REVISIÓN</option>
+
                                                 @elseif($order->order_status == "CANCEL")
                                                     <option value="{{ $order->order_status }}" selected> CANCELADA </option>
                                                     <option class='text-warning' value="PENDANT">PENDIENTE</option>
                                                     <option class='text-success' value="APPROVED">APROVADA</option>
+                                                    <option class='text-success' value="REVIEWING">EN REVISIÓN</option>
+
+                                                @elseif($order->order_status == "REVIEWING")
+                                                    <option class='text-success' value="REVIEWING" selected>EN REVISIÓN</option>
+                                                    <option value="{{ $order->order_status }}"> CANCELADA </option>
+                                                    <option class='text-warning' value="PENDANT">PENDIENTE</option>
+                                                    <option class='text-success' value="APPROVED">APROVADA</option>
+
                                                 @else
                                                     <option value="{{ $order->order_status }}" selected> APROVADA </option>
                                                     <option class="text-danger" value="CANCEL">CANCELADA</option>
                                                     <option class='text-warning' value="PENDANT">PENDIENTE</option>
+                                                    <option class='text-success' value="REVIEWING">EN REVISIÓN</option>
                                                 @endif
-                                                
+
                                             </select>
-                                        </fieldset>        
+                                        </fieldset>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4 mb-2">
@@ -133,7 +143,7 @@
                                 </div>
                                 <div class="col-12 col-sm-12">
                                     <h4 style="text-align: center;">Dirección</h4>
-                                </div> 
+                                </div>
 
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group">
@@ -204,14 +214,14 @@
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group">
                                         <label for="email-id-icon">Nombre del archivo: (descargalo)</label>
-                                        <div class="position-relative has-icon-left">     
+                                        <div class="position-relative has-icon-left">
                                             <a href="{{ url('/dashboard/download-file/'.$order->order_id) }}" class="form-control">Assets.zip</a>
                                             <div class="form-control-position">
                                                 <i class="icon-form feather icon-download"></i>
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-12 mt-2">
                                     <div class="form-group">
                                         <label for="contact-info-icon">Comentarios</label>
@@ -238,13 +248,13 @@
                         <h2 class="mt-2 mb-3" style="text-align: center;">Producto(s)</h2>
                         <div class="order-products">
                             @foreach ($order_x_products as $order_x_product)
-                            <form action="{{ url('/dashboard/edit-cotizacion/'.$order->order_id) }}" method="POST"> 
+                            <form action="{{ url('/dashboard/edit-cotizacion/'.$order->order_id) }}" method="POST">
                                 @csrf
                                 <div class="row mt-2">
                                     <div class="col-12 col-sm-3 mb-2">
                                         <div class="form-group">
                                             <div id="img-hold"><img src="{{ $order_x_product->product->preview }}" alt="Producto Img" style="width: 130px; display:block;margin:0px auto;"></div>
-                                            <p style="text-align: center">{{ $order_x_product->name}}</p>     
+                                            <p style="text-align: center">{{ $order_x_product->name}}</p>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-9 mb-2">
@@ -257,7 +267,7 @@
                                                         <div class="form-control-position">
                                                             <i class="icon-form fas fa-tint"></i>
                                                         </div>
-                                                    </div>        
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-4 mb-2">
@@ -360,7 +370,7 @@
                     @csrf
                     <select id="add-product" class="form-control mb-2" name="addProductId">
                         @foreach ($products as $product)
-                            <option value="{{ $product->id }}"  data-image="{{ $product->preview }}"> 
+                            <option value="{{ $product->id }}"  data-image="{{ $product->preview }}">
                                 {{ $product->name .' - '. $product->subcategoria->nombre .' - '. $product->proveedor}}
                             </option>
                         @endforeach

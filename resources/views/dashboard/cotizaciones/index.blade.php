@@ -103,7 +103,7 @@
             <th></th>
             <th>UUID</th>
             <th>Nombre</th>
-            <th>Email</th> 
+            <th>Email</th>
             <th>Estatus</th>
             <th>Acciones</th>
           </tr>
@@ -126,9 +126,10 @@
             <div class="form-group">
               <label for="empleados">Estatus</label>
               <select name="estatus" class="form-control">
-                <option value="Aprobada">Aprobada</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Cancelada">Cancelada</option>
+                <option value="APPROVED">Aprobada</option>
+                <option value="CANCEL">Pendiente</option>
+                <option value="PENDANT">Cancelada</option>
+                <option value="PENDANT">En Revisión</option>
               </select>
             </div>
             <input type="hidden" name="cotizacion_id" id="cotizacion_id">
@@ -183,9 +184,9 @@
                 confirmButtonColor: '#007600',
                 cancelButtonColor: '#d33',
                 reverseButtons: !0
-            }).then(function (e) 
+            }).then(function (e)
             {
-                if (e.value === true) 
+                if (e.value === true)
                 {
                     let _url = "{{url('/')}}";
                     $.ajax({
