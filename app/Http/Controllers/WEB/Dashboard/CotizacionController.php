@@ -20,6 +20,7 @@ use App\Models\Shippment;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Sale;
+use App\Models\Venta;
 
 use DateTime;
 //para el manejo de archivos
@@ -82,7 +83,7 @@ class CotizacionController extends Controller
             'products' => $products,
             'order_x_products' => $order_x_products
         ]);
-        
+
     }
 
     public function editInvoice($order_id)
@@ -124,7 +125,7 @@ class CotizacionController extends Controller
                 'price_x_unid.required' => 'Indica el precio por pza',
             ];
         } else {
- 
+
             $rules = [
                 'order_status' => 'required',
                 'name' => 'required',
@@ -170,7 +171,7 @@ class CotizacionController extends Controller
                 $order_x_product->printing_method = $request->printing_method;
                 if ($order_x_product->isDirty()) {
                     $order_x_product->update();
-                }   
+                }
             }
         } else {
             $order->name = $request->name;
@@ -205,7 +206,7 @@ class CotizacionController extends Controller
                 $sale->shippment_id = $shippment->id;
                 $sale->user_id = Auth::user()->id;
                 $sale->save();
-            }         
+            }
         }
 
         if($request->order_status == 'CANCEL' || $request->status == 'PENDANT' ){
@@ -219,7 +220,7 @@ class CotizacionController extends Controller
         }
 
         return back()->with('success','La cotizacion se actualizo de manera correcta');
-        
+
     }
 
     public function updateInvoice(Request $request, $order_id)
@@ -253,7 +254,7 @@ class CotizacionController extends Controller
 
     public function updateQuick(Request $request)
     {
- 
+dd($request->all());
         $cotizacion = Order::find((int) $request->cotizacion_id);
         $cotizacion->status = $request->estatus;
         $cotizacion->save();
@@ -285,7 +286,7 @@ class CotizacionController extends Controller
                     $prevVenta->venta_realizada = now();
                     $prevVenta->save();
                 }
-            }          
+            }
         }
         //$cotizacion->id
         //venta $cotizaion_id
@@ -300,11 +301,11 @@ class CotizacionController extends Controller
         }
 
         return back()->with('success','La cotizacion se actualizo de manera correcta');
-        
+
     }
 
     public function download($id)
-    {    
+    {
         $cotizacion = Order::find($id);
         $path = public_path('storage');
         $public = public_path();
@@ -318,7 +319,7 @@ class CotizacionController extends Controller
                 $zip->addFile($path.'/'.$file,$file);
             }
             $zip->close();
-            
+
             return response()->download($public.'/assets/'.$zipname);
         }
         else{
@@ -344,7 +345,7 @@ class CotizacionController extends Controller
 
         $items = array();
         $void = 0;
-        foreach ($productos as $producto) 
+        foreach ($productos as $producto)
         {
             $producto->num_pzas = $num_pzas[$void];
             $producto->precio_pza = $precio_pza[$void];
@@ -376,7 +377,7 @@ class CotizacionController extends Controller
 
         $items = array();
         $void = 0;
-        foreach ($productos as $producto) 
+        foreach ($productos as $producto)
         {
             $producto->num_pzas = $num_pzas[$void];
             $producto->precio_pza = $precio_pza[$void];
@@ -452,7 +453,7 @@ class CotizacionController extends Controller
                     $preview = public_path('storage').'/cotizaciones_imgs/'.$name;
                 }
             }
-            
+
 
             array_push($items, (new InvoiceItem())
                 ->title($order_x_product->name)
@@ -464,13 +465,13 @@ class CotizacionController extends Controller
                 ->img($preview)
             );
         }
-      
+
         $notes = [
             'Forma de pago: '. $invoice->payment_days.' día(s)',
             'Tiempo de Entrega: '.$invoice->deliver_days.' días hábiles',
             'LOGOTIPOS CONVERTIDOS EN CURVAS, TIPOGRAFÍA, PANTONES A TRABAJAR',
         ];
-        
+
         $notes = implode("<br>", $notes);
 
         $invoice = Invoice::make('Cotización - '. $order->identifier)
@@ -499,7 +500,7 @@ class CotizacionController extends Controller
             ->save('public');
 
         $link = $invoice->url();
-       
+
         // Then send email to party with link
         // And return invoice itself to browser or have a different view
         return $invoice->stream();
@@ -507,7 +508,7 @@ class CotizacionController extends Controller
 
     public function addProduct( Request $request)
     {
-        $product = Product::find($request->addProductId); 
+        $product = Product::find($request->addProductId);
         $order = Order::find($request->addOrderId);
 
         $order_x_product = new OrderProduct();
@@ -526,7 +527,7 @@ class CotizacionController extends Controller
         $order_x_product->save();
 
         return back()->with('success',"Producto agregado a la Cotización");
-        
+
 
     }
 }
@@ -539,48 +540,48 @@ function invertDate($date_db){
 
     if($explode_string[1] == "01")
     $month = "Enero,";
-    
+
     if($explode_string[1] == "02")
     $month = "Febero,";
-    
+
     if($explode_string[1] == "03")
     $month = "Marzo,";
-    
+
     if($explode_string[1] == "04")
     $month = "Abril";
-    
+
     if($explode_string[1] == "05")
     $month = "Mayo,";
-    
+
     if($explode_string[1] == "06")
     $month = "Junio,";
-    
+
     if($explode_string[1] == "07")
     $month = "Julio,";
-    
+
     if($explode_string[1] == "08")
     $month = "Agosto,";
-    
+
     if($explode_string[1] == "09")
     $month = "Septiembre";
-    
+
     if($explode_string[1] == "10")
     $month = "Octubre,";
-    
+
     if($explode_string[1] == "11")
     $month = "Noviembre,";
-    
+
     if($explode_string[1] == "12")
     $month = "Diciembre,";
 
-    
+
     if($explode_string[2] == '01'){
         $day = "1";
     }
     else if($explode_string[2] == '02'){
         $day = "2";
     }
-    
+
     else if($explode_string[2] == '03'){
         $day = "3";
     }
@@ -591,11 +592,11 @@ function invertDate($date_db){
     else if($explode_string[2] == '05'){
         $day = "5";
     }
-      
+
     else if($explode_string[2] == '06'){
         $day = "6";
     }
-    
+
     else if($explode_string[2] == '07'){
         $day = "7";
     }
@@ -603,14 +604,14 @@ function invertDate($date_db){
     else if($explode_string[2] == '08'){
         $day = "8";
     }
-    
+
     else if($explode_string[2] == '09'){
         $day = "9";
     }
     else{
         $day = $explode_string[2];
     }
-    
+
     $date = $day." ".$month." ".$explode_string[0];
     return $date;
 
