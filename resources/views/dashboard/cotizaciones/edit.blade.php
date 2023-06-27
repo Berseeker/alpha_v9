@@ -256,7 +256,7 @@
                                             <div id="img-hold"><img src="{{ $order_x_product->product->preview }}" alt="Producto Img" style="width: 130px; display:block;margin:0px auto;"></div>
                                             <p style="text-align: center">{{ $order_x_product->name}}</p>
                                             @if ($order_x_product->product->deleted_at != null)
-                                                <small>Descontinuado por el proveedor</small>
+                                                <p style="color: red;text-size:12px;margin-top:0px;text-align:center;">Descontinuado por el proveedor</p>
                                             @endif
                                         </div>
                                     </div>
