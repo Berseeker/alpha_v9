@@ -127,9 +127,9 @@
               <label for="empleados">Estatus</label>
               <select name="estatus" class="form-control">
                 <option value="APPROVED">Aprobada</option>
-                <option value="CANCEL">Pendiente</option>
-                <option value="PENDANT">Cancelada</option>
-                <option value="PENDANT">En Revisión</option>
+                <option value="PENDANT">Pendiente</option>
+                <option value="CANCEL">Cancelada</option>
+                <option value="REVIEWING">En Revisión</option>
               </select>
             </div>
             <input type="hidden" name="cotizacion_id" id="cotizacion_id">
