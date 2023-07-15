@@ -17,6 +17,7 @@ use LaravelDaily\Invoices\Classes\InvoiceItem;
 use App\Models\OrderProduct;
 use App\Models\InvoiceOrder;
 use App\Models\Shippment;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Sale;
