@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\OrderProduct;
+use App\Models\User;
+use App\Models\Order;
 use App\Models\Sale;
 
 class VentasController extends Controller
@@ -17,8 +19,10 @@ class VentasController extends Controller
         $sales = array();
 
         foreach ($ventas as $key => $venta) {
-            dd($venta, $venta->order);
-            $products = OrderProduct::where('order_id', $venta->order->order_id)->get();
+
+            $order = Order::find($venta->order_id);
+            $products = OrderProduct::where('order_id', $order->order_id)->get();
+            $seller = User::find($venta->user_id);
 
             $total = 0;
 
@@ -26,12 +30,12 @@ class VentasController extends Controller
                 $total = $total + ($product->num_pzas * $product->price_x_unid);
             }
             $sale =  [
-                'id' => $venta->order->identifier,
-                'nombre' => $venta->order->name,
+                'id' => $order->identifier,
+                'nombre' => $order->name,
                 'venta_realizada' => $venta->created_at,
                 'total' => $total,
-                'status' => $venta->order->order_status,
-                'seller' => $venta->seller->name
+                'status' => $order->order_status,
+                'seller' => $seller->name
             ];
 
             array_push($sales, $sale);
