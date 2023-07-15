@@ -271,7 +271,7 @@ class CotizacionController extends Controller
                 $venta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
                 $venta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
                 $venta->status = 'Aprobada';
-                $venta->cotizacion_id = $cotizacion->id;
+                $venta->cotizacion_id = $cotizacion->order_id;
                 $venta->user_id = Auth::user()->id;
                 $venta->save();
             }
