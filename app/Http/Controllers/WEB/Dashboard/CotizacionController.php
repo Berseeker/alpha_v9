@@ -259,8 +259,6 @@ class CotizacionController extends Controller
         $cotizacion->order_status = $request->estatus;
         $cotizacion->save();
 
-        dd($cotizacion);
-
         if($request->estatus == 'APPROVED')
         {
             $prevVenta = Venta::where('cotizacion_id',$cotizacion->id)->first();
