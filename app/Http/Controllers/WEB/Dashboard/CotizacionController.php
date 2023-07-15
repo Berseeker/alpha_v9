@@ -273,6 +273,7 @@ class CotizacionController extends Controller
                 $venta->status = 'Aprobada';
                 $venta->cotizacion_id = $cotizacion->id;
                 $venta->user_id = Auth::user()->id;
+                dd($cotizacion, $venta);
                 $venta->save();
             }
             else {
