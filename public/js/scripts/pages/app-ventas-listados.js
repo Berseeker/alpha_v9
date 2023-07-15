@@ -53,7 +53,6 @@ $(function () {
                 { data: 'id' },
                 { data: 'nombre' },
                 { data: 'venta_realizada' },
-                { data: 'subtotal' },
                 { data: 'total' },
                 { data: 'status' },
                 { data: 'user' },
@@ -76,7 +75,7 @@ $(function () {
                     responsivePriority: 4,
                     render: function (data, type, full, meta) {
                         //console.log(full);
-                        var name =  'AP-' + full['id'],
+                        var name =  full['id'],
                             $id = 'Id: ' + full['id'];
 
                         var colorClass = '';
@@ -100,20 +99,12 @@ $(function () {
                     targets: 2,
                     render: function (data, type, full, meta) {
                         var $venta_realizada = full['venta_realizada'];
-                        
+
                         return "<span class='text-truncate align-middle'>" + $venta_realizada + '</span>';
                     }
                 },
                 {
                     targets: 3,
-                    render: function (data, type, full, meta) {
-                        var $subtotal = full['subtotal'];
-
-                        return '<span class="text-nowrap">' + $subtotal + '</span>';
-                    }
-                },
-                {
-                    targets: 4,
                     render: function (data, type, full, meta) {
                         var $total = full['total'];
 
@@ -122,7 +113,7 @@ $(function () {
                 },
                 {
                     // User Status
-                    targets: 5,
+                    targets: 4,
                     render: function (data, type, full, meta) {
                         var $status = full['status'];
 
@@ -136,12 +127,12 @@ $(function () {
                     }
                 },
                 {
-                    targets: 6,
+                    targets: 5,
                     render: function (data, type, full, meta) {
-                        var $user = full['user'];
+                        var $user = full['seller'];
                         console.log($user);
 
-                        return '<span class="text-nowrap">' + $user.name + '</span>';
+                        return '<span class="text-nowrap">' + $user + '</span>';
                     }
                 },
                 {
