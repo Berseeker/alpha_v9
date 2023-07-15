@@ -265,19 +265,18 @@ class CotizacionController extends Controller
             if($prevVenta == null)
             {
                 $venta = new Venta();
-                $venta->cantidad_piezas = $cotizacion['total_productos'];
+                $venta->cantidad_piezas = $cotizacion->total_products;
                 $venta->venta_realizada = now();
                 $venta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
                 $venta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
                 $venta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
                 $venta->status = 'Aprobada';
-                $venta->cotizacion_id = $cotizacion['id'];
+                $venta->cotizacion_id = $cotizacion->id;
                 $venta->user_id = Auth::user()->id;
-                dd($cotizacion, $venta, $cotizacion->total_productos,$cotizacion['total_productos']);
                 $venta->save();
             }
             else {
-                $prevVenta->cantidad_piezas = $cotizacion['total_productos'];
+                $prevVenta->cantidad_piezas = $cotizacion->total_products;
                 $prevVenta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
                 $prevVenta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
                 $prevVenta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
