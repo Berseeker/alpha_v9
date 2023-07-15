@@ -254,10 +254,10 @@ class CotizacionController extends Controller
 
     public function updateQuick(Request $request)
     {
+        dd($request);
         $cotizacion = Order::find($request->cotizacion_id);
         $cotizacion->order_status = $request->estatus;
         $cotizacion->save();
-        dd($cotizacion->total_productos, $cotizacion['total_productos']);
 
         if($request->estatus == 'APPROVED')
         {
