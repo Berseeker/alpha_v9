@@ -16,9 +16,8 @@ $(function () {
         select = $('.select2'),
         dtContact = $('.dt-contact'),
         statusObj = {
-            'Cancelada': { title: 'Cancelada', class: 'badge-light-warning' },
-            'Aprobada': { title: 'Aprobada', class: 'badge-light-success' },
-            3: { title: 'Inactive', class: 'badge-light-secondary' }
+            'CANCEL': { title: 'Cancelada', class: 'badge-light-warning' },
+            'APPROVED': { title: 'Aprobada', class: 'badge-light-success' }
         };
 
     var assetPath = '../../../app-assets/',

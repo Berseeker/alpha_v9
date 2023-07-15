@@ -108,7 +108,6 @@
             <th></th>
             <th>Cotizacion</th>
             <th>Venta Realizada</th>
-            <th>Subtotal</th>
             <th>Total</th>
             <th>Estatus</th>
             <th>Aprobada por</th>
