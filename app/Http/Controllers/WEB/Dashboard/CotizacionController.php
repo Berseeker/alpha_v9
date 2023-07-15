@@ -257,6 +257,7 @@ class CotizacionController extends Controller
         $cotizacion = Order::find($request->cotizacion_id);
         $cotizacion->order_status = $request->estatus;
         $cotizacion->save();
+        dd($cotizacion);
 
         if($request->estatus == 'APPROVED')
         {
