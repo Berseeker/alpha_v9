@@ -17,6 +17,7 @@ class VentasController extends Controller
         $sales = array();
 
         foreach ($ventas as $key => $venta) {
+            dd($venta, $venta->order);
             $products = OrderProduct::where('order_id', $venta->order->order_id)->get();
 
             $total = 0;
