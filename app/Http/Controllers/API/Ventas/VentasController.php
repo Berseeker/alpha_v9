@@ -5,7 +5,8 @@ namespace App\Http\Controllers\API\Ventas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Venta;
+use App\Models\OrderProduct;
+use App\Models\Sale;
 
 class VentasController extends Controller
 {
