@@ -24,12 +24,11 @@ return new class extends Migration
             // Estados: Pendiente, Cancelada, Aprobada
             $table->enum('status',['Cancelada','Aprobada']);
             //FK de Cotizacion --> Users
-            $table->unsignedBigInteger('cotizacion_id');
-            $table->foreign('cotizacion_id')->references('id')->on('cotizaciones');
+            $table->longText('cotizacion_id');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            
+
             $table->softDeletes();
             $table->timestamps();
         });
