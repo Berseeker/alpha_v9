@@ -20,7 +20,6 @@ use App\Models\Shippment;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Sale;
-use App\Models\Venta;
 
 use DateTime;
 //para el manejo de archivos
@@ -210,7 +209,7 @@ class CotizacionController extends Controller
         }
 
         if($request->order_status == 'CANCEL' || $request->status == 'PENDANT' ){
-            $preVenta = Venta::where('cotizacion_id', '=' , $cotizacion->id)->get();
+            $preVenta = Sale::where('order_id', '=' , $order->order_id)->get();
             if(!$preVenta->isEmpty()){
                 foreach($preVenta as $Venta){
                     $Venta->delete();
@@ -256,42 +255,28 @@ class CotizacionController extends Controller
     {
 
         $cotizacion = Order::where('order_id', $request->cotizacion_id)->first();
-        $cotizacion->order_status = $request->estatus;
-        $cotizacion->save();
+        $order->order_status = $request->estatus;
+        $order->save();
+
+        $payment = Payment::where('order_id', $order->order_id)->first();
+        $shippment = Shippment::where('order_id', $order->order_id)->first();
 
         if($request->estatus == 'APPROVED')
         {
-            $prevVenta = Venta::where('cotizacion_id',$cotizacion->id)->first();
+            $prevVenta = Sale::where('order_id',$order->id)->first();
             if($prevVenta == null)
             {
-                $venta = new Venta();
-                $venta->cantidad_piezas = $cotizacion->total_products;
-                $venta->venta_realizada = now();
-                $venta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
-                $venta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
-                $venta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
-                $venta->status = 'Aprobada';
-                $venta->cotizacion_id = $cotizacion->order_id;
-                $venta->user_id = Auth::user()->id;
-                $venta->save();
-            }
-            else {
-                $prevVenta->cantidad_piezas = $cotizacion->total_products;
-                $prevVenta->total = ($request->precio_total == null) ? 0 : $request->precio_total;
-                $prevVenta->subtotal = ($request->precio_subtotal == null) ? 0 : $request->precio_subtotal;
-                $prevVenta->mano_obra = ($request->mano_x_obra == null) ? 0 : $request->mano_x_obra;
-                $prevVenta->user_id = Auth::user()->id;
-                if($prevVenta->isDirty())
-                {
-                    $prevVenta->venta_realizada = now();
-                    $prevVenta->save();
-                }
+                $sale = new Sale();
+                $sale->order_id = $order->order_id;
+                $sale->payment_id = $payment->id;
+                $sale->shippment_id = $shippment->id;
+                $sale->user_id = Auth::user()->id;
+                $sale->save();
             }
         }
-        //$cotizacion->id
-        //venta $cotizaion_id
+
         if($request->estatus == 'Pendiente' || $request->estatus == 'Cancelada' ){
-            $preVenta = Venta::where('cotizacion_id', '=' , $cotizacion->id)->get();
+            $preVenta = Sale::where('order_id', '=' , $order->order_id)->get();
             if(!$preVenta->isEmpty()){
                 foreach($preVenta as $Venta){
                     $Venta->delete();
