@@ -115,7 +115,7 @@ $(function () {
                     targets: 4,
                     render: function (data, type, full, meta) {
                         var $status = full['status'];
-
+                        console.log($status, full);
                         return (
                             '<span class="badge rounded-pill ' +
                             statusObj[$status].class +
