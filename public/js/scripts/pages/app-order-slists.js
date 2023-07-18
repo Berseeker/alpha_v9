@@ -56,6 +56,7 @@ $(function () {
                 { data: 'name' },
                 { data: 'email' },
                 { data: 'status' },
+                { data: 'asesor' },
                 { data: '' },
             ],
             columnDefs: [
@@ -140,6 +141,15 @@ $(function () {
                             statusObj[$status].title +
                             '</span>'
                         );
+                    }
+                },
+                {
+                    // Asesor
+                    targets: 5,
+                    render: function (data, type, full, meta) {
+                        var $asesor = full['user'];
+                        //console.log($asesor)
+                        return '<span class="text-nowrap">' + $asesor.name + '</span>';
                     }
                 },
                 {
