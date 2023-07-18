@@ -292,18 +292,18 @@ class CotizacionController extends Controller
 
     public function download($id)
     {
-        $cotizacion = Order::find($id);
+        $order = Order::find($id);
         $path = public_path('storage');
         $public = public_path();
-        if($cotizacion->logo_img != NULL){
+        if($order->file_path != NULL){
 
-            $files = json_decode($cotizacion->logo_img);
+            //$files = json_decode($order->file_path);
             $zipname = uniqid().'assets.zip';
             $zip = new ZipArchive;
             $zip->open($public.'/assets/'.$zipname, ZipArchive::CREATE);
-            foreach ($files as $file) {
-                $zip->addFile($path.'/'.$file,$file);
-            }
+           // foreach ($files as $file) {
+                $zip->addFile($path.'/'.$order->file_path,$order->file_path);
+            //}
             $zip->close();
 
             return response()->download($public.'/assets/'.$zipname);
