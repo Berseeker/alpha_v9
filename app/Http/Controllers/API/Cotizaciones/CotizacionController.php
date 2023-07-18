@@ -12,8 +12,8 @@ class CotizacionController extends Controller
 {
     public function index()
     {
-        $cotizaciones = Order::where('deleted_at',null)->get()->toJson();
-        
+        $cotizaciones = Order::with('user')->where('deleted_at',null)->get()->toJson();
+
         return $cotizaciones;
     }
 
@@ -66,7 +66,7 @@ class CotizacionController extends Controller
         $cotizacion->pantones = json_encode($request->pantones);
         $cotizacion->tipografia = json_encode($request->tipografia);
         $precios_pza = array();
-        for ($i=0; $i < $request->total_productos ; $i++) { 
+        for ($i=0; $i < $request->total_productos ; $i++) {
             array_push($precios_pza,0);
         }
         $cotizacion->precio_pza = json_encode($precios_pza);
@@ -74,7 +74,7 @@ class CotizacionController extends Controller
         $cotizacion->precio_total = 0;
         $cotizacion->precio_subtotal = 0;
         $cotizacion->mano_x_obra = 0;
-        
+
         $cotizacion->numero_tintas = json_encode($request->numero_tintas);
         $cotizacion->forma_pago = 'Tarjeta';
         $cotizacion->numero_pzas = json_encode($request->numero_pzas);
@@ -96,7 +96,7 @@ class CotizacionController extends Controller
             'msg' => 'La cotizacion se genero de manera exitosa'
         ]);
 
-        
+
     }
 
     public function update(Request $request,$id)

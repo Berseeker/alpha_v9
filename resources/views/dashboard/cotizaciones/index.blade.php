@@ -105,6 +105,7 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Estatus</th>
+            <th>Asesor</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -168,7 +169,7 @@
 
 @section('page-script')
   {{-- Page js files --}}
-  <script src="{{ asset('js/scripts/pages/app-order-listas.js') }}"></script>
+  <script src="{{ asset('js/scripts/pages/app-orders-lists.js') }}"></script>
 
   <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
   <script>
