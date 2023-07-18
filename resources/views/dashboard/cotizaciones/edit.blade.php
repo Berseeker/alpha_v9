@@ -69,17 +69,17 @@
                                                 @elseif($order->order_status == "CANCEL")
                                                     <option value="{{ $order->order_status }}" selected> CANCELADA </option>
                                                     <option class='text-warning' value="PENDANT">PENDIENTE</option>
-                                                    <option class='text-success' value="APPROVED">APROVADA</option>
+                                                    <option class='text-success' value="APPROVED">APROBADA</option>
                                                     <option class='text-success' value="REVIEWING">EN REVISIÓN</option>
 
                                                 @elseif($order->order_status == "REVIEWING")
                                                     <option class='text-success' value="REVIEWING" selected>EN REVISIÓN</option>
                                                     <option value="{{ $order->order_status }}"> CANCELADA </option>
                                                     <option class='text-warning' value="PENDANT">PENDIENTE</option>
-                                                    <option class='text-success' value="APPROVED">APROVADA</option>
+                                                    <option class='text-success' value="APPROVED">APROBADA</option>
 
                                                 @else
-                                                    <option value="{{ $order->order_status }}" selected> APROVADA </option>
+                                                    <option value="{{ $order->order_status }}" selected> APROBADA </option>
                                                     <option class="text-danger" value="CANCEL">CANCELADA</option>
                                                     <option class='text-warning' value="PENDANT">PENDIENTE</option>
                                                     <option class='text-success' value="REVIEWING">EN REVISIÓN</option>
