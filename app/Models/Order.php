@@ -19,6 +19,10 @@ class Order extends Model
     public $incrementing = false;
     protected $appends = ['date_transform','status','bg_status', 'payment_gross', 'payment_net'];
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     protected function paymentGross(): Attribute
     {
         $gross_price = 0;
@@ -26,7 +30,7 @@ class Order extends Model
         if ($payment != null) {
             $gross_price = $payment->gross_price;
         }
-        
+
         return Attribute::make(
             get: fn () => $gross_price,
         );
@@ -39,7 +43,7 @@ class Order extends Model
         if ($payment != null) {
             $net_price = $payment->net_price;
         }
-        
+
         return Attribute::make(
             get: fn () => $net_price,
         );
