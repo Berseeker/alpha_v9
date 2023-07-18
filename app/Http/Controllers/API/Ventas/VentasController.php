@@ -35,7 +35,8 @@ class VentasController extends Controller
                 'venta_realizada' => $venta->created_at,
                 'total' => $total,
                 'status' => $order->order_status,
-                'seller' => $seller->name
+                'seller' => $seller->name,
+                'order_id' => $order->order_id
             ];
 
             array_push($sales, $sale);

@@ -140,7 +140,7 @@ $(function () {
                     title: 'Actions',
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        var id = full['cotizacion_id'];
+                        var id = full['order_id'];
                         return (
                             '<div class="btn-group">' +
                             '<a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
