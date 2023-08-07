@@ -12,7 +12,7 @@ class PromoOpcionProcess extends Command
      *
      * @var string
      */
-    protected $signature = 'command:promoopcion';
+    protected $signature = 'provider:promoopcion';
 
     /**
      * The console command description.
