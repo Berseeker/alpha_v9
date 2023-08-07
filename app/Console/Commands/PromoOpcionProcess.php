@@ -40,7 +40,7 @@ class PromoOpcionProcess extends Command
     {
         InsertPromoOpcion::dispatch();
         $this->info('Job Promo Opcion done at: ' . date('Y-m-d H:i:s'));
-        
+
         return 0;
     }
 }
