@@ -55,7 +55,8 @@ class PromoOpcionProcess extends Command
 
         if(array_key_exists('error',$result))
         {
-            var_dump($result);
+            $test =  var_export($result);
+            echo $test;
             $log = new Logs();
             $log->status = 'Error';
             $log->message = $result['error'] . 'en PromoOpcion.';
@@ -64,6 +65,7 @@ class PromoOpcionProcess extends Command
         } else {
 
             $cont_new_products = 0; #Contador global
+            $cont_update_products = 0; #Contador global
             foreach ($result as $key => $item)
             {
                 array_push($api_ids, $item['item_code']);
@@ -72,17 +74,20 @@ class PromoOpcionProcess extends Command
                 {
                     $this->insertProduct($item, $cont_new_products);
                 } else {
-                    $this->updateProduct($item);
+                    $this->updateProduct($item, $cont_update_products);
                 }
             }
 
-            $msg = '';
-            if ($cont_new_products > 0) {
-                $msg = $msg.$cont_new_products. ' productos nuevos';
+            $msg = 'Se agregaron ';
+            $msg = '' . $msg.$cont_new_products;
+            if ($cont_update_products > 0) {
+                $msg = $msg . ' y se actualizaron ' . $cont_update_products;
             }
 
+            $msg = ' productos ';
+
             $log = new Logs();
-            $log->status = 'Error';
+            $log->status = 'Success';
             $log->message = $msg . 'en PromoOpcion.';
             $log->save();
             Log::error($msg . 'en PromoOpcion.');
@@ -849,7 +854,7 @@ class PromoOpcionProcess extends Command
         $product->save();
     }
 
-    private function updateProduct($item)
+    private function updateProduct(&$item)
     {
         $colores = [];
         if (str_contains($item['colors'], '/')) {
@@ -887,7 +892,8 @@ class PromoOpcionProcess extends Command
 
         Product::where('code', '=', $item['item_code'])
             ->update([
-                'colors' => json_encode($colores)
+                'colors' => json_encode($colores),
+                'images' => json_encode(array($item['img']))
         ]);
     }
 }
