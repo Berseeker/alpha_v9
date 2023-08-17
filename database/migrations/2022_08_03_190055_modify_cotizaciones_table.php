@@ -17,7 +17,7 @@ return new class extends Migration
     {
         // Status de la cotizacion
         // Estados: Pendiente, Cancelada, Aprobada
-        \DB::statement("ALTER TABLE ".$this->set_schema_table." MODIFY COLUMN status ENUM('Aprobada', 'Cancelada', 'Pendiente', 'En Proceso') NOT NULL");
+        \DB::raw("ALTER TABLE cotizaciones MODIFY COLUMN status ENUM('Aprobada', 'Cancelada', 'Pendiente', 'En Proceso') NOT NULL");
     }
 
     /**

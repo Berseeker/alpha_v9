@@ -11,11 +11,11 @@ return new class extends Migration
      *
      * @return void
      */
-    public $set_schema_table = 'cotizaciones';
-
     public function up()
     {
-        \DB::raw("ALTER TABLE ".$this->set_schema_table." MODIFY COLUMN forma_pago ENUM('Tarjeta', 'Cancelada', 'Efectivo', 'Transferencia', 'Otro') NOT NULL");
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->timestamp('expires_at')->nullable()->after('last_used_at');
+        });
     }
 
     /**
@@ -25,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->dropColumn('expires_at');
+        });
     }
 };
