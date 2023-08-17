@@ -77,7 +77,7 @@ $(function () {
                     render: function (data, type, full, meta) {
                         console.log(full);
                         var id = full['identifier'];
-                        numer = id.split('-');
+                        var number = id.split('-');
 
                         // Creates full output for row
                         var $row_output =
