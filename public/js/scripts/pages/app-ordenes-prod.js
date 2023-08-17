@@ -1,5 +1,3 @@
-const { split } = require("lodash");
-
 /*=========================================================================================
     File Name: app-user-list.js
     Description: User List page
