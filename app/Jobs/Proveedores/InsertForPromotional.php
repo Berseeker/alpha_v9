@@ -62,15 +62,15 @@ class InsertForPromotional implements ShouldQueue
         $cont_new_products = 0; #Contador global
         $cont_update_products = 0; #Contador global
         $api_ids = array();
-        foreach ($response as $producto) 
+        foreach ($response as $producto)
         {
             array_push($api_ids, $producto['id_articulo']);
             $product = Product::where('parent_code', $producto['id_articulo'])->where('proveedor', 'ForPromotional')->first();
             if($product == null){
                 $this->insertProduct($producto, $cont_new_products);
             } else {
-                $this->updateProduct($producto, $cont_update_products);
-            }  
+                $this->updateProduct($product, $producto, $cont_update_products);
+            }
         }
 
         $msg = '';
@@ -128,13 +128,13 @@ class InsertForPromotional implements ShouldQueue
         }
         $product->images = json_encode($images);
         $product->proveedor = 'ForPromotional';
-        
+
         $result = $this->setFamily($item);
         if ($result == null) {
             $product->categoria_id = 20;
             $product->subcategoria_id = 93;
         }
-            
+
         $product->categoria_id = (isset($result['category_id'])) ? $result['category_id'] : 20;
         $product->subcategoria_id = (isset($result['subcategory_id'])) ? $result['subcategory_id'] : 93;
         $product->search = $result['search'];
@@ -146,12 +146,10 @@ class InsertForPromotional implements ShouldQueue
 
     }
 
-    private function updateProduct($item, &$cont_update_products) 
+    private function updateProduct($product, $item, &$cont_update_products)
     {
-
-        $product = Product::where('parent_code', $item['id_articulo'])->first();
         $colors = json_decode($product->colors);
-        
+
         $pointer = false;
         foreach ($colors as $color) {
 
@@ -163,8 +161,8 @@ class InsertForPromotional implements ShouldQueue
         if (!$pointer) {
             array_push($colors, trim(Str::upper($item['color'])));
         }
-        
-      
+
+
         $product->colors = json_encode($colors);
         $product->update();
 
@@ -174,7 +172,7 @@ class InsertForPromotional implements ShouldQueue
     private function setFamily($producto) {
 
         if($producto['categoria'] == "TECNOLOGÍA"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'AUDÍFONOS':
                     return [
@@ -224,7 +222,7 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', BATERIA PORTATIL ,' . Str::upper($producto['nombre_articulo']),
                     ];
                     break;
-                
+
                 default:
                     return [
                         'category_id' => 1,
@@ -243,7 +241,7 @@ class InsertForPromotional implements ShouldQueue
             //6.- POWER BANKS
         }
         if($producto['categoria'] == "BOLÍGRAFOS"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'BOLÍGRAFOS METÁLICOS':
                     return [
@@ -270,7 +268,7 @@ class InsertForPromotional implements ShouldQueue
                     ];
                     break;
                 case 'BOLÍGRAFOS ECOLÓGICOS':
-                    
+
                     $product = new Product();
                     $product->name = $producto['nombre_articulo'];
                     $product->code = $producto['id_articulo'];
@@ -325,7 +323,7 @@ class InsertForPromotional implements ShouldQueue
                         'search' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', BOLIGRAFOS DE PLASTICO, ESCRITURA, ' . Str::upper($producto['nombre_articulo']),
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', BOLIGRAFOS DE PLASTICO, ESCRITURA, ' . Str::upper($producto['nombre_articulo'])
                     ];
-                    break;   
+                    break;
                 default:
                     return [
                         'category_id' => 2,
@@ -334,18 +332,18 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'].','.$producto['sub_categoria'].',OTROS BOLIGRAFOS,BOLIGRAFO,' . Str::upper($producto['nombre_articulo'])
                     ];
                     break;
-            } 
+            }
             //--------------- BOLIGRAFOS
             //BOLÍGRAFOS METÁLICOS
             //BOLÍGRAFOS MULTIFUNCIONALES
             //BOLÍGRAFOS DE PLÁSTICO
             //BOLÍGRAFOS ECOLÓGICOS
             //BOLÍGRAFOS PLÁSTICO
-            
+
         }
 
         if($producto['categoria'] == "SALUD Y CUIDADO PERSONAL"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'SALUD':
                     $subcategoria = 16;
@@ -421,7 +419,7 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', VIAJAR, VACACIONES, ' . Str::upper($producto['nombre_articulo'])
                     ];
                     break;
-                
+
                 default:
                     return [
                         'category_id' => 3,
@@ -437,11 +435,11 @@ class InsertForPromotional implements ShouldQueue
             //COSMETIQUERAS
             //CUIDADO PERSONAL
             //VIAJE
-            
+
         }
 
         if($producto['categoria'] == "TEXTIL"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'BOLSAS Y MORRALES':
                     return [
@@ -546,7 +544,7 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'].', '.$producto['sub_categoria'].', PORTAFOLIOS, PORTAFÓLIOS, ' . Str::upper($producto['nombre_articulo'])
                     ];
                     break;
-                
+
                 default:
                     return [
                         'category_id' => 5,
@@ -556,7 +554,7 @@ class InsertForPromotional implements ShouldQueue
                     ];
                     break;
             }
-            // --------- TEXTIL     
+            // --------- TEXTIL
             //BOLSAS Y MORRALES
             //BOLSAS ECOLÓGICAS
             //MOCHILAS
@@ -564,10 +562,10 @@ class InsertForPromotional implements ShouldQueue
             //LONCHERAS Y HIELERAS
             //GORRAS Y CANGURERAS
             //PARAGUAS
-            //PORTAFOLIOS   
+            //PORTAFOLIOS
         }
         if($producto['categoria'] == "HERRAMIENTAS"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'ACCESORIOS PARA AUTO':
                     return [
@@ -607,7 +605,7 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'].', '.$producto['sub_categoria'] . ', NAVÁJAS, ' . Str::upper($producto['nombre_articulo'])
                     ];
                     break;
-                
+
                 default:
                     return [
                         'category_id' => 7,
@@ -617,15 +615,15 @@ class InsertForPromotional implements ShouldQueue
                     ];
                     break;
             }
-            // --------- HERRAMIENTAS   
+            // --------- HERRAMIENTAS
             //ACCESORIOS PARA AUT
             //HERRAMIENTAS
             //LÁMPARAS
-            //NAVAJAS MULTIFUNCIÓN   
+            //NAVAJAS MULTIFUNCIÓN
         }
 
         if($producto['categoria'] == "ECOLOGICOS" || $producto['categoria'] == 'ECOLÓGICOS'){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'LIBRETAS ECOLÓGICAS':
                     return [
@@ -650,8 +648,8 @@ class InsertForPromotional implements ShouldQueue
                         'search' => $producto['categoria'].', '.$producto['sub_categoria'] . ', ECOLOGICOS, ECOLÓGICOS, ECOLOGÍA, ECOLOGIA, RECICLABLE, ' . Str::upper($producto['nombre_articulo']),
                         'meta_keywords' => $producto['categoria'].', '.$producto['sub_categoria'] . ', ECOLOGICOS, ECOLÓGICOS, ECOLOGÍA, ECOLOGIA, RECICLABLE, ' . Str::upper($producto['nombre_articulo']),
                     ];
-                    break;      
-                
+                    break;
+
                 default:
                     return [
                         'category_id' => 8,
@@ -664,11 +662,11 @@ class InsertForPromotional implements ShouldQueue
             // --------- ECOLOGICOS
             //LIBRETAS ECOLÓGICAS
             //NOTAS
-            //BOLSAS ECOLÓGICAS  
+            //BOLSAS ECOLÓGICAS
         }
 
         if($producto['categoria'] == "HOGAR"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'COCINA':
                     $subcategoria = 42;
@@ -700,7 +698,7 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'] . ', TARRO, BEBIDA, ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo']),
                     ];
                     break;
-                    
+
                 default:
                     return [
                         'category_id' => 9,
@@ -713,11 +711,11 @@ class InsertForPromotional implements ShouldQueue
             // --------- HOGAR
             //COCINA
             //BAR
-            //TAZAS 
+            //TAZAS
         }
 
         if($producto['categoria'] == "OFICINA"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'ESCOLARES':
                     return [
@@ -749,7 +747,7 @@ class InsertForPromotional implements ShouldQueue
                         $subcategoria = 52;
                         $string = 'TARJETA, TARJETERO, ' . Str::upper($producto['nombre_articulo']);
                     }
-                    
+
                     return [
                         'category_id' => $categoria,
                         'subcategory_id' => $subcategoria,
@@ -772,7 +770,7 @@ class InsertForPromotional implements ShouldQueue
                         'search' => $producto['categoria'] . ', OFICINA, ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo']),
                         'meta_keywords' => $producto['categoria'] . ', OFICINA, ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo'])
                     ];
-                    break;            
+                    break;
                 default:
                     return [
                         'category_id' => 10,
@@ -786,11 +784,11 @@ class InsertForPromotional implements ShouldQueue
             //ESCOLARES
             //ACCESORIOS DE OFICINA
             //LIBRETAS
-            //CARPETAS  
+            //CARPETAS
         }
 
         if($producto['categoria'] == "TIEMPO LIBRE"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'VIAJE':
                     return [
@@ -832,7 +830,7 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo'])
                     ];
                     break;
-                    
+
                 default:
                     return [
                         'category_id' => 11,
@@ -842,16 +840,16 @@ class InsertForPromotional implements ShouldQueue
                     ];
                     break;
             }
-            // --------- TIEMPO LIBRE  
+            // --------- TIEMPO LIBRE
             //VIAJE
             //ENTRETENIMIENTO
             //ANTIESTRÉS
             //MASCOTAS
-            //DEPORTES    
+            //DEPORTES
         }
 
         if($producto['categoria'] == "SUBLIMACIÓN"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'TAZAS':
                     return [
@@ -900,7 +898,7 @@ class InsertForPromotional implements ShouldQueue
                         'search' => $producto['categoria'] . ', OFICINA, SUBLIMACION, ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo']),
                         'meta_keywords' => $producto['categoria'] . ', OFICINA, SUBLIMACION, ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo'])
                     ];
-                    break;     
+                    break;
                 default:
                     return [
                         'category_id' => 13,
@@ -916,11 +914,11 @@ class InsertForPromotional implements ShouldQueue
             //VASOS Y TARROS
             //TERMOS
             //CILINDROS METÁLICOS
-            //ACCESORIOS DE OFICINA 
+            //ACCESORIOS DE OFICINA
         }
 
         if($producto['categoria'] == "BEBIDAS"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'ÚNICA':
                     return [
@@ -997,7 +995,7 @@ class InsertForPromotional implements ShouldQueue
         }
 
         if($producto['categoria'] == "LLAVEROS"){
-            
+
             switch ($producto['sub_categoria']) {
                 case 'LLAVEROS MULTIFUNCIONALES':
                     return [
@@ -1018,7 +1016,7 @@ class InsertForPromotional implements ShouldQueue
                         'search' => $producto['categoria'] . ', ' . $producto['sub_categoria'].',LLAVERO METALICO, LLAVÉROS, ' . Str::upper($producto['nombre_articulo']),
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'].',LLAVERO METALICO, LLAVÉROS, ' . Str::upper($producto['nombre_articulo']),
                     ];
-                    break;   
+                    break;
                 default:
                     return [
                         'category_id' => 14,
@@ -1028,9 +1026,9 @@ class InsertForPromotional implements ShouldQueue
                     ];
                     break;
             }
-            // --------- LLAVEROS  
+            // --------- LLAVEROS
             //LLAVEROS MULTIFUNCIONALES
-            //LLAVEROS METÁLICOS        
+            //LLAVEROS METÁLICOS
         }
 
         if ($producto['categoria'] == 'HUICHOL') {
@@ -1113,7 +1111,7 @@ class InsertForPromotional implements ShouldQueue
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ',TEXTIL, PORTAFOLIO, MALETIN, MALETÍN, ' . Str::upper($producto['nombre_articulo'])
                     ];
                     break;
-                
+
                 default:
                     return [
                         'category_id' => 20,

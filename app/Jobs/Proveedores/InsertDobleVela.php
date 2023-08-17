@@ -55,7 +55,7 @@ class InsertDobleVela implements ShouldQueue
             $product = Product::where('code', $producto['CLAVE'])->where('proveedor', 'DobleVela')->first();
             if($product == null){
                 $this->insertProduct($producto, $cont_new_products);
-              
+
             }else{
                 $this->updateProduct($producto, $cont_update_products);
             }
@@ -80,14 +80,14 @@ class InsertDobleVela implements ShouldQueue
         ProviderUpdated::dispatch('DobleVela');
     }
 
-    private function insertProduct($producto, &$cont_new_products){
-  
+    private function insertProduct($producto, &$cont_new_products)
+    {
         $item = new Product();
         $item->code = trim($producto['CLAVE']); //string
         $item->parent_code = trim($producto['MODELO']); //string
         $item->name = trim($producto['NOMBRE']);
         $item->details = trim($producto['Descripcion']);
-        
+
         $item->images = NULL; //JSON
         $color = explode("-", $producto['COLOR']);
         $item->colors = json_encode(array(trim(Str::upper($color[1]))));
@@ -198,13 +198,13 @@ class InsertDobleVela implements ShouldQueue
                 }
             }
         }
-            
+
         $item->printing_methods = json_encode($metodo_x_impresion); // string
         $item->material = $producto['Material']; //string
         $item->custom = false;
         $item->category = $producto['Familia'];
         $item->subcategory = $producto['SubFamilia'];
-            
+
         if($producto['Familia'] == 'TEXTILES')
         {
             $item->categoria_id = 5;
@@ -215,7 +215,7 @@ class InsertDobleVela implements ShouldQueue
                 $subcategoria = 27;
                 $item->search = $producto['Familia'].', TEXTÍL, '.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
                 $item->meta_keywords = $producto['Familia'].', TEXTÍL, '.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
-            } 
+            }
             else if($producto['SubFamilia'] == 'MALETAS')
             {
                 $subcategoria = 25;
@@ -456,7 +456,7 @@ class InsertDobleVela implements ShouldQueue
             }
 
             $item->subcategoria_id = $subcategoria;
-            
+
         }
         else if($producto['Familia'] == 'ESCRITURA Y MÁS')
         {
@@ -515,7 +515,7 @@ class InsertDobleVela implements ShouldQueue
                 $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
-            $item->subcategoria_id = $subcategoria;   
+            $item->subcategoria_id = $subcategoria;
         }
         else if($producto['Familia'] == 'TECNOLOGÍA')
         {
@@ -559,7 +559,7 @@ class InsertDobleVela implements ShouldQueue
 
             $item->categoria_id = 1;
             $item->subcategoria_id = $subcategoria;
-            
+
         }
         else if($producto['Familia'] == 'LLAVEROS, LINTERNAS Y HERRAMIE')
         {
@@ -616,7 +616,7 @@ class InsertDobleVela implements ShouldQueue
                 $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
-            $item->subcategoria_id = $subcategoria;   
+            $item->subcategoria_id = $subcategoria;
         }
         else if($producto['Familia'] == 'SUBLIMACIÓN')
         {
@@ -644,7 +644,7 @@ class InsertDobleVela implements ShouldQueue
                 $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
-            $item->subcategoria_id = $subcategoria;   
+            $item->subcategoria_id = $subcategoria;
         }
         else if($producto['Familia'] == 'SALUD Y BELLEZA')
         {
@@ -683,7 +683,7 @@ class InsertDobleVela implements ShouldQueue
                 $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             }
 
-            $item->subcategoria_id = $subcategoria; 
+            $item->subcategoria_id = $subcategoria;
         }
         else if($producto['Familia'] == 'NAYAD')
         {
@@ -702,15 +702,15 @@ class InsertDobleVela implements ShouldQueue
 
             $item->categoria_id = 14;
             $item->subcategoria_id = $subcategoria;
-            
+
         }
         else{
             $item->search = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             $item->meta_keywords = $producto['Familia'].','.$producto['SubFamilia'] . ', ' . Str::upper(trim($producto['NOMBRE']));
             $item->categoria_id = 20;
-            $item->subcategoria_id = 93;  
+            $item->subcategoria_id = 93;
         }
-            
+
         $item->save();
         $cont_new_products++;
     }
@@ -721,7 +721,7 @@ class InsertDobleVela implements ShouldQueue
         $colors = json_decode($product->colors);
 
         $item_color = explode("-", $item['COLOR']);;
-        
+
         $pointer = false;
         foreach ($colors as $color) {
 
@@ -733,7 +733,7 @@ class InsertDobleVela implements ShouldQueue
         if (!$pointer) {
             array_push($colors, trim(Str::upper($item_color[1])));
         }
-        
+
         $product->colors = json_encode($colors);
 
         if ($product->isDirty()) {

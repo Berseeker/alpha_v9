@@ -56,6 +56,7 @@ class InsertPromoOpcion implements ShouldQueue
         } else {
 
             $cont_new_products = 0; #Contador global
+            $cont_update_products = 0;
             foreach ($result as $key => $item)
             {
                 array_push($api_ids, $item['item_code']);
@@ -73,11 +74,16 @@ class InsertPromoOpcion implements ShouldQueue
                 $msg = $msg.$cont_new_products. ' productos nuevos';
             }
 
+            if ($cont_update_products > 0) {
+                $msg = $msg. ' y se actualizaron '. $cont_update_products. ' productos';
+            }
+
+
             $log = new Logs();
-            $log->status = 'Error';
+            $log->status = 'Success';
             $log->message = $msg . 'en PromoOpcion.';
             $log->save();
-            Log::error($msg . 'en PromoOpcion.');
+            Log::info($msg . 'en PromoOpcion.');
 
             Product::where('proveedor','PromoOpcion')->whereNotIn('code', $api_ids)->delete();
             ProviderUpdated::dispatch('PromoOpcion');
@@ -834,11 +840,11 @@ class InsertPromoOpcion implements ShouldQueue
                 $product->meta_keywords = "OTROS,VARIOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
         }
-
+        $cont_new_products++;
         $product->save();
     }
 
-    private function updateProduct($item)
+    private function updateProduct($item, &$cont_update_products)
     {
         $colores = [];
         if (str_contains($item['colors'], '/')) {
@@ -876,7 +882,10 @@ class InsertPromoOpcion implements ShouldQueue
 
         Product::where('code', '=', $item['item_code'])
             ->update([
-                'colors' => json_encode($colores)
+                'colors' => json_encode($colores),
+                'images' => json_encode($item['img'])
         ]);
+
+        $cont_update_products++;
     }
 }

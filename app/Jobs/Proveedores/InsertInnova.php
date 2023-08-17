@@ -41,7 +41,7 @@ class InsertInnova implements ShouldQueue
     public function handle()
     {
         $this->error = $this->client->getError();
-        if ($this->error) 
+        if ($this->error)
         {
             if (isset($this->error['code']) && $this->error['code'] == '#10004') {
                 $log = new Logs();
@@ -76,7 +76,7 @@ class InsertInnova implements ShouldQueue
         if (isset($response['pages'])) {
             $pages = (isset($response['pages'])) ? $response['pages'] : 9;
 
-            for ($i = 1; $i <= $pages; $i++ ) 
+            for ($i = 1; $i <= $pages; $i++ )
             {
                 $params = [
                     'user_api' => 'Pu7P5Qy602ea9d959f19Byo7',
@@ -88,16 +88,16 @@ class InsertInnova implements ShouldQueue
                 $response = $this->client->call('Products', $params);
                 $response = json_decode($response, true);
                 if(isset($response['response']) && $response['response'] == true) {
-                    foreach ($response['data'] as $key => $value) 
+                    foreach ($response['data'] as $key => $value)
                     {
                         array_push($api_ids, $value['codigo']);
                         $product = Product::where('code',$value['codigo'])->where('proveedor','Innova')->first();
                         if ($product == null) {
                             $this->insertProduct($value);
                         } else {
-                            $this->updateProduct($value);
+                            $this->updateProduct($product, $value);
                         }
-                        
+
                     }
                 } else {
                     $log = new Logs();
@@ -124,7 +124,7 @@ class InsertInnova implements ShouldQueue
         $images = array();
         $colores = array();
         array_push($images, $producto['imagen_principal']);
-        
+
         foreach ($producto['colores'] as $color) {
             array_push($colores, $color['codigo_color']);
             array_push($images, $color['image']);
@@ -157,7 +157,7 @@ class InsertInnova implements ShouldQueue
         $item->material = Str::ucfirst($producto['material']);
         $item->proveedor = 'Innova';
         $item->custom = false;
-        
+
         if($producto['categorias']['categorias'][0]['nombre'] == 'Cuidado Personal')
         {
             if(Str::contains($producto['nombre'], 'antibacterial'))
@@ -200,8 +200,8 @@ class InsertInnova implements ShouldQueue
                     {
                         $item->subcategoria_id = 7;
                         $item->categoria_id = 2;
-                        $item->search = 'BOLIGRAFOS, BOLIGRAFOS METALICOS, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']); 
-                        $item->meta_keywords = $producto['meta_keywords'] . ', BOLIGRAFOS, BOLIGRAFOS METALICOS, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']); 
+                        $item->search = 'BOLIGRAFOS, BOLIGRAFOS METALICOS, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
+                        $item->meta_keywords = $producto['meta_keywords'] . ', BOLIGRAFOS, BOLIGRAFOS METALICOS, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                     }
                     else if($producto['material'] == 'CARTON' || $producto['material'] == 'BAMBOO' || $producto['material'] == 'CORCHO' || $producto['material'] == 'FIBRA DE TRIGO')
                     {
@@ -242,10 +242,10 @@ class InsertInnova implements ShouldQueue
                     {
                         $item->subcategoria_id = 9;
                         $item->categoria_id = 2;
-                        $item->search = 'BOLIGRAFOS, BOLIGRAFOS DE PLASTICO, BOLÍGRAFOS DE PLÁSTICO, PLÁSTICO, BOLÍGRAFO PLASTICO, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']); 
+                        $item->search = 'BOLIGRAFOS, BOLIGRAFOS DE PLASTICO, BOLÍGRAFOS DE PLÁSTICO, PLÁSTICO, BOLÍGRAFO PLASTICO, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                         $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
                     }
-                    else 
+                    else
                     {
                         $item->subcategoria_id = 15;
                         $item->categoria_id = 2;
@@ -308,7 +308,7 @@ class InsertInnova implements ShouldQueue
                 {
                     $item->subcategoria_id = 9;
                     $item->categoria_id = 2;
-                    $item->search = 'BOLIGRAFOS, BOLÍGRAFOS, ESCRITURA, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']); 
+                    $item->search = 'BOLIGRAFOS, BOLÍGRAFOS, ESCRITURA, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                     $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
                 }
                 else {
@@ -399,7 +399,7 @@ class InsertInnova implements ShouldQueue
                 $item->search = 'OFICINA, LIBRETAS, ECOLOGÍA, ECOLÓGICO, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                 $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
             }
-            else 
+            else
             {
                 $item->subcategoria_id = 47;
                 $item->categoria_id = 10;
@@ -451,14 +451,14 @@ class InsertInnova implements ShouldQueue
                 $item->search = 'OFICINA, LIBRETAS, CUADERNO, TRABAJO, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                 $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
             }
-            else 
+            else
             {
                 $item->subcategoria_id = 47;
                 $item->categoria_id = 10;
                 $item->search = 'EJECUTIVA, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                 $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
             }
-            
+
         }
         else if($producto['categorias']['categorias'][0]['nombre'] == 'Viaje')
         {
@@ -591,7 +591,7 @@ class InsertInnova implements ShouldQueue
                 {
                     $item->subcategoria_id = 86;
                     $item->categoria_id = 17;
-                    $item->search = 'RELOJES, ESTUCHES, RELÓJ, RELOJ, WATCH, ESTÚCHE,' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']); 
+                    $item->search = 'RELOJES, ESTUCHES, RELÓJ, RELOJ, WATCH, ESTÚCHE,' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                     $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
                 }
                 else if($producto['categorias']['subcategorias'][0]['codigo'] == 'pared-y-escritorio')
@@ -683,7 +683,7 @@ class InsertInnova implements ShouldQueue
                 $item->search = 'LLAVEROS,OTROS LLAVEROS, LLAVÉROS, ' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                 $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
             }
-            
+
         }
         else if($producto['categorias']['categorias'][0]['nombre'] == 'Tecnología')
         {
@@ -916,9 +916,8 @@ class InsertInnova implements ShouldQueue
         $item->save();
     }
 
-    private function updateProduct($producto)
+    private function updateProduct($item, $producto)
     {
-        $item = Product::where('code', $producto['codigo'])->first();
         $item->name = $producto['nombre'];
         $item->code = $producto['codigo'];
         $item->parent_code = $producto['codigo'];
@@ -927,7 +926,7 @@ class InsertInnova implements ShouldQueue
         $images = array();
         $colores = array();
         array_push($images, $producto['imagen_principal']);
-        
+
         foreach ($producto['colores'] as $color) {
             array_push($colores, $color['codigo_color']);
             array_push($images, $color['image']);
