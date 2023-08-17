@@ -1,3 +1,5 @@
+const { split } = require("lodash");
+
 /*=========================================================================================
     File Name: app-user-list.js
     Description: User List page
@@ -77,13 +79,14 @@ $(function () {
                     render: function (data, type, full, meta) {
                         console.log(full);
                         var id = full['identifier'];
+                        numer = id.split('-');
 
                         // Creates full output for row
                         var $row_output =
                             '<div class="d-flex justify-content-left align-items-center">' +
                             '<div class="d-flex flex-column">' +
                             '<a href="#" class="user_name text-truncate text-body"><span class="fw-bolder">' +
-                            id +
+                            number[1] +
                             '</span></a>'
                             '</div>' +
                             '</div>';
