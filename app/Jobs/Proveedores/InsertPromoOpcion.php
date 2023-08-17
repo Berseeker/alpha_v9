@@ -42,7 +42,7 @@ class InsertPromoOpcion implements ShouldQueue
         ])->post('https://www.contenidopromo.com/wsds/mx/catalogo/');
 
         $result = $response->json();
-    
+
         if(array_key_exists('error',$result))
         {
             $log = new Logs();
@@ -53,13 +53,17 @@ class InsertPromoOpcion implements ShouldQueue
         } else {
 
             $cont_new_products = 0; #Contador global
-            foreach ($result as $key => $item) 
+            $cont_update_products = 0; #Contador global
+            foreach ($result as $key => $item)
             {
                 $prevItem = Producto::where('code',$item['parent_code'])->where('proveedor','PromoOpcion')->first();
                 if($prevItem == null)
                 {
-                    $this->insertProduct($item, $cont_new_products); 
-                }   
+                    $this->insertProduct($item, $cont_new_products);
+                }
+                else {
+                    $this->updateProduct($prevItem, $item, $cont_update_products);
+                }
             }
 
             $msg = '';
@@ -67,12 +71,16 @@ class InsertPromoOpcion implements ShouldQueue
                 $msg = $msg.$cont_new_products. ' productos nuevos';
             }
 
+            if ($cont_update_products > 0) {
+                $msg = $msg. ' y se actualizaron '. $cont_update_products. ' productos';
+            }
+
             $log = new Logs();
-            $log->status = 'Error';
+            $log->status = 'Success';
             $log->message = $msg . 'en PromoOpcion.';
             $log->save();
-            Log::error($msg . 'en PromoOpcion.');
-        }   
+            Log::info($msg . 'en PromoOpcion.');
+        }
     }
 
     private function insertProduct($item, &$cont_new_products)
@@ -82,7 +90,8 @@ class InsertPromoOpcion implements ShouldQueue
         $product->code = $item['item_code'];
         $product->parent_code = $item['parent_code'];
         $colors = explode('/', $item['colors']);
-        
+        $product->images = json_encode(array($item['img'])); //JSON
+
         $colors = [];
         foreach ($colors as $color) {
             if ($color == 'a') {
@@ -128,7 +137,7 @@ class InsertPromoOpcion implements ShouldQueue
 
         switch (Str::upper($item['family'])) {
             case 'BAR':
-                $product->categoria_id = 9; 
+                $product->categoria_id = 9;
                 $product->subcategoria_id = 43;
                 $product->search = 'HOGAR, BAR, CASA, ' . Str::upper($item['name']);
                 $product->meta_keywords = 'HOGAR, BAR, CASA, ' . Str::upper($item['name']);
@@ -161,7 +170,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->gw = $item['gw']." kg"; //string -> se necesita agregar "KG"
                     $product_T->medida_producto_alto = $item['height']; // int
                     $product_T->medida_producto_ancho = $item['width']; //int
-                    $product_T->material = $item['material']; //string 
+                    $product_T->material = $item['material']; //string
                     $product_T->capacity = $item['capacity']; //string
                     $product_T->category = $item['family'];
                     $product_T->custom = false;
@@ -192,25 +201,25 @@ class InsertPromoOpcion implements ShouldQueue
                     break;
                 }
             case 'ARTICULOS PARA VIAJE':
-                $product->categoria_id = 4; 
+                $product->categoria_id = 4;
                 $product->subcategoria_id = 20;
                 $product->search = "VIAJE, VACACIONES, RELAX, ARTICULOS PARA VIAJE, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "VIAJE, VACACIONES, RELAX, ARTICULOS PARA VIAJE, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'AGENDAS':
-                $product->categoria_id = 10; 
+                $product->categoria_id = 10;
                 $product->subcategoria_id = 54;
                 $product->search = "OFICINA, AGENDAS, TRABAJO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "OFICINA, AGENDAS, TRABAJO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'CILINDRO DE PLASTICO':
-                $product->categoria_id = 14; 
+                $product->categoria_id = 14;
                 $product->subcategoria_id = 71;
                 $product->search = "BEBIDAS,CILINDRO DE PLASTICO, CILÍNDROS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "BEBIDAS,CILINDRO DE PLASTICO, CILÍNDROS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'ACC SMARTPH Y TABLET':
-                $product->categoria_id = 1; 
+                $product->categoria_id = 1;
                 $product->subcategoria_id = 5;
                 $product->search = "TECNOLOGIA ,ACCESORIOS DE CELULAR, TECNOLOGÍA, SMARTPHONE, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TECNOLOGIA ,ACCESORIOS DE CELULAR, TECNOLOGÍA, SMARTPHONE, " . $item['family'] . ', ' . Str::upper($item['name']);
@@ -257,31 +266,31 @@ class InsertPromoOpcion implements ShouldQueue
                     break;
                 }
             case 'ACC COMPUTO':
-                $product->categoria_id = 1; 
+                $product->categoria_id = 1;
                 $product->subcategoria_id = 4;
                 $product->search = "TECNOLOGIA,ACCESORIOS COMPUTO, COMPUTADORAS, PC, TECNOLOGÍA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TECNOLOGIA,ACCESORIOS COMPUTO, COMPUTADORAS, PC, TECNOLOGÍA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'GORRAS Y SOMBREROS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 27;
                 $product->search = "HOGAR, CASA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "HOGAR, CASA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'CHAMARRAS Y CHALECOS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 30;
                 $product->search = "TEXTIL,CHAMARRAS Y CHALECOS, TEXTÍL, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TEXTIL,CHAMARRAS Y CHALECOS, TEXTÍL, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'DEPORTES':
-                $product->categoria_id = 11; 
+                $product->categoria_id = 11;
                 $product->subcategoria_id = 56;
                 $product->search = "TIEMPO LIBRE, DEPORTES, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TIEMPO LIBRE, DEPORTES, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'LIBRETAS':
-                $product->categoria_id = 10; 
+                $product->categoria_id = 10;
                 $product->subcategoria_id = 48;
                 $product->search = "OFICINA, LIBRETAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "OFICINA, LIBRETAS, " . $item['family'] . ', ' . Str::upper($item['name']);
@@ -338,7 +347,7 @@ class InsertPromoOpcion implements ShouldQueue
                     break;
                 }
             case 'LLAVEROS FUNCIONES':
-                $product->categoria_id = 15; 
+                $product->categoria_id = 15;
                 $product->subcategoria_id = 79;
                 $product->search = "LLAVEROS,LLAVEROS MULTIFUNCION, LLAVÉROS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "LLAVEROS,LLAVEROS MULTIFUNCION, LLAVÉROS, " . $item['family'] . ', ' . Str::upper($item['name']);
@@ -442,7 +451,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->gw = $item['gw']." kg"; //string -> se necesita agregar "KG"
                     $product_T->medida_producto_alto = $item['height']; // int
                     $product_T->medida_producto_ancho = $item['width']; //int
-                    $product_T->material = $item['material']; //string 
+                    $product_T->material = $item['material']; //string
                     $product_T->capacity = $item['capacity']; //string
                     $product_T->category = $item['family'];
                     $product_T->custom = false;
@@ -580,95 +589,95 @@ class InsertPromoOpcion implements ShouldQueue
                     break;
                 }
             case 'PARAGUAS':
-                $product->categoria_id = 6; 
+                $product->categoria_id = 6;
                 $product->subcategoria_id = 32;
                 $product->search = "PARAGUAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "PARAGUAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'ENTRETENIMIENTO':
-                $product->categoria_id = 11; 
+                $product->categoria_id = 11;
                 $product->subcategoria_id = 57;
                 $product->search = "ENTRETENIMIENTO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "ENTRETENIMIENTO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'LLAVEROS METALICOS':
-                $product->categoria_id =15; 
+                $product->categoria_id =15;
                 $product->subcategoria_id = 80;
                 $product->search = "LLAVEROS,LLAVEROS METALICOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "LLAVEROS,LLAVEROS METALICOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'HIELERAS Y LONCHERAS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 26;
                 $product->search = "TEXTIL,HIELERAS Y LONCHERAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TEXTIL,HIELERAS Y LONCHERAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'PORTAFOLIOS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 28;
                 $product->search = "TEXTIL,PORTAFOLIOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TEXTIL,PORTAFOLIOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'IMPULSA':
                 //se elimina
-                
+
                 break;
             case 'LLAVEROS DE PLASTICO':
-                $product->categoria_id = 15; 
+                $product->categoria_id = 15;
                 $product->subcategoria_id = 81;
                 $product->search = "LLAVEROS,LLAVEROS DE PLASTICO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "LLAVEROS,LLAVEROS DE PLASTICO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'CARPETAS':
-                $product->categoria_id = 10; 
+                $product->categoria_id = 10;
                 $product->subcategoria_id = 49;
                 $product->search = "OFICINA,CARPETAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "OFICINA,CARPETAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'RELOJES':
-                $product->categoria_id = 17; 
+                $product->categoria_id = 17;
                 $product->subcategoria_id = 87;
                 $product->search = "RELOJ,RELOJES, RELÓJES, ". $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "RELOJ,RELOJES, RELÓJES, ". $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'MASCOTAS':
-                $product->categoria_id = 11; 
+                $product->categoria_id = 11;
                 $product->subcategoria_id = 58;
                 $product->search = "TIEMPO LIBRE,MASCOTAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TIEMPO LIBRE,MASCOTAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'PLAYERAS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 31;
                 $product->search = "TEXTIL,PLAYERAS, TEXTÍL, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TEXTIL,PLAYERAS, TEXTÍL, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'PORTARRETRATOS':
-                $product->categoria_id = 9; 
+                $product->categoria_id = 9;
                 $product->subcategoria_id = 46;
                 $product->search = "HOGAR,PORTARETRATOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "HOGAR,PORTARETRATOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'MOCHILAS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 24;
                 $product->search = "TEXTIL,MOCHILA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TEXTIL,MOCHILA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'BOLSAS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 22;
                 $product->search = "TEXTIL,BOLSA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TEXTIL,BOLSA, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'MALETAS':
-                $product->categoria_id = 5; 
+                $product->categoria_id = 5;
                 $product->subcategoria_id = 25;
                 $product->search = "TEXTIL,MALETAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TEXTIL,MALETAS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'ANTI-STRESS':
-                $product->categoria_id = 12; 
+                $product->categoria_id = 12;
                 $product->subcategoria_id = 59;
                 $product->search = "ANTIESTRESS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "ANTIESTRESS, " . $item['family'] . ', ' . Str::upper($item['name']);
@@ -694,25 +703,25 @@ class InsertPromoOpcion implements ShouldQueue
                     break;
                 }
             case 'TAZAS':
-                $product->categoria_id = 14; 
+                $product->categoria_id = 14;
                 $product->subcategoria_id = 74;
                 $product->search = "BEBIDAS,TAZAS Y TARROS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "BEBIDAS,TAZAS Y TARROS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'CILINDROS METALICOS':
-                $product->categoria_id = 14; 
+                $product->categoria_id = 14;
                 $product->subcategoria_id = 72;
                 $product->search = "BEBIDAS,CILINDROS METALICOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "BEBIDAS,CILINDROS METALICOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'TERMO METALICO':
-                $product->categoria_id = 14; 
+                $product->categoria_id = 14;
                 $product->subcategoria_id = 77;
                 $product->search = "BEBIDAS,TERMO METALICO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "BEBIDAS,TERMO METALICO, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
             case 'USB':
-                $product->categoria_id = 1; 
+                $product->categoria_id = 1;
                 $product->subcategoria_id = 3;
                 $product->search = "TECNOLOGIA,USB, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "TECNOLOGIA,USB, " . $item['family'] . ', ' . Str::upper($item['name']);
@@ -739,7 +748,7 @@ class InsertPromoOpcion implements ShouldQueue
                     $product_T->gw = $item['gw']." kg"; //string -> se necesita agregar "KG"
                     $product_T->medida_producto_alto = $item['height']; // int
                     $product_T->medida_producto_ancho = $item['width']; //int
-                    $product_T->material = $item['material']; //string 
+                    $product_T->material = $item['material']; //string
                     $product_T->capacity = $item['capacity']; //string
                     $product_T->category = $item['family'];
                     $product_T->custom = false;
@@ -804,14 +813,66 @@ class InsertPromoOpcion implements ShouldQueue
                     $product->meta_keywords = "BOLIGRAFOS,OTROS BOLIGRAFOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                     break;
                 }
-            
+
             default:
-                $product->categoria_id = 20; 
+                $product->categoria_id = 20;
                 $product->subcategoria_id = 93;
                 $product->search = "OTROS,VARIOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 $product->meta_keywords = "OTROS,VARIOS, " . $item['family'] . ', ' . Str::upper($item['name']);
                 break;
         }
+
+        $product->save();
+    }
+
+    private function updateProduct($product, $item, &$cont_new_products)
+    {
+        $product->name = $item['name'];
+        $product->code = $item['item_code'];
+        $product->parent_code = $item['parent_code'];
+        $colors = explode('/', $item['colors']);
+        $product->images = json_encode(array($item['img'])); //JSON
+
+        $colors = [];
+        foreach ($colors as $color) {
+            if ($color == 'a') {
+                array_push($colors, 'azul');
+            } else if ($color == 'r') {
+                array_push($colors, 'rojo');
+            } else if ($color == 'v') {
+                array_push($colors, 'verde');
+            } else if ($color == 'be') {
+                array_push($colors, 'beige');
+            } else if ($color == 'c') {
+                array_push($colors, 'cafe');
+            } else if ($color == 'n') {
+                array_push($colors, 'negro');
+            } else if ($color == 't') {
+                array_push($colors, 'tinto');
+            } else if ($color == 'ac') {
+                array_push($colors, 'azul cielo');
+            } else {
+                array_push($colors, $color);
+            }
+        }
+
+        $product->colors = json_encode($colors);
+        $product->details = $item['description'];
+        $product->nw = $item['nw'] . ' kg';
+        $product->gw = $item['gw'] . ' kg';
+        $product->medida_producto_alto = $item['height'];
+        $product->medida_producto_ancho = $item['width'];
+        $product->printing_area = $item['printing_area'];
+        $printing = [];
+        $metodos_impresion = explode('/', $item['printing']);
+        foreach ($metodos_impresion as $impresion) {
+            array_push($printing, trim($impresion));
+        }
+        $product->printing_methods = json_encode($printing);
+        $product->category = $item['family'];
+        $product->box_pieces = $item['count_box'];
+        $product->capacity = $item['capacity'];
+        $product->material = $item['material'];
 
         $product->save();
     }
