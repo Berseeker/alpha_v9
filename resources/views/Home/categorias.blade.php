@@ -1,11 +1,13 @@
 @extends('layouts.web')
 
+@section('title', 'Categorias')
+
 @section('page-styles')
 <!-- Page css files -->
 <link rel="stylesheet" href="{{ asset('css/v3/home/categoria_home.css') }}">
 @endsection
 
-    
+
 @section('content')
 <div class="container">
     <section id="categoria-header">

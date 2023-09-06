@@ -1,6 +1,6 @@
 @extends('layouts.web')
 
-@section('title', 'Categoria - ' . {{ $categoria->nombre }})
+@section('title', 'Categoria - ' . $categoria->nombre)
 
 @section('page-styles')
 <!-- Page css files -->
@@ -9,6 +9,7 @@
 
 
 @section('content')
+
 <div class="container">
     <section id="categoria-header">
         <h3> <img src=" {{ asset('imgs/v3/logos/alpha.ico') }} " alt="AlphaPromos" id="alphaCateg"> {{ $title }} </h3>

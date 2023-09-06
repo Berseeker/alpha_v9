@@ -5,7 +5,8 @@
 <link rel="stylesheet" href="{{ asset('css/v3/home/categoria_home.css') }}">
 @endsection
 
-    
+@section('title', 'Categoria - ' . $subcategoria->nombre)
+
 @section('content')
 <div class="container">
     <section id="categoria-header">
@@ -92,6 +93,6 @@
 <script type="text/javascript">
     if ($(document).width() > 700) {
         var sticky = new Sticky('.selector');
-    } 
+    }
 </script>
 @endsection

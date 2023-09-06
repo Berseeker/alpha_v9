@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{ asset('css/v3/home/products.css') }}">
 @endsection
 
-@section('title', 'Producto - ' . {{ $producto->name }})
+@section('title', 'Producto - ' . $producto->name)
 
 @section('content')
 
