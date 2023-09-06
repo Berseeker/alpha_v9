@@ -37,15 +37,15 @@ class IndexController extends Controller
 
     public function showCategoria(Request $request,$slug)
     {
- 
+
         $categoria = NULL;
         $title = null;
-        $cont = 1; 
+        $cont = 1;
         $total_items = 0;
 
         $slug_categoria = DB::table('slugs')->where('slug',$slug)->get();
         if(!$slug_categoria->isEmpty()){
- 
+
             $categoria = Categoria::find($slug_categoria[0]->fk_id);
             $title = $categoria->nombre;
             $flag = 1;
@@ -55,7 +55,7 @@ class IndexController extends Controller
         if ($categoria == NULL) {
             $productos = NULL;
             $flag = 0;
-            
+
         } else {
 
             if ($request->has('search_global'))
@@ -72,12 +72,6 @@ class IndexController extends Controller
                 $flag=0;
         }
 
-        
-        $categoria->seo->update([
-            'title' => 'AlphaPromos - ' . $categoria->nombre,
-            'description' => 'Categoria ' . $categoria->nombre,
-        ]);
-           
         return view('Home.categoria',[
             'categoria' => $categoria,
             'productos' => $productos,
@@ -88,9 +82,9 @@ class IndexController extends Controller
 
     public function showCategorias()
     {
-            
+
         $categorias = Categoria::all();
-           
+
         return view('Home.categorias',[
             'categorias' => $categorias
         ]);
@@ -109,16 +103,16 @@ class IndexController extends Controller
             $title = $subcategoria->nombre;
             $flag = 1;
         }
-        
+
         $categorias = Categoria::all();
-        $cont = 1; 
+        $cont = 1;
 
         if($subcategoria == NULL){
             $productos = NULL;
             $total_items = 0;
             $flag = 0;
             $categoria = NULL;
-            
+
         }else{
 
             $categoria = Categoria::find($subcategoria->categoria_id);
@@ -137,7 +131,7 @@ class IndexController extends Controller
                 $flag=0;
 
         }
-        
+
         return view('Home.subcategoria',[
             'subcategoria' => $subcategoria,
             'productos' => $productos,
@@ -158,9 +152,9 @@ class IndexController extends Controller
         }
 
 
-        $categorias = Categoria::all();     
+        $categorias = Categoria::all();
         $categoria = Categoria::find($producto->categoria_id);
-        $area_impresion = NULL; 
+        $area_impresion = NULL;
 
         if($producto->printing_area != "S/MEDIDAS_IMP"){
             $area_impresion = $producto->printing_area;
@@ -185,14 +179,14 @@ class IndexController extends Controller
                 $cont++;
             }
         }
-        
+
 
         $colors = NULL;
         $cont_colors = count(json_decode($producto->colors));
         if ($cont_colors > 0) {
             $colors = json_decode($producto->colors);
         }
-        
+
         return view('Home.producto',[
             'title' => $title,
             'categorias' => $categorias,
@@ -219,7 +213,7 @@ class IndexController extends Controller
 
         $categoria = NULL;
         $title = null;
-        $cont = 1; 
+        $cont = 1;
         $total_items = 0;
         $flag = 1;
 
@@ -235,8 +229,8 @@ class IndexController extends Controller
 
         if(count($productos) == 0)
             $flag=0;
-        
-        
+
+
         return view('Home.busqueda',[
             'pageConfigs' => $pageConfigs,
             'productos' => $productos,
@@ -255,7 +249,7 @@ class IndexController extends Controller
 
         return view('Home.contacto', [
             'categorias' => $categorias
-        ]);  
+        ]);
     }
 
     public function sendMessage(Request $request)
