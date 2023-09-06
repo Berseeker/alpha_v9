@@ -11,7 +11,7 @@
     <meta property="og:site_name" content="Alpha Promos">
     <meta property="og:type" content="Article">
     <meta name="og:title" content="Inicio | Alpha Promos">
-    <meta name="description" content="Artículos Promocionales">
+    <meta name="description" content="Alphapromos.mx ofrece productos promocionales en Cancún. Encuentra artículos promocionales, regalos corporativos, mercancía personalizada y más. ¡Destaca tu marca con nuestros productos de calidad en Cancún. Productos promocionales Cancún, Regalos corporativos Cancún, Merchandising con logotipo Cancún, Artículos promocionales Cancún." />
     <meta name="keywords" content="promocionales,regalos,publicidad,termos,libretas,relojes,boligrafos,mama,papa,dia del padre,dia de la madre,regreso a clases">
     <meta name="og:description" content="Artículos Promocionales">
     <meta property="og:image" content="https://www.alphapromos.mx/imgs/v3/logos/logo_alpha.png">
