@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 @endsection
 
+@section('title', 'Cotizacion')
 
 @section('content')
     <div class="container" id="cart-container">
@@ -25,7 +26,7 @@
             <div class="bg-success" style="padding:10px;margin-bottom:30px;text-align:center;border-radius:5px;color:white;">
                 <p style="margin-bottom: 0px;"><i class="fas fa-thumbs-up" style="margin-right: 10px;"></i> {{ session('success') }}</p>
             </div>
-        @endif 
+        @endif
         <form id="signUpForm" enctype="multipart/form-data" action="{{ route('home.store.cotizacion') }}" method="POST">
             @csrf
             <!-- Nav tabs -->
@@ -105,8 +106,8 @@
                                             <li><i class="{{ $star }}"></i></li>
                                         </ul>
                                         <div class="mrb-5">
-                                            <input type="number" class="form-control" name="noPzas[]" placeholder="Numero de piezas*" value="{{ old('noPzas')[$indx] ?? '' }}">  
-                                            <input type="hidden" class="form-control" name="producto_id[]" value="{{ $producto->id }}">  
+                                            <input type="number" class="form-control" name="noPzas[]" placeholder="Numero de piezas*" value="{{ old('noPzas')[$indx] ?? '' }}">
+                                            <input type="hidden" class="form-control" name="producto_id[]" value="{{ $producto->id }}">
                                         </div>
                                         <div class="mrb-5">
                                             <select class="form-select" name="printing_methods[]">
@@ -117,10 +118,10 @@
                                         </div>
                                         <div class="mrb-5">
                                             <p style="font-size: 11px;margin-bottom:0px;margin-top:5px;font-weight:lighter;padding-left:10px;">Si es mas de un color, separar con coma</p>
-                                            <input type="text" class="form-control" name="pantone[]" placeholder="Color deseado" value="{{ old('pantone')[$indx] ?? '' }}">  
+                                            <input type="text" class="form-control" name="pantone[]" placeholder="Color deseado" value="{{ old('pantone')[$indx] ?? '' }}">
                                         </div>
                                         <div class="mrb-5">
-                                            <input type="text" class="form-control" name="no_ink[]" placeholder="Número de tintas" value="{{ old('no_ink')[$indx] ?? '' }}">  
+                                            <input type="text" class="form-control" name="no_ink[]" placeholder="Número de tintas" value="{{ old('no_ink')[$indx] ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -168,25 +169,25 @@
                         <div class="col-xs-12 col-md-6 col-lg-3">
                             <div class="mrb-5">
                                 <label for="phone" class="form-label blockC">Teléfono</label>
-                                <input type="tel" class="form-control" name="phone" id="phone" value="{{ old('phone') ?? '' }}"> 
+                                <input type="tel" class="form-control" name="phone" id="phone" value="{{ old('phone') ?? '' }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-3">
                             <div class="mrb-5">
                                 <label for="pais" class="form-label blockC">País</label>
-                                <input type="text" class="form-control widthC" name="country" id="pais" value="{{ old('country') ?? '' }}"> 
+                                <input type="text" class="form-control widthC" name="country" id="pais" value="{{ old('country') ?? '' }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-3">
                             <div class="mrb-5">
                                 <label for="estado" class="form-label blockC">Estado</label>
-                                <input type="text" class="form-control widthC" name="state" id="estado" value="{{ old('state') ?? '' }}"> 
+                                <input type="text" class="form-control widthC" name="state" id="estado" value="{{ old('state') ?? '' }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-3">
                             <div class="mrb-5">
                                 <label for="ciudad" class="form-label blockC">Ciudad</label>
-                                <input type="text" class="form-control widthC" name="city" id="ciudad" value="{{ old('city') ?? '' }}"> 
+                                <input type="text" class="form-control widthC" name="city" id="ciudad" value="{{ old('city') ?? '' }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-3">
@@ -269,15 +270,15 @@ window.intlTelInput(input, {
         });
     },
 });
- 
+
 $( function() {
-    $( "#datepicker" ).datepicker({ 
-        dateFormat: 'yy-mm-dd' 
+    $( "#datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd'
     });
 });
 
 
-  
+
 function activateTab(target) {
     const triggerEl = document.querySelector('#myTab button[data-bs-target="#'+ target +'"]')
     bootstrap.Tab.getOrCreateInstance(triggerEl).show() // Select tab by name

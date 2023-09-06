@@ -6,7 +6,8 @@
 <link rel="stylesheet" href="{{ asset('css/v3/home/products.css') }}">
 @endsection
 
-    
+@section('title', 'Producto - ' . {{ $producto->name }})
+
 @section('content')
 
 <div class="container" id="product-page">
@@ -40,13 +41,13 @@
                     @else
                         <div class="item" style="position: relative;"><img src="{{ asset('imgs/v3/productos/no_disp.png') }}" id="product{{ $cont }}" class="imgP" alt="{{ $producto->name }}"></div>
                     @endif
-                    
+
                 </div>
             </div>
             <div class="d-md col-md-12 col-lg-3">
                 @for ($i = 0; $i < $cont; $i++)
                     <div id="previewImg{{$i}}" class="custom-n flag" style="width:300px;height:300px;margin-top:50px;"></div>
-                @endfor 
+                @endfor
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
                 <div class="product-details pd-top-20">
@@ -74,7 +75,7 @@
                             @endforeach
                         </ul>
                     @endif
-                </div> 
+                </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-8 pd-0">
                         <button class="btn pd-8 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto->code }}"><i class="fa-solid fa-cart-plus mr-10"></i>Agregar al carrito</button>
@@ -83,7 +84,7 @@
             </div>
         </div>
     </section>
-    
+
     <div class="container">
         <section class="row" id="features-row">
             <div class="col-xs-12 col-sm-2 col-md-3 features">
@@ -131,7 +132,7 @@
                         }
                     }
                 @endphp
-                <div class="item"> 
+                <div class="item">
                     <a href="{{ url('/producto/'. Str::slug($item->name . " " . $item->code,'-')) }}">
                         <div class="header-pr"><img src="{{ $imagen }}" alt=""></div>
                         <div class="body-pr"><p>{{ $item->name }}</p></div>
@@ -208,7 +209,7 @@ function imageZoom(imgID, resultID) {
         result.style.backgroundSize = (1000) + "px " + (1000) + "px";
     } else {
         result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
-    } 
+    }
     /*execute a function when someone moves the cursor over the image, or the lens:*/
     lens.addEventListener("mousemove", moveLens);
     img.addEventListener("mousemove", moveLens);

@@ -1,11 +1,13 @@
 @extends('layouts.web')
 
+@section('title', 'Categoria - ' . {{ $categoria->nombre }})
+
 @section('page-styles')
 <!-- Page css files -->
 <link rel="stylesheet" href="{{ asset('css/v3/home/categoria_home.css') }}">
 @endsection
 
-    
+
 @section('content')
 <div class="container">
     <section id="categoria-header">
@@ -92,6 +94,6 @@
 <script type="text/javascript">
     if ($(document).width() > 700) {
         var sticky = new Sticky('.selector');
-    } 
+    }
 </script>
 @endsection

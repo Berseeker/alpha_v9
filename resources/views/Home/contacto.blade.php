@@ -9,7 +9,7 @@
     </script>
 @endsection
 
-
+@section('title', 'Contacto')
 
 @section('content')
     <div class="container">
@@ -39,9 +39,9 @@
                         <textarea name="comentarios" class="form-control" cols="30" rows="10" style="resize: none;width:100%;"></textarea>
                     </div>
                     <div class="form-group col-xs-12 col-sm-12 col-lg-12 mb-2">
-                        <button class="g-recaptcha btn btn-outline-primary" 
-                        data-sitekey="6LfuzDQaAAAAAFxWRcVR1UYoU9waEmUtGZQKM_wl" 
-                        data-callback='onSubmit' 
+                        <button class="g-recaptcha btn btn-outline-primary"
+                        data-sitekey="6LfuzDQaAAAAAFxWRcVR1UYoU9waEmUtGZQKM_wl"
+                        data-callback='onSubmit'
                         data-action='submit'>Enviar</button>
                     </div>
                 </form>

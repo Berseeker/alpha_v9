@@ -1,34 +1,42 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="{{ asset('imgs/logos/alpha.ico') }}">
-  <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <!--title>AlphaPromos @yield('title')</title-->
-  {!! seo($categoria ?? null) !!}
-  <!-- JQUERY 3.x -->
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-  <!-- COOKIE JS PLUGIN - -->
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
-  <!-- CSS BOOTSTRAP V5.3 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  <!-- CARROUSEL PLUGIN - https://owlcarousel2.github.io/OwlCarousel2 -->
-  <link rel="stylesheet" href="{{ asset('css/v3/home/owl_carousel/owl.carousel.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('css/v3/home/owl_carousel/owl.theme.default.css') }}" />
-  <script src="{{ asset('js/v3/owl_carousel/owl.carousel.min.js') }}"></script>
-  <!-- FONT AWESOME -->
-  <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
-  <!-- GLOBAL CSS -->
-  <link rel="stylesheet" href="{{ asset('css/v3/home/king_ediberto.css') }}">
-  <!-- CUSTOM CSS FOR EACH PAGE -->
-  @yield('page-styles')
-  <!-- Chat en vivo -->
-  <script src="//code-sa1.jivosite.com/widget/DuWHrZwtML" async></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-525GD06J3K"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('imgs/logos/alpha.ico') }}">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>AlphaPromos | @yield('title')</title>
+    <meta name="author" content="Alpha Promos Promocionales">
+    <meta property="og:site_name" content="Alpha Promos">
+    <meta property="og:type" content="Article">
+    <meta name="og:title" content="Inicio | Alpha Promos">
+    <meta name="description" content="Artículos Promocionales">
+    <meta name="keywords" content="promocionales,regalos,publicidad,termos,libretas,relojes,boligrafos,mama,papa,dia del padre,dia de la madre,regreso a clases">
+    <meta name="og:description" content="Artículos Promocionales">
+    <meta property="og:image" content="https://www.alphapromos.mx/imgs/v3/logos/logo_alpha.png">
+    <meta property="twitter:image" content="https://www.alphapromos.mx/imgs/v3/logos/logo_alpha.png">
+    <!-- JQUERY 3.x -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- COOKIE JS PLUGIN - -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <!-- CSS BOOTSTRAP V5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- CARROUSEL PLUGIN - https://owlcarousel2.github.io/OwlCarousel2 -->
+    <link rel="stylesheet" href="{{ asset('css/v3/home/owl_carousel/owl.carousel.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/v3/home/owl_carousel/owl.theme.default.css') }}" />
+    <script src="{{ asset('js/v3/owl_carousel/owl.carousel.min.js') }}"></script>
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/8d420a663d.js" crossorigin="anonymous"></script>
+    <!-- GLOBAL CSS -->
+    <link rel="stylesheet" href="{{ asset('css/v3/home/king_ediberto.css') }}">
+    <!-- CUSTOM CSS FOR EACH PAGE -->
+    @yield('page-styles')
+    <!-- Chat en vivo -->
+    <script src="//code-sa1.jivosite.com/widget/DuWHrZwtML" async></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-525GD06J3K"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -85,7 +93,7 @@
           $("#menu-alpha").addClass('menu-active');
         }
       }, function() {
-        
+
       }
     );
 
@@ -123,7 +131,7 @@
           $("#errorMessageEmail").text('');
           $("#errorMessageEmail").text('Es necesario ingresar un email');
         }
-        
+
       } else {
         if ( $('#email-news-error').hasClass('warning-visible') ) {
           $("#email-news-error").removeClass('warning-visible');
@@ -154,7 +162,7 @@
         });
       }
     });
- 
+
   });
 </script>
 <script type="text/javascript">
@@ -177,7 +185,7 @@
 
             data.forEach(function(element, indice, array) {
               string = element.name + ' ' + element.code;
-              //quitar acentos 
+              //quitar acentos
               string = string
                         .normalize('NFD')
                         .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
@@ -199,9 +207,9 @@
                   {
                     img = obj[0];
                   }else{
-                    img = '{{ asset("storage/doblevela/images") }}' +'/'+ obj[0];                         
+                    img = '{{ asset("storage/doblevela/images") }}' +'/'+ obj[0];
                   }
-                  
+
               }
               template = template + '<li><a href="/producto/'+ slug +'"><p> <img src="'+img+'" style="width:50px;margin-right:10px;" />'+ element.name +'</p></a></li>';
             });
@@ -223,26 +231,26 @@ $(document).ready(function(){
       var items = JSON.parse(Cookies.get('carrito_cotizaciones'));
       $('.items-hooked').html('');
 
-      if (items.length === 0) 
+      if (items.length === 0)
       {
         var template = '<li>Sin Productos!!</li>';
-        $(".items-hooked").append(template);  
+        $(".items-hooked").append(template);
       }else{
         //console.log(items);
         items.forEach(element => {
-    
+
           $.ajax({
             url:"/api/producto/"+element,
             method:"GET",
             dataType : "json",
             success:function(data)
-            {  
+            {
                 var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
-                $(".items-hooked").append(template);  
+                $(".items-hooked").append(template);
             }
           });
-          
-        });  
+
+        });
         var template = '<li><button class="btn empty-cart" onclick="emptyCart()"> <i class="fa-solid fa-trash-can" style="margin-right:10px;"></i> Vaciar cesta</button></li>';
         $(".items-hooked").append(template);
       }
@@ -250,7 +258,7 @@ $(document).ready(function(){
       $("#cart-number").css('display','block');
       $("#cart-number").html('');
       $("#cart-number").html(cont);
-      
+
   } else {
     console.log('cookie no definida');
   }
@@ -267,7 +275,7 @@ $(document).ready(function(){
             method:"GET",
             dataType : "json",
             success:function(data)
-            {  
+            {
               //console.log(data);
               var items = [];
               if(Cookies.get('carrito_cotizaciones') == undefined)
@@ -285,7 +293,7 @@ $(document).ready(function(){
                   var value = JSON.stringify(items);
                   Cookies.set('carrito_cotizaciones',value,{ expires: 2 });
                   $('.alert-success').css('display','inline-block');
-                  $(".alert-success").fadeOut(5000); 
+                  $(".alert-success").fadeOut(5000);
               }
               else
               {
@@ -297,24 +305,24 @@ $(document).ready(function(){
                 else {
                   $('.items-hooked').html('');
                   items.forEach(element => {
-      
+
                     $.ajax({
                       url:"/api/producto/"+element,
                       method:"GET",
                       dataType : "json",
                       success:function(data)
-                      {  
+                      {
                           var template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
-                          $(".items-hooked").append(template);  
+                          $(".items-hooked").append(template);
                       }
                     });
-                    
+
                   });
                   var template = '<li><button class="btn empty-cart" onclick="emptyCart()"> <i class="fa-solid fa-trash-can" style="margin-right:10px;"></i> Vaciar cesta</button></li>';
                   $(".items-hooked").append(template);
                   template = '<li><img src="'+data.img+'" style="width:60px;margin-right:20px;" alt="'+data.nombre+'">'+data.nombre+'</li>';
                   $(".items-hooked").append(template);
-                  
+
 
                   items.push(data.sdk);
                   var cont = items.length;
@@ -324,7 +332,7 @@ $(document).ready(function(){
                   var value = JSON.stringify(items);
                   Cookies.set('carrito_cotizaciones',value, { expires: 2 });
                   $('.alert-success').css('display','inline-block');
-                  $(".alert-success").fadeOut(5000); 
+                  $(".alert-success").fadeOut(5000);
                 }
               }
             }
@@ -345,7 +353,7 @@ $(document).ready(function(){
           method:"GET",
           dataType : "json",
           success:function(data)
-          {  
+          {
             //console.log(data);
             var items = [];
             if(Cookies.get('carrito_cotizaciones') == undefined)
@@ -366,18 +374,18 @@ $(document).ready(function(){
               var items = JSON.parse(Cookies.get('carrito_cotizaciones'));
               $('.items-hooked').html('');
               items.forEach(element => {
-  
+
                 $.ajax({
                   url:"/api/producto/"+element,
                   method:"GET",
                   dataType : "json",
                   success:function(data)
-                  {  
+                  {
                       var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
-                      $(".items-hooked").append(template);  
+                      $(".items-hooked").append(template);
                   }
                 });
-                
+
               });
               var template = '<a class="dropdown-item" href="#"><img src="'+data.img+'" style="width:50px;margin-right:20px;" alt="'+data.name+'">'+data.name+'</a>';
               $(".items-hooked").append(template);
@@ -390,11 +398,11 @@ $(document).ready(function(){
               var value = JSON.stringify(items);
               Cookies.set('carrito_cotizaciones',value, { expires: 2 });
             }
-            window.location.href="/ver-cotizacion";   
+            window.location.href="/ver-cotizacion";
           }
       });
   });
-  
+
 });
 function emptyCart()
 {
