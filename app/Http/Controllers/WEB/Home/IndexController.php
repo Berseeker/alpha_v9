@@ -165,6 +165,9 @@ class IndexController extends Controller
         }
 
         $productos_relacionados = Product::where('subcategoria_id', '=', $producto->subcategoria_id)->where('deleted_at' ,'=', NULL)->limit(10)->get();
+        if ($productos_relacionados->isEmpty()) {
+            $productos_relacionados = null;
+        }
 
         $metodos_impresion = '';
         $methods = json_decode($producto->printing_methods);

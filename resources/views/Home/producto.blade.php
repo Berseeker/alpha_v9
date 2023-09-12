@@ -116,30 +116,34 @@
 
     <section style="margin-bottom: 30px;">
         <h4 style="text-align: center;margin-bottom:30px;margin-top:40px;">Productos relacionados</h4>
-        <div class="owl-carousel owl-theme productos-relacionados">
-            @foreach ($productos_relacionados as $item)
-                @php
-                    //dd($item->imgs);
-                    $imagen = url('/imgs/no_disp.png');
-                    if ($item->images != null) {
+            @if ($productos_relacionados == null)
+                <h2>Sin Productos relacionados</h2>
+            @else
+                <div class="owl-carousel owl-theme productos-relacionados">
+                @foreach ($productos_relacionados as $item)
+                        @php
+                            //dd($item->imgs);
+                            $imagen = url('/imgs/no_disp.png');
+                            if ($item->images != null) {
 
-                        $img = json_decode($item->images);
-                        if(!Str::contains($img[0],['https','http']))
-                        {
-                            $imagen = Storage::disk('doblevela_img')->url($img[0]);
-                        } else {
-                            $imagen = $img[0];
-                        }
-                    }
-                @endphp
-                <div class="item">
-                    <a href="{{ url('/producto/'. Str::slug($item->name . " " . $item->code,'-')) }}">
-                        <div class="header-pr"><img src="{{ $imagen }}" alt=""></div>
-                        <div class="body-pr"><p>{{ $item->name }}</p></div>
-                    </a>
+                                $img = json_decode($item->images);
+                                if(!Str::contains($img[0],['https','http']))
+                                {
+                                    $imagen = Storage::disk('doblevela_img')->url($img[0]);
+                                } else {
+                                    $imagen = $img[0];
+                                }
+                            }
+                        @endphp
+                        <div class="item">
+                            <a href="{{ url('/producto/'. Str::slug($item->name . " " . $item->code,'-')) }}">
+                                <div class="header-pr"><img src="{{ $imagen }}" alt=""></div>
+                                <div class="body-pr"><p>{{ $item->name }}</p></div>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
+            @endif
     </section>
 </div>
 
