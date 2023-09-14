@@ -50,6 +50,9 @@ class InsertInnova implements ShouldQueue
                 $log->save();
 
                 Log::error($this->error['message'] . 'en Innova.');
+
+                echo $this->error['message'] . PHP_EOL;
+
             };
             exit();
         }
@@ -69,6 +72,7 @@ class InsertInnova implements ShouldQueue
             $log->save();
 
             Log::error($this->error['message'] . 'en Innova.');
+            echo $this->error['message'] . PHP_EOL;
             exit();
         }
         //Result send by the endpoint: {"response":true,"code":"SUCCESS","pages":9}
