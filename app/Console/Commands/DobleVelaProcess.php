@@ -38,6 +38,8 @@ class DobleVelaProcess extends Command
      */
     public function handle()
     {
+        $this->info('Job Doble Vela started at: ' . date('Y-m-d H:i:s') );
+
         InsertDobleVela::dispatch();
 
         $this->info('Job Doble Vela done at: ' . date('Y-m-d H:i:s') );
