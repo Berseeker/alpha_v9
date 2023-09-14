@@ -86,9 +86,6 @@ class SlugController extends Controller
     public function productoV2Slug(){
         $productos = Product::all();
         foreach ($productos as $producto) {
-            if ($producto->id == 1) {
-                dd($producto);
-            }
             $slug = Str::slug($producto->name." ".$producto->code, '-');
             $prevSlug = Slug::where('slug',$slug)->get();
             if($prevSlug->isEmpty())
