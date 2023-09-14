@@ -39,7 +39,7 @@ class InsertDobleVela implements ShouldQueue
         $soapClient = new SoapClient('http://srv-datos.dyndns.info/doblevela/service.asmx?WSDL');
         $ObjectInfo = $soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
         $result = json_decode($ObjectInfo->GetExistenciaAllResult, true);
-
+dd($result);
         if ($result['intCodigo'] == 100) {
             $log = new Logs();
             $log->status = 'error';
