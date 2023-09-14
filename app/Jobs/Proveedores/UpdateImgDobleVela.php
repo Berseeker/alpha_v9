@@ -43,7 +43,8 @@ class UpdateImgDobleVela implements ShouldQueue
 
         $productos = Product::where('proveedor','DobleVela')->where('images',null)->get();
 
-        foreach ($productos as $producto) 
+        $cont = 0;
+        foreach ($productos as $producto)
         {
             /* PROCESO DE OBTENCION DE IMAGENES */
             $response = Http::asForm()->post('srv-datos.dyndns.info/doblevela/service.asmx/GetrProdImagenes', [
@@ -54,8 +55,7 @@ class UpdateImgDobleVela implements ShouldQueue
             $xml = simplexml_load_string($result);
             $array = $this->xml2array($xml);
             $result2 = json_decode($array[0], true);
-   
-            $cont = 0;
+
             $num = 0;
             $imgs = array();
             $imgsPrev = array();
@@ -67,7 +67,7 @@ class UpdateImgDobleVela implements ShouldQueue
                     $image = str_replace(' ', '+', $image);
                     $imageName = $producto->parent_code.$num.'.png';
 
-                    if (!Storage::disk('doblevela_img')->exists($imageName)) 
+                    if (!Storage::disk('doblevela_img')->exists($imageName))
                     {
                         Storage::disk('doblevela_img')->put($imageName, base64_decode($image));
                         array_push($imgs,$imageName);
@@ -88,12 +88,12 @@ class UpdateImgDobleVela implements ShouldQueue
             if ($producto->images == null && $imgs == null) {
                 $imgs = json_encode($imgsPrev);
             }
-            
+
             /* FIN DE PROCESO DE OBTENCION DE IMAGENES */
             $producto->images = $imgs;
             $producto->update();
         }
-        
+
         $log = new Logs();
         $log->status = 'success';
         $log->message = 'Se actualizaron '.$cont.' productos con imagenes de DobleVela';
