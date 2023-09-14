@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Subcategoria;
 use App\Models\Categoria;
-use App\Models\Producto;
 use App\Models\Product;
 use App\Models\Slug;
 
@@ -29,7 +28,7 @@ class SlugController extends Controller
                 $item->updated_at = now();
                 $item->save();
             }
-            
+
         }
         return response()->json([
             'status' => 'success',
@@ -61,7 +60,7 @@ class SlugController extends Controller
     }
 
     public function productoSlug(){
-        $productos = Producto::all();
+        $productos = Product::all();
         foreach ($productos as $producto) {
             $slug = Str::slug($producto->nombre." ".$producto->modelo, '-');
             $prevSlug = Slug::where('slug',$slug)->get();
