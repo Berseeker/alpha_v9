@@ -39,45 +39,50 @@ class InsertDobleVela implements ShouldQueue
         $soapClient = new SoapClient('http://srv-datos.dyndns.info/doblevela/service.asmx?WSDL');
         $ObjectInfo = $soapClient->GetExistenciaAll(array("Key" => "jk3CttIRpY+iQT8m/i0uzQ=="));
         $result = json_decode($ObjectInfo->GetExistenciaAllResult, true);
-dd($result);
-        if ($result['intCodigo'] == 100) {
+
+        if (isset($result['intCodigo']) && $result['intCodigo'] == 100) {
             $log = new Logs();
             $log->status = 'error';
             $log->message = 'Horario no permitido para hacer sync';
             $log->save();
-        }
 
-        $cont_new_products = 0; #Contador global
-        $cont_update_products = 0; #Contador global
-        $api_ids = array();
-        foreach ($result['Resultado'] as $producto) {
-            array_push($api_ids, $producto['CLAVE']);
-            $product = Product::where('code', $producto['CLAVE'])->where('proveedor', 'DobleVela')->first();
-            if($product == null){
-                $this->insertProduct($producto, $cont_new_products);
+            echo "Horario no permitido para hacer sync";
+        } else {
 
-            }else{
-                $this->updateProduct($producto, $cont_update_products);
+             $cont_new_products = 0; #Contador global
+            $cont_update_products = 0; #Contador global
+            $api_ids = array();
+            foreach ($result['Resultado'] as $producto) {
+                array_push($api_ids, $producto['CLAVE']);
+                $product = Product::where('code', $producto['CLAVE'])->where('proveedor', 'DobleVela')->first();
+                if($product == null){
+                    $this->insertProduct($producto, $cont_new_products);
+
+                }else{
+                    $this->updateProduct($producto, $cont_update_products);
+                }
             }
+
+            $msg = '';
+            if ($cont_new_products > 0) {
+                $msg = $msg.$cont_new_products. ' productos nuevos';
+            }
+            if ($cont_update_products > 0) {
+                $msg = $msg. ' y se actualizaron '. $cont_update_products. ' productos';
+            }
+
+            $log = new Logs();
+            $log->status = 'success';
+            $log->message = 'Se agregaron '.$msg.' de DobleVela';
+            $log->save();
+
+            Log::info('Se agregaron '.$msg.' de DobleVela');
+
+            Product::where('proveedor','DobleVela')->whereNotIn('code', $api_ids)->delete();
+            ProviderUpdated::dispatch('DobleVela');
         }
 
-        $msg = '';
-        if ($cont_new_products > 0) {
-            $msg = $msg.$cont_new_products. ' productos nuevos';
-        }
-        if ($cont_update_products > 0) {
-            $msg = $msg. ' y se actualizaron '. $cont_update_products. ' productos';
-        }
 
-        $log = new Logs();
-        $log->status = 'success';
-        $log->message = 'Se agregaron '.$msg.' de DobleVela';
-        $log->save();
-
-        Log::info('Se agregaron '.$msg.' de DobleVela');
-
-        Product::where('proveedor','DobleVela')->whereNotIn('code', $api_ids)->delete();
-        ProviderUpdated::dispatch('DobleVela');
     }
 
     private function insertProduct($producto, &$cont_new_products)
