@@ -53,6 +53,7 @@ class InsertPromoOpcion implements ShouldQueue
             $log->message = $result['error'] . 'en PromoOpcion.';
             $log->save();
             Log::error($result['error'] . 'en PromoOpcion.');
+            echo $result['error'] . PHP_EOL;
         } else {
 
             $cont_new_products = 0; #Contador global
@@ -84,6 +85,7 @@ class InsertPromoOpcion implements ShouldQueue
             $log->message = $msg . 'en PromoOpcion.';
             $log->save();
             Log::info($msg . 'en PromoOpcion.');
+            echo $msg . 'en PromoOpcion' . PHP_EOL;
 
             Product::where('proveedor','PromoOpcion')->whereNotIn('code', $api_ids)->delete();
             ProviderUpdated::dispatch('PromoOpcion');
