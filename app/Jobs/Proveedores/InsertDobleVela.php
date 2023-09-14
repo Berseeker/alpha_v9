@@ -46,7 +46,7 @@ class InsertDobleVela implements ShouldQueue
             $log->message = 'Horario no permitido para hacer sync';
             $log->save();
 
-            echo "Horario no permitido para hacer sync";
+            echo "Horario no permitido para hacer sync" . PHP_EOL;
         } else {
 
              $cont_new_products = 0; #Contador global
@@ -77,6 +77,8 @@ class InsertDobleVela implements ShouldQueue
             $log->save();
 
             Log::info('Se agregaron '.$msg.' de DobleVela');
+
+            echo 'Se agregaron '.$msg.' de DobleVela' . PHP_EOL;
 
             Product::where('proveedor','DobleVela')->whereNotIn('code', $api_ids)->delete();
             ProviderUpdated::dispatch('DobleVela');
