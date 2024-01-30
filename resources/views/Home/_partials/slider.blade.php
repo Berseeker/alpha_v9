@@ -7,5 +7,5 @@
         @endif
     @endforeach
     <a href="https://heyzine.com/flip-book/97817b7fb9.html" target="_blank" class="item"> <img src="{{ asset('imgs/v3/slider/bowl.jpeg') }}" class="w-100" alt="Super Bowl"> </a>
-    <a href="https://heyzine.com/flip-book/b3c8f4cce4.html" target="_blank" class="item"> <img src="{{ asset('imgs/v3/slider/amor.png') }}" class="w-100" alt="14 de Febrero"> </a>
+    <a href="https://heyzine.com/flip-book/b3c8f4cce4.html" target="_blank" class="item"> <img src="{{ asset('imgs/v3/slider/amor.jpeg') }}" class="w-100" alt="14 de Febrero"> </a>
 </div>
