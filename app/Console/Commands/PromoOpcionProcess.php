@@ -55,8 +55,8 @@ class PromoOpcionProcess extends Command
 
         if(array_key_exists('error',$result))
         {
-            $test =  var_export($result);
-            echo $test;
+            //$test =  var_export($result);
+            //echo $test;
             $log = new Logs();
             $log->status = 'Error';
             $log->message = $result['error'] . 'en PromoOpcion.';
