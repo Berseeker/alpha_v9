@@ -52,7 +52,7 @@ class PromoOpcionProcess extends Command
 
         $result = $response->json();
         $api_ids = array();
-
+        dd($result);
         if(array_key_exists('error',$result))
         {
             //$test =  var_export($result);
