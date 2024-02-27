@@ -611,6 +611,11 @@ class InsertInnova implements ShouldQueue
                     $item->categoria_id = 17;
                     $item->search = 'RELOJES, RELOJ DE PULSO, RELÓJ, RELOJ,' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
                     $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
+                } else {
+                    $item->subcategoria_id = 88;
+                    $item->categoria_id = 17;
+                    $item->search = 'RELOJES, RELOJ DE PULSO, RELÓJ, RELOJ,' . Str::upper($producto['nombre']) . ', '. Str::upper($producto['meta_description']);
+                    $item->meta_keywords = $item->search . ', ' .$producto['meta_keywords'];
                 }
             }
             else
