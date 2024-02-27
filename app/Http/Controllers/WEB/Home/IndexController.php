@@ -91,12 +91,12 @@ class IndexController extends Controller
     }
 
 
-    public function showSubcategoria(Request $request,$slug)
+    public function showSubcategoria(Request $request,$categoria,$slug)
     {
 
         $subcategoria = NULL;
         $title = null;
-        $slug_subcategoria = DB::table('slugs')->where('slug','sub-'.$slug)->get();
+        $slug_subcategoria = DB::table('slugs')->where('slug',$categoria . '-' . $slug)->get();
         if(!$slug_subcategoria->isEmpty())
         {
             $subcategoria = Subcategoria::find($slug_subcategoria[0]->fk_id);

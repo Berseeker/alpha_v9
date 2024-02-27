@@ -19,7 +19,7 @@ Auth::routes();
 Route::get('/',[App\Http\Controllers\WEB\Home\IndexController::class, 'index'])->name('index');
 Route::get('/categoria/{slug}',[App\Http\Controllers\WEB\Home\IndexController::class, 'showCategoria'])->name('home.categoria');
 Route::get('/categorias',[App\Http\Controllers\WEB\Home\IndexController::class, 'showCategorias'])->name('home.categorias');
-Route::get('/subcategoria/{slug}',[App\Http\Controllers\WEB\Home\IndexController::class, 'showSubcategoria'])->name('home.subcategoria');
+Route::get('{categoria}/subcategoria/{slug}',[App\Http\Controllers\WEB\Home\IndexController::class, 'showSubcategoria'])->name('home.subcategoria');
 Route::get('/producto/{slug}',[App\Http\Controllers\WEB\Home\IndexController::class, 'showProducto'])->name('home.producto');
 Route::post('/newsletter',[App\Http\Controllers\WEB\Home\IndexController::class, 'newsletter'])->name('home.newsletter');
 

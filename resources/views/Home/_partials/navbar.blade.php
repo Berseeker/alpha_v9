@@ -94,7 +94,7 @@
                             </button>
                             <ul class="dropdown-menu" style="padding: 8px;">
                                 @foreach ($categoria->customSubcategory as $subcategory)
-                                    <a href="{{ url('/subcategoria/' . Str::slug($subcategory->nombre, '-')) }}" class="link-catalogo" data="/imgs/v3/menu_navbar/{{ $subcategory->imgs }}" > {{ $subcategory->nombre }} </a>
+                                    <a href="{{ url(Str::slug($subcategory->categoria->nombre, '-') . '/subcategoria/' . Str::slug($subcategory->nombre, '-')) }}" class="link-catalogo" data="/imgs/v3/menu_navbar/{{ $subcategory->imgs }}" > {{ $subcategory->nombre }} </a>
                                 @endforeach
                                 <a href="{{ url('/categoria/' . Str::slug($categoria->nombre, '-')) }}" class='link-catalogo' data="textil"> Ver más</a>
                             </ul>

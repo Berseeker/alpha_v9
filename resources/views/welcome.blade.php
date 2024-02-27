@@ -18,7 +18,7 @@
                     <h2>Termos</h2>
                     <p>La mejor selección de termos.</p>
                     <p class="mb-30">Personalizados con el logotipo de tu empresa</p>
-                    <a href="{{ url('/subcategoria/termo-metalico') }}" style="text-decoration: none;" class="btn-catalogo">Ver más</a>
+                    <a href="{{ url('bebidas//subcategoria/termo-metalico') }}" style="text-decoration: none;" class="btn-catalogo">Ver más</a>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 pd-0">
