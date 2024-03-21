@@ -59,7 +59,7 @@
                         <ul style="list-style: none">
                             <li><i class="fa-solid fa-square-phone mr-10"></i>(998) 880-5111 / 880-5564 / 140-8894</li>
                         </ul>
-                        <p>Cancún y Riviera Maya</p>
+                        <p>CDMX, México</p>
                         <ul style="list-style: none">
                             <li><i class="fa-solid fa-square-phone mr-10"></i>(55) 1106-6569</li>
                         </ul>
