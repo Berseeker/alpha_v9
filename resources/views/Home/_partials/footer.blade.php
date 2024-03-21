@@ -52,18 +52,18 @@
                     <li>
                         <p class="mb-0"><i class="fa-solid mr-10 fa-location-dot red"></i>Cancún Q.Roo, México</p>
                         <p class="mb-0"><i class="fa-solid mr-10 fa-phone green"></i>(998) 880-5111 / 880-5564 / 140-8894</p>
-                        <p class="mb-30"><i class="fa-solid mr-10 fa-envelope-open-text alpha-color"></i>fernando@alphapromos.mx</p>
+                        <p class="mb-30"><i class="fa-solid mr-10 fa-envelope-open-text alpha-color"></i>ventas@alphapromos.mx</p>
                     </li>
                     <li>
-                        <p class="mb-0"><i class="fa-solid mr-10 fa-location-dot red"></i>CDMX Tlalpan, México</p>
+                        <p class="mb-0"><i class="fa-solid mr-10 fa-location-dot red"></i>CDMX, México</p>
                         <p class="mb-0"><i class="fa-solid mr-10 fa-phone green"></i>(55) 1106-6569</p>
-                        <p class="mb-30"><i class="fa-solid mr-10 fa-envelope-open-text alpha-color"></i>sarai@alphapromos.mx</p>
+                        <p class="mb-30"><i class="fa-solid mr-10 fa-envelope-open-text alpha-color"></i>ventas@alphapromos.mx</p>
                     </li>
-                    <li>
+                    <!--li>
                         <p class="mb-0"><i class="fa-solid mr-10 fa-location-dot red"></i>Madrid, España</p>
                         <p class="mb-0"><i class="fa-solid mr-10 fa-phone green"></i>(34) 662-9658-70</p>
                         <p class="mb-30"><i class="fa-solid mr-10 fa-envelope-open-text alpha-color"></i>ventasmadrid@alphapromos.mx</p>
-                    </li>
+                    </li-->
                 </ul>
             </div>
         </div>

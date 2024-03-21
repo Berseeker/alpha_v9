@@ -53,8 +53,7 @@
                         <p>Agradecemos te tomes unos minutos y nos cuentes tu experiencia, tus comentarios y sugerencias, eso ayudará a que cada día logremos ofrecer más y mejores servicios.</p>
                         <p>Correos electrónicos:</p>
                         <ul style="list-style: none">
-                            <li><i class="fa-solid fa-envelope mr-10"></i><a href="mailto:fernando@alphapromos.mx">fernando@alphapromos.mx</a></li>
-                            <li><i class="fa-solid fa-envelope mr-10"></i><a href="mailto:celene@alphapromos.mx">celene@alphapromos.mx</a></li>
+                            <li><i class="fa-solid fa-envelope mr-10"></i><a href="mailto:ventas@alphapromos.mx">ventas@alphapromos.mx</a></li>
                         </ul>
                         <p>Cancún y Riviera Maya</p>
                         <ul style="list-style: none">
