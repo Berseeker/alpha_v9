@@ -23,7 +23,7 @@ Route::get('{categoria}/subcategoria/{slug}',[App\Http\Controllers\WEB\Home\Inde
 Route::get('/producto/{slug}',[App\Http\Controllers\WEB\Home\IndexController::class, 'showProducto'])->name('home.producto');
 Route::post('/newsletter',[App\Http\Controllers\WEB\Home\IndexController::class, 'newsletter'])->name('home.newsletter');
 
-Route::get('/busqueda-resultado',[App\Http\Controllers\WEB\Home\IndexController::class, 'busqueda'])->name('home.busqueda');
+Route::get('/busqueda/{producto}',[App\Http\Controllers\WEB\Home\IndexController::class, 'search'])->name('home.busqueda');
 Route::get('/cotizacion-producto',[App\Http\Controllers\WEB\Home\CotizacionController::class, 'index'])->name('home.cotizacion');
 Route::post('/cotizacion-producto',[App\Http\Controllers\WEB\Home\CotizacionController::class, 'store'])->name('home.store.cotizacion');
 Route::get('/contacto',[App\Http\Controllers\WEB\Home\IndexController::class, 'contacto'])->name('home.contacto');

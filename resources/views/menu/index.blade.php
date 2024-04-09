@@ -81,7 +81,7 @@
                 </div>
             </li>
             <li>
-                <form action="{{ route('home.busqueda') }}" method="GET">
+                <form action="{{ route('home.busqueda') }}" method="POST" id="potter">
                     @csrf
                     <div class="input-group">
                         <input type="text" class="form-control search-product" id="search-global" placeholder="Busca un producto" name="search_global" autocomplete="off">

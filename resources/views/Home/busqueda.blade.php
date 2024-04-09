@@ -1,135 +1,98 @@
 @extends('layouts.web')
 
+
 @section('page-styles')
 <!-- Page css files -->
-<link rel="stylesheet" href="{{ asset('vendors/css/extensions/nouislider.min.css') }}">
-<link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-sliders.css') }}">
-<link rel="stylesheet" href="{{ asset('css/base/pages/app-ecommercet.css') }}">
-<link rel="stylesheet" href="{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}">
-<link rel="stylesheet" href="{{ asset('css/home/second_style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/v3/home/categoria_home.css') }}">
 @endsection
 
     
 @section('content')
 <!-- E-commerce Content Section Starts -->
 
-<div class="app-content content ecommerce-application content-w">
-    <section>
-        <h4 class="title-category">- {{ $title }} -</h4>
-        <div class="divider-custom" style="color: #AADD35;">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon">
-                <img src="{{ asset('imgs/logos/alpha_icon.png') }}" alt="" class="alpha_icon">
-            </div>
-            <div class="divider-custom-line"></div>
-        </div>
+<div class="container">
+    <section id="categoria-header">
+        <h3> <img src=" {{ asset('imgs/v3/logos/alpha.ico') }} " alt="AlphaPromos" id="alphaCateg"> {{ $title }} </h3>
     </section>
-    <div class="row">
-        <div class="col-sm-3 col-md-2">
-            @include('layouts.sidebar')
-        </div>
-        <div class="col-sm-9 col-md-10">
-            <!-- E-commerce Search Bar Starts -->
-            <section id="ecommerce-searchbar" class="ecommerce-searchbar">
-                <div class="row mt-1">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="search-results" style="text-align: left;"><i class="fa-solid fa-magnifying-glass" style="margin-right: 5px;color:#7367f0"></i>{{ $total }} productos encontrados</div>
-                    </div>
+    <section id="categoria-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
+                <div class="selector" data-margin-top="100">
+                    <h5><i class="fa-solid fa-list-ul mr-10 alpha-color"></i>{{ $categoria->nombre }}</h5>
+                    <ul class="list-categoria">
+                        @foreach ($categoria->subcategorias as $subcategoria)
+                            <li><a href="{{ url(Str::slug($subcategoria->categoria->nombre, '-') . '/subcategoria') . '/' . Str::slug($subcategoria->nombre, '-') }}">{{ $subcategoria->nombre }}</a></li>
+                        @endforeach
+                    </ul>
                 </div>
-            </section>
-            <!-- E-commerce Search Bar Ends -->
-            
-            <!-- E-commerce Products Starts -->
-            <section id="ecommerce-products" class="grid-view row">
-                @if ($productos->isEmpty())
-
-                    <img src="{{ asset('imgs/logos/no_encontrado.png') }}" alt="No hay productos que coincidan con tu busqueda" style="width: 550px;margin:0px auto;margin-bottom:20px;">
-                    <h2 class="text-warning">No se encontraron productos relacionados <br> con tu búsqueda </h2>
-
-                @else
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
+                <div class="row" style="margin-top: 20px;">
                     @foreach ($productos as $producto)
-                        <div class="col-sm-4 col-md-3">
-                            <div class="card ecommerce-card">
-                                <div class="item-img text-center">
-                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}">
-                                        @php
-                                            $img = asset('imgs/no_disp.png');
-                                            if($producto->images != null)
-                                            {
-                                                $img = json_decode($producto->images)[0];
-                                                if(!Str::contains($img,['https','http']))
-                                                {
-                                                    $img = Storage::url($img);
+                        <div class="col-xs-12 col-md-12 col-lg-6 col-xl-4 mb-30">
+                            <div class="shadowx">
+                                <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="bg-producto br-16c">
+                                    <div class="product-header pd-16c">
+                                        <img src="{{ $producto->preview }}" alt="{{ $producto->name }}">
+                                    </div>
+                                    <div class="product-body pd-16c">
+                                        <p class="title alpha-color">{{ $producto->name }}</p>
+                                        <ul>
+                                            <li><i class="fa-solid fa-star"></i></li>
+                                            <li><i class="fa-solid fa-star"></i></li>
+                                            <li><i class="fa-solid fa-star"></i></li>
+                                            <li><i class="fa-solid fa-star"></i></li>
+                                            @php
+                                                $random = rand(1, 3);
+                                                $star = "";
+                                                if ($random == 1) {
+                                                    $star = 'fa-solid fa-star-half-stroke';
                                                 }
-                                            }
-                                        @endphp 
-                                        <img
-                                        class="img-fluid card-img-top"
-                                        src="{{ $img }}"
-                                        alt="img-placeholder"
-                                    /></a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="item-wrapper">
-                                        <div class="item-rating">
-                                            <ul class="unstyled-list list-inline">
-                                                <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
-                                                <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
-                                                <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
-                                                <li class="ratings-list-item"><i class="fa-solid fa-star gold-s"></i></i></li>
-                                                @php
-                                                    $star = 'fa-star-half-stroke';
-                                                    $rand = rand(1,3);
-                                                    if($rand == 1)
-                                                        $star = 'fa-star';
 
-                                                @endphp
-                                                <li class="ratings-list-item"><i class="fa-solid {{$star}} gold-s"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <!--h6 class="item-price">$339.99</h6-->
-                                        </div>
-                                    </div>
-                                    <h6 class="item-name">
-                                        <a class="text-body" href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}">{{ $producto->nombre }}</a>
-                                        <span class="card-text item-company">By <a href="#" class="company-name">{{ $producto->SDK }}</a></span>
-                                    </h6>
-                                    <p class="card-text item-description">
-                                        {{ $producto->descripcion }}
-                                    </p>
-                                </div>
+                                                if ($random == 2) {
+                                                    $star = 'fa-solid fa-star';
+                                                }
 
-                                <div class="item-options text-center">
-                                    <div class="item-wrapper">
-                                        <div class="item-cost">
-                                            <!--h4 class="item-price">$339.99</h4-->
-                                        </div>
+                                                if ($random == 3) {
+                                                    $star = 'fa-regular fa-star';
+                                                }
+                                            @endphp
+                                            <li><i class="{{ $star }}"></i></li>
+                                        </ul>
+                                        <p class="description-item">{{ $producto->details }}</p>
+                                        @php
+                                            $colores = json_decode($producto->colors);
+                                        @endphp
+                                        <ul class="color-list">
+                                            @foreach ($colores as $color)
+                                                <li><div class="{{ $color }} color-product" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="{{ $color }}"></div></li>
+                                            @endforeach
+                                        </ul>
                                     </div>
-                                    <a href="{{url('/producto/'.Str::slug($producto->nombre." ".$producto->modelo,'-'))}}" class="btn btn-light btn-wishlist">
-                                        <i class="fa-solid fa-info"></i>
-                                        <span>Detalles</span>
-                                    </a>
-                                    <a href="#" class="btn btn-primary btn-cart" sdk ='{{$producto->SDK}}'>
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        <span class="add-to-cart">Agregar al Carrito</span>
-                                    </a>
+                                </a>
+                                <div class="product-footer row mr-0 ml-0">
+                                    <div class="col-xs-12 col-sm-12 col-md-4 pd-0">
+                                        <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="btn pd-0 d-flex align-items-center justify-content-center bg-w br-r0"><i class="fa-solid fa-info"></i>Detalles</a>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-8 pd-0">
+                                        <button class="btn pd-0 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto->code }}"><i class="fa-solid fa-cart-plus"></i>Agregar al carrito</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                @endif
-            </section>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
 @endsection
 
 @section('page-scripts')
-<!-- Page js files -->
-<script src="{{ asset('vendors/js/extensions/wNumb.min.js') }}"></script>
-<script src="{{ asset('vendors/js/extensions/nouislider.min.js') }}"></script>
-<script src="{{ asset('vendors/js/extensions/toastr.min.js') }}"></script>
-<script src="{{ asset('js/scripts/pages/app-ecom.js') }}"></script>
+<script src="{{ asset('js/v3/sticky/sticky.min.js') }}"></script>
+<script type="text/javascript">
+    if ($(document).width() > 700) {
+        var sticky = new Sticky('.selector');
+    }
+</script>
 @endsection

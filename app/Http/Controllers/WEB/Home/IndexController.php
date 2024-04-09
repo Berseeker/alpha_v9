@@ -246,6 +246,49 @@ class IndexController extends Controller
         ]);
     }
 
+    public function search(string $producto)
+    {
+        $pageConfigs = [
+            'contentLayout' => "content-detached-left-sidebar",
+            'pageClass' => 'ecommerce-application',
+        ];
+
+        $breadcrumbs = [
+            ['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "eCommerce"], ['name' => "Shop"]
+        ];
+
+        $categoria = NULL;
+        $title = null;
+        $cont = 1;
+        $total_items = 0;
+        $flag = 1;
+        $categoria = null;
+
+        $categorias = Categoria::all();
+
+        $productos = [];
+        if ($producto != null && $producto != '') {
+            $productos = Product::where('search','LIKE','%'.$producto.'%')->orWhere('details','LIKE','%'.$producto.'%')->get();
+            $total_items = count($productos);
+            $categoria = Categoria::find($productos[0]->categoria_id);
+        }
+
+        if(count($productos) == 0)
+            $flag=0;
+
+        return view('Home.busqueda',[
+            'pageConfigs' => $pageConfigs,
+            'productos' => $productos,
+            'categorias' => $categorias,
+            'breadcrumbs' => $breadcrumbs,
+            'total' => $total_items,
+            'flag' => $flag,
+            'title' => $title,
+            'cont' => $cont,
+            'categoria' => $categoria
+        ]);
+    }
+
     public function contacto(Request $request)
     {
         $categorias = Categoria::all();

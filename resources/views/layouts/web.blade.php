@@ -167,7 +167,7 @@
 </script>
 <script type="text/javascript">
   //BUSCADOR
-  document.addEventListener('DOMContentLoaded', () => {
+  /*document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('search-global');
     input.addEventListener('keyup', event => {
       console.log(event.target.value);
@@ -221,6 +221,11 @@
         }
       });
     });
+  });*/
+  $('#search-global').keypress(function (e) {
+    if (e.which == 13) {
+      window.location.replace("/busqueda/" + $(this).val());
+    }
   });
 </script>
 <script type="text/javascript">
