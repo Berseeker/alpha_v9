@@ -266,9 +266,14 @@ class IndexController extends Controller
 
         $categorias = Categoria::all();
 
+        $string_formatted = Str::lower($producto);
+        if ($string_formatted == 'sombrilla') {
+            $string_formatted = "paraguas";
+        }
+
         $productos = [];
         if ($producto != null && $producto != '') {
-            $productos = Product::where('search','LIKE','%'.$producto.'%')->orWhere('details','LIKE','%'.$producto.'%')->get();
+            $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->get();
             $total_items = count($productos);
             $categoria = Categoria::find($productos[0]->categoria_id);
         }
