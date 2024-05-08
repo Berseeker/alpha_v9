@@ -28,59 +28,65 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
                 <div class="row" style="margin-top: 20px;">
-                    @foreach ($productos as $producto)
-                        <div class="col-xs-12 col-md-12 col-lg-6 col-xl-4 mb-30">
-                            <div class="shadowx">
-                                <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="bg-producto br-16c">
-                                    <div class="product-header pd-16c">
-                                        <img src="{{ $producto->preview }}" alt="{{ $producto->name }}">
-                                    </div>
-                                    <div class="product-body pd-16c">
-                                        <p class="title alpha-color">{{ $producto->name }}</p>
-                                        <ul>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
+                    @if (count($productos) > 0)
+                        @foreach ($productos as $producto)
+                            <div class="col-xs-12 col-md-12 col-lg-6 col-xl-4 mb-30">
+                                <div class="shadowx">
+                                    <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="bg-producto br-16c">
+                                        <div class="product-header pd-16c">
+                                            <img src="{{ $producto->preview }}" alt="{{ $producto->name }}">
+                                        </div>
+                                        <div class="product-body pd-16c">
+                                            <p class="title alpha-color">{{ $producto->name }}</p>
+                                            <ul>
+                                                <li><i class="fa-solid fa-star"></i></li>
+                                                <li><i class="fa-solid fa-star"></i></li>
+                                                <li><i class="fa-solid fa-star"></i></li>
+                                                <li><i class="fa-solid fa-star"></i></li>
+                                                @php
+                                                    $random = rand(1, 3);
+                                                    $star = "";
+                                                    if ($random == 1) {
+                                                        $star = 'fa-solid fa-star-half-stroke';
+                                                    }
+
+                                                    if ($random == 2) {
+                                                        $star = 'fa-solid fa-star';
+                                                    }
+
+                                                    if ($random == 3) {
+                                                        $star = 'fa-regular fa-star';
+                                                    }
+                                                @endphp
+                                                <li><i class="{{ $star }}"></i></li>
+                                            </ul>
+                                            <p class="description-item">{{ $producto->details }}</p>
                                             @php
-                                                $random = rand(1, 3);
-                                                $star = "";
-                                                if ($random == 1) {
-                                                    $star = 'fa-solid fa-star-half-stroke';
-                                                }
-
-                                                if ($random == 2) {
-                                                    $star = 'fa-solid fa-star';
-                                                }
-
-                                                if ($random == 3) {
-                                                    $star = 'fa-regular fa-star';
-                                                }
+                                                $colores = json_decode($producto->colors);
                                             @endphp
-                                            <li><i class="{{ $star }}"></i></li>
-                                        </ul>
-                                        <p class="description-item">{{ $producto->details }}</p>
-                                        @php
-                                            $colores = json_decode($producto->colors);
-                                        @endphp
-                                        <ul class="color-list">
-                                            @foreach ($colores as $color)
-                                                <li><div class="{{ $color }} color-product" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="{{ $color }}"></div></li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </a>
-                                <div class="product-footer row mr-0 ml-0">
-                                    <div class="col-xs-12 col-sm-12 col-md-4 pd-0">
-                                        <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="btn pd-0 d-flex align-items-center justify-content-center bg-w br-r0"><i class="fa-solid fa-info"></i>Detalles</a>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-8 pd-0">
-                                        <button class="btn pd-0 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto->code }}"><i class="fa-solid fa-cart-plus"></i>Agregar al carrito</button>
+                                            <ul class="color-list">
+                                                @foreach ($colores as $color)
+                                                    <li><div class="{{ $color }} color-product" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="{{ $color }}"></div></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </a>
+                                    <div class="product-footer row mr-0 ml-0">
+                                        <div class="col-xs-12 col-sm-12 col-md-4 pd-0">
+                                            <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="btn pd-0 d-flex align-items-center justify-content-center bg-w br-r0"><i class="fa-solid fa-info"></i>Detalles</a>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-8 pd-0">
+                                            <button class="btn pd-0 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto->code }}"><i class="fa-solid fa-cart-plus"></i>Agregar al carrito</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
+                    @else
+                        <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12 mb-30">
+                            <p>No se encontraron resultados</p>
                         </div>
-                    @endforeach
+                    @endif
                 </div>
             </div>
         </div>
