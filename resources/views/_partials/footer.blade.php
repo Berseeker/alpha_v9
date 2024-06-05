@@ -39,7 +39,7 @@
                       <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
                           <h3 class="f-title f_600 t_color f_size_18">Redes Sociales</h3>
                           <div class="f_social_icon">
-                              <a href="https://wa.me/+5219981098156" target="_blank" class="fab fa-whatsapp"></a>
+                              <a href="https://wa.me/+525534167685" target="_blank" class="fab fa-whatsapp"></a>
                               <a href="https://www.facebook.com/alphapromos.mx/" target="_blank" class="fab fa-facebook"></a>
                               <!--a href="#" class="fab fa-twitter"></a>
                               <a href="#" class="fab fa-pinterest"></a-->
