@@ -113,7 +113,7 @@ class SlugController extends Controller
         $all_slugs = Slug::where('path', 'producto')->get();
         $slugs_deleted = array();
         foreach ($all_slugs as $slug) {
-            $producto = Product::where('name', $slug->original_name)->first();
+            $producto = Product::where('name', $slug->original_name)->whereNull('deleted_at')->first();
             if ($producto == null) {
                 $producto = Product::onlyTrashed()->where('name', $slug->original_name)->first();
                 if ($producto != null) {
