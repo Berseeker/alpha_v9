@@ -32,7 +32,7 @@
                         @foreach ($productos as $producto)
                             <div class="col-xs-12 col-md-12 col-lg-6 col-xl-4 mb-30">
                                 <div class="shadowx">
-                                    <a href="{{ url('/producto/' . Str::slug($producto['name']." ".$producto['modelo'], '-')) }}" class="bg-producto br-16c">
+                                    <a href="{{ url('/producto/' . Str::slug($producto['name']." ".$producto['code'], '-')) }}" class="bg-producto br-16c">
                                         <div class="product-header pd-16c">
                                             <img src="{{ $producto['preview'] }}" alt="{{ $producto['name'] }}">
                                         </div>
