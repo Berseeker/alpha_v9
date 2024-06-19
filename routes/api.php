@@ -51,6 +51,7 @@ Route::get('slug-productos-v2',[SlugController::class,'productoV2Slug']);
 
 Route::get('all-products',[ProductoController::class,'index']);
 Route::get('producto/{sdk}',[ProductoController::class,'producto']);
+Route::get('producto-slug/{slug}',[ProductoController::class,'slug']);
 
 
 Route::post('store-cotizacion',[CotizacionController::class,'store']);

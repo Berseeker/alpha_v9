@@ -46,4 +46,22 @@ class ProductoController extends Controller
         //return $producto;
     }
 
+    public function slug($slug)
+    {
+        $producto = NULL;
+        $title = null;
+        $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
+        if(!$slug_producto->isEmpty()){
+            $producto = Product::find($slug_producto[0]->fk_id);
+            $title = $producto->name;
+        }
+
+        return response()->json([
+            'producto' => $producto,
+            'title' => $title
+        ]);
+
+        //return $producto;
+    }
+
 }
