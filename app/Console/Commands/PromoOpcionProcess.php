@@ -52,8 +52,14 @@ class PromoOpcionProcess extends Command
 
         $result = $response->json();
         $api_ids = array();
-        dd($result);
-        if(array_key_exists('error',$result))
+
+        if ($result == null) {
+            $log = new Logs();
+            $log->status = 'Error';
+            $log->message = 'Algo ocurrio con el endpoint de PromoOpcion.';
+            $log->save();
+            Log::error('Error inesperado de  PromoOpcion.');
+        } elseif(array_key_exists('error',$result))
         {
             //$test =  var_export($result);
             //echo $test;

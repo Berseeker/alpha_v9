@@ -18,6 +18,7 @@ class ProductoController extends Controller
             ->join('categorias', 'products.categoria_id', '=', 'categorias.id')
             ->join('subcategorias', 'products.subcategoria_id', '=', 'subcategorias.id')
             ->select('products.id','products.name','products.code', 'products.categoria_id', 'products.images', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria', 'products.proveedor as proveedor')
+            ->where('products.deleted_at', '=', null)
             ->get()->toJson();
         
         return $productos;
@@ -63,6 +64,11 @@ class ProductoController extends Controller
         ]);
 
         //return $producto;
+    }
+
+    public function restore() {
+        //Get Products that are deleted
+        onlyTrashed()->get();
     }
 
 }

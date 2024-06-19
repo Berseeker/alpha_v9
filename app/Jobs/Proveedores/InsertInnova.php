@@ -113,7 +113,9 @@ class InsertInnova implements ShouldQueue
             }
         }
 
-        Product::where('proveedor','Innova')->whereNotIn('parent_code', $api_ids)->delete();
+        if (count($api_ids) > 0) {
+            Product::where('proveedor','Innova')->whereNotIn('parent_code', $api_ids)->delete();
+        }
         ProviderUpdated::dispatch('Innova');
     }
 

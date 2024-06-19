@@ -80,7 +80,9 @@ class InsertDobleVela implements ShouldQueue
 
             echo 'Se agregaron '.$msg.' de DobleVela' . PHP_EOL;
 
-            Product::where('proveedor','DobleVela')->whereNotIn('code', $api_ids)->delete();
+            if (count($api_ids) > 0) {
+                Product::where('proveedor','DobleVela')->whereNotIn('code', $api_ids)->delete();
+            }
             ProviderUpdated::dispatch('DobleVela');
         }
 

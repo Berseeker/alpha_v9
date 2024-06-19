@@ -91,7 +91,9 @@ class InsertForPromotional implements ShouldQueue
 
         echo 'Se agregaron '.$msg.' de ForPromotional' . PHP_EOL;
 
-        Product::where('proveedor','ForPromotional')->whereNotIn('parent_code', $api_ids)->delete();
+        if (count($api_ids) > 0) {
+            Product::where('proveedor','ForPromotional')->whereNotIn('parent_code', $api_ids)->delete();
+        }
         ProviderUpdated::dispatch('ForPromotional');
     }
 

@@ -226,7 +226,7 @@ class IndexController extends Controller
         if($request->has('search_global'))
         {
             $title = Str::upper($request->search_global);
-            $productos = Product::where('search','LIKE','%'.$request->search_global.'%')->orWhere('details','LIKE','%'.$request->search_global.'%')->get();
+            $productos = Product::where('search','LIKE','%'.$request->search_global.'%')->orWhere('details','LIKE','%'.$request->search_global.'%')->where('delete_at', NULL)->get();
             $total_items = count($productos);
         }
 
@@ -274,7 +274,7 @@ class IndexController extends Controller
 
         $productos = [];
         if ($producto != null && $producto != '') {
-            $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->get();
+            $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->where('deleted_at', null)->get();
             $total_items = count($productos);
             if ($total_items > 0) {
                 $categoria = Categoria::find($productos[0]->categoria_id);

@@ -66,7 +66,7 @@ class InsertPromoOpcion implements ShouldQueue
                 {
                     $this->insertProduct($item, $cont_new_products);
                 } else {
-                    $this->updateProduct($item);
+                    $this->updateProduct($item, $cont_update_products);
                 }
             }
 
@@ -87,7 +87,9 @@ class InsertPromoOpcion implements ShouldQueue
             Log::info($msg . 'en PromoOpcion.');
             echo $msg . 'en PromoOpcion' . PHP_EOL;
 
-            Product::where('proveedor','PromoOpcion')->whereNotIn('code', $api_ids)->delete();
+            if (count($api_ids) > 0) {
+                Product::where('proveedor','PromoOpcion')->whereNotIn('code', $api_ids)->delete();
+            }
             ProviderUpdated::dispatch('PromoOpcion');
         }
     }
