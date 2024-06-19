@@ -112,6 +112,8 @@ class SlugController extends Controller
         $count = 0;
         $all_slugs = Slug::where('path', 'producto')->get();
         $slugs_deleted = array();
+        $slugs_exception = array();
+        $product_exception = array();
         foreach ($all_slugs as $slug) {
             $producto = Product::where('name', $slug->original_name)->whereNull('deleted_at')->first();
             if ($producto == null) {
@@ -120,16 +122,13 @@ class SlugController extends Controller
                     array_push($slugs_deleted, $slug);
                     $slug->delete();
                 } else {
-                    return response()->json([
-                        'slug' => $slug,
-                    ]);
+                    array_push($slugs_exception, $slug);
+                    $slugs_exception
                 }
             } else {
                 $slug_find = Slug::where('original_name', $producto->name)->first();
                 if ($slug_find == null) {
-                    return response()->json([
-                        'producto' => $producto
-                    ]);
+                    array_push($product_exception, $producto);
                 } else {
                     if ($slug_find->fk_id != $producto->id) {
                         $slug_find->fk_id = $producto->id;
@@ -142,7 +141,10 @@ class SlugController extends Controller
 
         return response()->json([
             'msg' => 'Se corrigieron los slugs',
-            'count' => $count
+            'count' => $count,
+            'slugs_deleted' => $slugs_deleted,
+            'slugs_exception' => $slugs_exception,
+            'product_exception' => $product_exception
         ]);
     }
 }
