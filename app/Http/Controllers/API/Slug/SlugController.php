@@ -114,9 +114,18 @@ class SlugController extends Controller
         foreach ($all_slugs as $slug) {
             $producto = Product::where('name', $slug->original_name)->first();
             if ($producto == null) {
-                return response()->json([
-                    'slug' => $slug
-                ]);
+                $producto = Product::onlyTrashed()->where('name', $slug->original_name)->first();
+                if ($producto != null) {
+                    return response()->json([
+                        'slug' => $slug,
+                        'producto_deleted' => $producto
+                    ]);
+                } else {
+                    return response()->json([
+                        'slug' => $slug,
+                        'producto_deleted' => $producto
+                    ]);
+                }
             }
             $slug = Slug::where('original_name', $producto->name)->first();
             if ($slug == null) {
