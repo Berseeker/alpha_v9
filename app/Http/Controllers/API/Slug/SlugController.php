@@ -113,7 +113,17 @@ class SlugController extends Controller
         $all_slugs = Slug::where('path', 'producto')->get();
         foreach ($all_slugs as $slug) {
             $producto = Product::where('name', $slug->original_name)->first();
+            if ($producto == null) {
+                return response()->json([
+                    'slug' => $slug
+                ]);
+            }
             $slug = Slug::where('original_name', $producto->name)->first();
+            if ($slug == null) {
+                return response()->json([
+                    'producto' => $producto
+                ]);
+            }
             if ($slug->fk_id != $producto->id) {
                 $slug->fk_id = $producto->id;
                 $slug->save();
