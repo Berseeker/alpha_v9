@@ -54,7 +54,6 @@ class ProductoController extends Controller
         $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
         if(!$slug_producto->isEmpty()){
             $producto = Product::find((int) $slug_producto[0]->fk_id);
-            dd($producto, $slug_producto, (int) $slug_producto[0]->fk_id);
             $title = $producto->name;
         }
 
@@ -66,9 +65,11 @@ class ProductoController extends Controller
         //return $producto;
     }
 
-    public function restore() {
-        //Get Products that are deleted
-        onlyTrashed()->get();
+    public function search($string_formatted) {
+        $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->whereNull('deleted_at')->get();
+        return response()->json([
+            'productos' => $productos
+        ]);
     }
 
 }
