@@ -123,7 +123,6 @@ class SlugController extends Controller
                     $slug->delete();
                 } else {
                     array_push($slugs_exception, $slug);
-                    $slugs_exception
                 }
             } else {
                 $slug_find = Slug::where('original_name', $producto->name)->first();
