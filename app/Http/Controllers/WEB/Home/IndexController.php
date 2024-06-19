@@ -146,6 +146,7 @@ class IndexController extends Controller
         $producto = NULL;
         $title = null;
         $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
+        dd($slug_producto);
         if(!$slug_producto->isEmpty()){
             $producto = Product::find($slug_producto[0]->fk_id);
             $title = $producto->name;
