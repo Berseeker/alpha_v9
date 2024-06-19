@@ -66,9 +66,10 @@ class ProductoController extends Controller
     }
 
     public function search($string_formatted) {
-        $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->whereNull('deleted_at')->get();
+        $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->get();
         return response()->json([
-            'productos' => $productos
+            'productos' => $productos,
+            'count' => count($productos)
         ]);
     }
 
