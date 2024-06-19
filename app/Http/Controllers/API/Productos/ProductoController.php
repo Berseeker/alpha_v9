@@ -52,7 +52,8 @@ class ProductoController extends Controller
         $title = null;
         $slug_producto = DB::table('slugs')->where('slug',$slug)->get();
         if(!$slug_producto->isEmpty()){
-            $producto = Product::find($slug_producto[0]->fk_id);
+            $producto = Product::find((int) $slug_producto[0]->fk_id);
+            dd($producto, $slug_producto, (int) $slug_producto[0]->fk_id);
             $title = $producto->name;
         }
 
