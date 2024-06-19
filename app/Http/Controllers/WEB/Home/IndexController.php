@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 //Para conexion a la base de datos
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -274,6 +275,9 @@ class IndexController extends Controller
 
         $productos = [];
         if ($producto != null && $producto != '') {
+            $response = Http::get('https://alphapromos.mx/api/searc-producto/' . $string_formatted);
+            $response->json();
+            dd($response);
             $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->whereNull('deleted_at')->get();
             $total_items = count($productos);
             if ($total_items > 0) {
