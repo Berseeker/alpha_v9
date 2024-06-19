@@ -109,6 +109,7 @@ class SlugController extends Controller
 
     public function correctSlug()
     {
+        $count = 0;
         $all_slugs = Slug::where('path', 'producto')->get();
         foreach ($all_slugs as $slug) {
             $producto = Product::where('name', $slug->original_name)->first();
@@ -116,7 +117,13 @@ class SlugController extends Controller
             if ($slug->fk_id != $producto->id) {
                 $slug->fk_id = $producto->id;
                 $slug->save();
+                $count++;
             }
         }
+
+        return response()->json([
+            'msg' => 'Se corrigieron los slugs',
+            'count' => $count
+        ]);
     }
 }
