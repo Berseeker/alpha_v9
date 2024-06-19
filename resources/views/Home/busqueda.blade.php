@@ -32,12 +32,12 @@
                         @foreach ($productos as $producto)
                             <div class="col-xs-12 col-md-12 col-lg-6 col-xl-4 mb-30">
                                 <div class="shadowx">
-                                    <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="bg-producto br-16c">
+                                    <a href="{{ url('/producto/' . Str::slug($producto['name']." ".$producto['code'], '-')) }}" class="bg-producto br-16c">
                                         <div class="product-header pd-16c">
-                                            <img src="{{ $producto->preview }}" alt="{{ $producto->name }}">
+                                            <img src="{{ $producto['preview'] }}" alt="{{ $producto['name'] }}">
                                         </div>
                                         <div class="product-body pd-16c">
-                                            <p class="title alpha-color">{{ $producto->name }}</p>
+                                            <p class="title alpha-color">{{ $producto['name'] }}</p>
                                             <ul>
                                                 <li><i class="fa-solid fa-star"></i></li>
                                                 <li><i class="fa-solid fa-star"></i></li>
@@ -60,9 +60,9 @@
                                                 @endphp
                                                 <li><i class="{{ $star }}"></i></li>
                                             </ul>
-                                            <p class="description-item">{{ $producto->details }}</p>
+                                            <p class="description-item">{{ $producto['details'] }}</p>
                                             @php
-                                                $colores = json_decode($producto->colors);
+                                                $colores = json_decode($producto['colors']);
                                             @endphp
                                             <ul class="color-list">
                                                 @foreach ($colores as $color)
@@ -73,10 +73,10 @@
                                     </a>
                                     <div class="product-footer row mr-0 ml-0">
                                         <div class="col-xs-12 col-sm-12 col-md-4 pd-0">
-                                            <a href="{{ url('/producto/' . Str::slug($producto->name." ".$producto->code, '-')) }}" class="btn pd-0 d-flex align-items-center justify-content-center bg-w br-r0"><i class="fa-solid fa-info"></i>Detalles</a>
+                                            <a href="{{ url('/producto/' . Str::slug($producto['name']." ".$producto['code'], '-')) }}" class="btn pd-0 d-flex align-items-center justify-content-center bg-w br-r0"><i class="fa-solid fa-info"></i>Detalles</a>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-8 pd-0">
-                                            <button class="btn pd-0 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto->code }}"><i class="fa-solid fa-cart-plus"></i>Agregar al carrito</button>
+                                            <button class="btn pd-0 d-flex align-items-center justify-content-center bg-alpha br-l0 btn-cart" sdk="{{ $producto['code'] }}"><i class="fa-solid fa-cart-plus"></i>Agregar al carrito</button>
                                         </div>
                                     </div>
                                 </div>
