@@ -274,7 +274,13 @@ class IndexController extends Controller
 
         $productos = [];
         if ($producto != null && $producto != '') {
-            $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->whereNull('deleted_at')->get();
+            //$productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->whereNull('deleted_at')->get();
+            $productos = DB::table('products')
+                   ->select('*')
+                   ->where('search','LIKE','%'.$string_formatted.'%')
+                   ->orWhere('details','LIKE','%'.$string_formatted.'%')
+                   ->whereNull('deleted_at')
+                   ->get();
             $total_items = count($productos);
             if ($total_items > 0) {
                 $categoria = Categoria::find($productos[0]->categoria_id);
