@@ -280,7 +280,7 @@ class IndexController extends Controller
             $productos = $response['productos'];
             $total_items = count($productos);
             if ($total_items > 0) {
-                $categoria = Categoria::find($productos[0]->categoria_id);
+                $categoria = Categoria::find($productos[0]['categoria_id']);
             } else {
                 $categoria = Categoria::first();
             }
