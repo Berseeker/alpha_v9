@@ -47,6 +47,7 @@ Route::get('slug-categorias',[SlugController::class,'categoriaSlug']);
 Route::get('slug-subcategorias',[SlugController::class,'subcategoriaSlug']);
 Route::get('slug-productos',[SlugController::class,'productoSlug']);
 Route::get('slug-productos-v2',[SlugController::class,'productoV2Slug']);
+Route::get('correct-slugs-v2',[SlugController::class,'correctSlug']);
 
 
 Route::get('all-products',[ProductoController::class,'index']);

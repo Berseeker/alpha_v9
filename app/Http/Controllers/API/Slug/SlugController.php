@@ -106,4 +106,17 @@ class SlugController extends Controller
             'msg' =>  "Slugs de productos creados exitosamente"
         ]);
     }
+
+    public function correctSlug()
+    {
+        $all_slugs = Slug::where('path', 'producto')->get();
+        foreach ($all_slugs as $slug) {
+            $producto = Product::where('name', $slug->original_name)->first();
+            $slug = Slug::where('original_name', $producto->name);
+            if ($slug->fk_id != $producto->id) {
+                $slug->fk_id = $producto->id;
+                $slug->save();
+            }
+        }
+    }
 }
