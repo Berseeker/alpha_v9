@@ -126,17 +126,19 @@ class SlugController extends Controller
                     ]);
                 }
             }
-            $slug = Slug::where('original_name', $producto->name)->first();
-            if ($slug == null) {
+            $slug_find = Slug::where('original_name', $producto->name)->first();
+            if ($slug_find == null) {
                 return response()->json([
                     'producto' => $producto
                 ]);
+            } else {
+                if ($slug_find->fk_id != $producto->id) {
+                    $slug_find->fk_id = $producto->id;
+                    $slug_find->save();
+                    $count++;
+                }
             }
-            if ($slug->fk_id != $producto->id) {
-                $slug->fk_id = $producto->id;
-                $slug->save();
-                $count++;
-            }
+            
         }
 
         return response()->json([
