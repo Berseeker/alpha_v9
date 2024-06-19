@@ -122,23 +122,22 @@ class SlugController extends Controller
                 } else {
                     return response()->json([
                         'slug' => $slug,
-                        'producto_deleted' => $producto
                     ]);
                 }
-            }
-            $slug_find = Slug::where('original_name', $producto->name)->first();
-            if ($slug_find == null) {
-                return response()->json([
-                    'producto' => $producto
-                ]);
             } else {
-                if ($slug_find->fk_id != $producto->id) {
-                    $slug_find->fk_id = $producto->id;
-                    $slug_find->save();
-                    $count++;
+                $slug_find = Slug::where('original_name', $producto->name)->first();
+                if ($slug_find == null) {
+                    return response()->json([
+                        'producto' => $producto
+                    ]);
+                } else {
+                    if ($slug_find->fk_id != $producto->id) {
+                        $slug_find->fk_id = $producto->id;
+                        $slug_find->save();
+                        $count++;
+                    }
                 }
-            }
-            
+            } 
         }
 
         return response()->json([
