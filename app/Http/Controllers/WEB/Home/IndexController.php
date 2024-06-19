@@ -277,7 +277,7 @@ class IndexController extends Controller
         if ($producto != null && $producto != '') {
             $response = Http::get('https://alphapromos.mx/api/searc-producto/' . $string_formatted);
             $response->json();
-            dd($response);
+            dd($response['productos']);
             $productos = Product::where('search','LIKE','%'.$string_formatted.'%')->orWhere('details','LIKE','%'.$string_formatted.'%')->whereNull('deleted_at')->get();
             $total_items = count($productos);
             if ($total_items > 0) {
