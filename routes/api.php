@@ -38,6 +38,7 @@ Route::get('forpromotional-v2',[forPromotionalController::class,'v2']);
 Route::get('doblevela-v2',[DobleVelaController::class,'v2']);
 Route::get('doblevela-imgs-v2',[DobleVelaController::class,'imgsV2']);
 Route::get('doblevela-images-v2',[DobleVelaController::class,'updateImgV2']);
+Route::post('doblevela-images-excel',[DobleVelaController::class,'updateImgExcel']);
 Route::get('doblevela-count-images-v2',[DobleVelaController::class,'empty']);
 Route::get('doblevela-test-product',[DobleVelaController::class,'test']);
 

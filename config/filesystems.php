@@ -172,6 +172,23 @@ return [
             ],
         ],
 
+        'urlsvela' => [
+            'driver' => 'local',
+            'root' => storage_path('app/URLS/doblevela'),
+            'url' => env('APP_URL').'/storage/doblevela-urls-imgs',
+            'visibility' => 'public',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+
     ],
 
     /*
