@@ -1015,7 +1015,7 @@ class InsertForPromotional implements ShouldQueue
                         $subcategoria = 83;
                     }
                     return [
-                        'category_id' => 14,
+                        'category_id' => 15,
                         'subcategory_id' => $subcategoria,
                         'search' => $producto['categoria'] . ', ' . $producto['sub_categoria'].',LLAVERO METALICO, LLAVÉROS, ' . Str::upper($producto['nombre_articulo']),
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'].',LLAVERO METALICO, LLAVÉROS, ' . Str::upper($producto['nombre_articulo']),
@@ -1023,7 +1023,7 @@ class InsertForPromotional implements ShouldQueue
                     break;
                 default:
                     return [
-                        'category_id' => 14,
+                        'category_id' => 15,
                         'subcategory_id' => 84,
                         'search' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo']),
                         'meta_keywords' => $producto['categoria'] . ', ' . $producto['sub_categoria'] . ', ' . Str::upper($producto['nombre_articulo']),

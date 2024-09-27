@@ -25,7 +25,7 @@
                 <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/novedades.png') }}')">
                     <h2>Novedades</h2>
                     <p>Consulta todas las novedades</p>
-                    <p class="mb-30">Artículos Promocionales para este 2023.</p>
+                    <p class="mb-30">Artículos Promocionales para este {{ date("Y") }}.</p>
                     <a href="{{ url('/') }}" class="btn-catalogo">Ver más</a>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="item-catalogo" style="background: url('{{ asset('imgs/v3/catalogos/tecnology.png') }}')">
                     <h2>Tecnología</h2>
                     <p>Descubre lo mejor para ti.</p>
-                    <p class="mb-30">Artículos Promocionales para este 2023.</p>
+                    <p class="mb-30">Artículos Promocionales para este {{ date("Y") }}.</p>
                     <a href="{{ url('/categoria/tecnologia') }}" class="btn-catalogo">Ver más</a>
                 </div>
             </div>
