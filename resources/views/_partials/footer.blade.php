@@ -30,7 +30,7 @@
                       <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
                             <h3 class="f-title f_600 t_color f_size_18">Ayuda</h3>
                             <ul class="list-unstyled f_list">
-                                <li><a href="{{ url('/contacto') }}">Contácto</a></li>
+                                <li><a href="{{ url('/contacto') }}">Contacto</a></li>
                                 <li><a href="#">Términos y Condiciones</a></li>
                             </ul>
                       </div>

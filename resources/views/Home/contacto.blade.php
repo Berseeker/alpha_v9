@@ -65,7 +65,7 @@
                         </ul>
                         <p>Whatsapp</p>
                         <ul style="list-style: none">
-                            <li><i class="fa-brands fa-whatsapp mr-10"></i>(998) 168-5408 y (998) 109 8156</li>
+                            <li><i class="fa-brands fa-whatsapp mr-10"></i>(+52) 998 111 1725</li>
                         </ul>
                     </div>
                 </div>

@@ -20,7 +20,7 @@
                     <a class="nav-link" href="{{ route('home.displays') }}">DISPLAYS</a>
                 </li>
                 <li class="nav-item customH">
-                    <a class="nav-link" href="{{ route('home.contacto') }}">CONTÁCTO</a>
+                    <a class="nav-link" href="{{ route('home.contacto') }}">CONTACTO</a>
                 </li>
                 <li class="nav-item dropdown customV">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,7 +29,7 @@
                     <ul class="dropdown-menu bg-body-tertiary" style="margin-bottom: 20px; border-width:0px;">
                         <li><a class="dropdown-item" href="{{ route('home.servicios') }}">IMPRESIÓN</a></li>
                         <li><a class="dropdown-item" href="{{ route('home.displays') }}">DISPLAYS</a></li>
-                        <li><a class="dropdown-item" href="{{ route('home.contacto') }}">CONTÁCTO</a></li>
+                        <li><a class="dropdown-item" href="{{ route('home.contacto') }}">CONTACTO</a></li>
                     </ul>
                 </li>
                 <li class="nav-item custom-li">
@@ -100,7 +100,12 @@
                             </ul>
                         </div>
                         @if ($contador == 20)
-                            </div>
+                                <div class="btn-group dropend catalogo">
+                                    <a type="button" href="https://heyzine.com/flip-book/e2df54f8c2.html" target="_blank" style="text-decoration:none;color:black;padding-left:10px;">
+                                        <i class="fa-solid fa-heart icon-menu alpha-color"></i> Waltfort
+                                    </a>
+                                </div>
+                        </div>
                         @endif
                         @php
                             $contador++;

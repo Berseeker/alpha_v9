@@ -35,7 +35,7 @@
                 <h4>Ayuda</h4>
                 <ul id="ayuda">
                     <li><a href="">Acerca de nosotros</a></li>
-                    <li><a href="">Contácto</a></li>
+                    <li><a href="">Contacto</a></li>
                     <li><a href="">Términos y Condiciones</a></li>
                     <li><a href="">Aviso de Privacidad</a></li>
                 </ul>
